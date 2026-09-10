@@ -29,3 +29,6 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Large ML model
+neuroticism_module/mpnet_embedder/

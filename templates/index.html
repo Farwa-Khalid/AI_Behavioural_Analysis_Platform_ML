@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Behaviour Analysis</title>
+</head>
+<body>
+
+<h1>AI Behaviour Analysis Platform</h1>
+
+<form method="POST">
+    <textarea
+        name="text"
+        rows="8"
+        cols="80"
+        placeholder="Enter text here..."
+    ></textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Analyze
+    </button>
+</form>
+
+{% if result %}
+
+<hr>
+
+<h2>Emotion</h2>
+<pre>{{ result.emotion }}</pre>
+
+<h2>Sentiment</h2>
+<pre>{{ result.sentiment }}</pre>
+
+<h2>Toxicity</h2>
+<pre>{{ result.toxicity }}</pre>
+
+<h2>Neuroticism</h2>
+<pre>{{ result.neuroticism }}</pre>
+
+{% endif %}
+
+</body>
+</html>

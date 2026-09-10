@@ -1,0 +1,488 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Neuroticism Assessment Chatbot</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        .chat-container {
+            width: 750px;
+            max-width: 95%;
+            margin: 40px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+        }
+
+        .chat-header p {
+            margin-bottom: 0;
+            opacity: 0.85;
+        }
+
+        .chat-box {
+            padding: 25px;
+        }
+
+        .bot-message {
+            background: #eeeeee;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .user-message {
+            background: #333;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .results-section {
+            margin-top: 25px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+
+        .results-section h3 {
+            margin-top: 0;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .score {
+            font-weight: bold;
+        }
+
+        .progress-container {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #555;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .input-area button {
+            margin-left: 10px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #333;
+            color: white;
+            cursor: pointer;
+        }
+
+        .input-area button:hover {
+            background: #555;
+        }
+
+        .assessment-complete {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #e9f7ef;
+            border: 1px solid #b7dfc5;
+        }
+
+        /* ================================================= */
+        /* NEXT PHASE BUTTON */
+        /* ================================================= */
+
+        .next-phase {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .continue-btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .continue-btn:hover {
+            background: #555;
+        }
+
+        /* ================================================= */
+        /* EXERCISE SECTION */
+        /* ================================================= */
+
+        .exercise-section {
+            margin-top: 25px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+
+        .exercise-section h3 {
+            margin-top: 0;
+        }
+
+        .exercise-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .exercise-description {
+            line-height: 1.6;
+        }
+
+        .exercise-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 20px;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .exercise-button:hover {
+            background: #555;
+        }
+
+        /* ================================================= */
+        /* REASSESSMENT */
+        /* ================================================= */
+
+        .reassessment-section {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f7f7f7;
+            border: 1px solid #ddd;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="chat-container">
+
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
+
+    <div class="chat-header">
+
+        <h2>Neuroticism Assessment</h2>
+
+        <p>
+            Let's talk about your thoughts and feelings.
+        </p>
+
+    </div>
+
+
+    <div class="chat-box">
+
+
+        <!-- ================================================= -->
+        <!-- CHATBOT MESSAGE -->
+        <!-- ================================================= -->
+
+        {% if message %}
+
+            <div class="bot-message">
+
+                <strong>Chatbot:</strong>
+
+                <p>
+                    {{ message }}
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- ================================================= -->
+        <!-- CURRENT QUESTION -->
+        <!-- ================================================= -->
+
+        {% if question %}
+
+            <div class="bot-message">
+
+                <strong>Chatbot:</strong>
+
+                <p>
+                    {{ question }}
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- ================================================= -->
+        <!-- BASELINE RESULTS -->
+        <!-- ================================================= -->
+
+        {% if result and result.get("baseline_results") %}
+
+            <div class="assessment-complete">
+
+                <h3>
+                    Assessment Complete 🎉
+                </h3>
+
+                <p>
+                    Your initial assessment has been completed.
+                    Here are your results across the eight assessment dimensions.
+                </p>
+
+            </div>
+
+
+            <div class="results-section">
+
+                <h3>
+                    Baseline Results
+                </h3>
+
+
+                {% for dimension, score in result["baseline_results"].items() %}
+
+    <div class="result-row">
+
+        <span>
+            {{ dimension.replace("_", " ").title() }}
+        </span>
+
+        <span class="score">
+           {{ score }}
+        </span>
+
+    </div>
+
+{% endfor %}
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- CONTINUE TO EXERCISES -->
+            <!-- ================================================= -->
+
+            <div class="next-phase">
+
+                <a
+                    href="/chatbot/exercises"
+                    class="continue-btn"
+                >
+                    Continue to Personalized Exercises →
+                </a>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- ================================================= -->
+        <!-- EXERCISE -->
+        <!-- ================================================= -->
+
+        {% if exercise %}
+
+            <div class="exercise-section">
+
+                <h3>
+                    Personalized Exercise 🧘
+                </h3>
+
+                <div class="exercise-title">
+                    {{ exercise["title"] }}
+                </div>
+
+                <div class="exercise-description">
+                    {{ exercise["description"] }}
+                </div>
+
+
+                <form
+                    method="POST"
+                    action="/chatbot"
+                    class="input-area"
+                >
+
+                    <input
+                        type="text"
+                        name="message"
+                        placeholder="Type 'done' when you complete the exercise..."
+                        autocomplete="off"
+                        required
+                    >
+
+                    <button type="submit">
+                        Complete
+                    </button>
+
+                </form>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- ================================================= -->
+        <!-- NORMAL CHAT INPUT -->
+        <!-- ================================================= -->
+
+        {% if not result
+              or result.get("phase") not in [
+                  "assessment_complete",
+                  "exercises",
+                  "reassessment_complete"
+              ] %}
+
+            {% if not exercise %}
+
+                <form
+                    class="input-area"
+                    method="POST"
+                    action="/chatbot"
+                >
+
+                    <input
+                        type="text"
+                        name="message"
+                        placeholder="Type your response..."
+                        autocomplete="off"
+                        required
+                    >
+
+                    <button type="submit">
+                        Send
+                    </button>
+
+                </form>
+
+            {% endif %}
+
+        {% endif %}
+
+
+        <!-- ================================================= -->
+        <!-- REASSESSMENT COMPLETE -->
+        <!-- ================================================= -->
+
+        {% if result and result.get("comparison") %}
+
+            <div class="reassessment-section">
+
+                <h3>
+                    Reassessment Complete 🎉
+                </h3>
+
+                <p>
+                    Your reassessment is complete.
+                    Here is your progress compared with your initial assessment.
+                </p>
+
+                {% if result.get("progress_message") %}
+
+                    <p>
+                        {{ result["progress_message"] }}
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+        {% if result and result.get("status") == "ready_for_reassessment" %}
+
+<div class="next-phase">
+
+    <h3>Exercises Complete 🎉</h3>
+
+    <p>
+        You've completed your personalized exercises.
+        You're now ready to reassess your progress.
+    </p>
+
+    <a href="/chatbot/reassessment" class="continue-btn">
+        Start Reassessment →
+    </a>
+
+</div>
+
+{% endif %}
+
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
+

@@ -37,36 +37,36 @@ def create_conversation_state():
     state = {'session_id': str(uuid.uuid4()), 'created_at': datetime.now().isoformat(), 'phase': 'initial_assessment', 'turn_count': 0, 'current_dimension': None, 'current_question': None, 'questions_asked': [], 'conversation_history': [], 'last_response_type': None, 'last_analysis': None, 'dimensions': {dimension: {'responses': [], 'probabilities': [], 'evidence_count': 0, 'score': None, 'status': 'not_started'} for dimension in DIMENSIONS}, 'baseline_results': None, 'assessment_complete': False, 'recommended_exercises': [], 'completed_exercises': [], 'reassessment_results': None, 'reassessment_complete': False, 'comparison_results': None}
     return state
 
-def route_response(user_response):
-    """
-    Route a user's response into one of three categories.
+# def route_response(user_response):
+#     """
+#     Route a user's response into one of three categories.
 
-    relevant -> response can be analyzed for the assessment
-    unclear  -> response needs clarification
-    neutral  -> understandable but unrelated to the assessment
+#     relevant -> response can be analyzed for the assessment
+#     unclear  -> response needs clarification
+#     neutral  -> understandable but unrelated to the assessment
 
-    IMPORTANT:
-    Neutral responses NEVER contribute evidence.
-    """
-    if not isinstance(user_response, str):
-        return 'unclear'
-    response = user_response.strip()
-    if not response:
-        return 'unclear'
-    response_lower = response.lower()
-    response_lower = response_lower.replace('’', "'").replace('‘', "'")
-    normalized_response = re.sub("[^\\w\\s']", '', response_lower)
-    normalized_response = re.sub('\\s+', ' ', normalized_response).strip()
-    unclear_responses = {'idk', "i don't know", 'dont know', "don't know", 'not sure', 'maybe', 'perhaps', 'no idea', 'nothing'}
-    if normalized_response in unclear_responses:
-        return 'unclear'
-    assessment_phrases = {'worry about the future', 'worried about the future', 'worry about what might happen', 'worried about what might happen', 'what could go wrong', 'what might go wrong', 'possible problems', 'keep thinking about', 'keeps thinking about', 'think about it again', 'thinking about it again', 'replay it in my mind', 'replay it in my head', 'think about my mistakes', 'thinking about my mistakes', "don't know what will happen", 'do not know what will happen', 'uncertain about', 'uncertain situation', 'uncertain outcome', 'waiting for an outcome', 'overthink', 'overthinking', 'think about it repeatedly', 'analyze it repeatedly', 'analyze things repeatedly', 'keep analyzing', 'different possibilities', 'what other people think', 'what people think of me', 'what others think', 'people judging me', 'being judged', 'judge me', 'said something wrong', 'question whether i can', 'question if i can', 'question my ability', 'not capable', "don't think i can", 'do not think i can', 'not good enough', 'doubt myself', 'doubt my abilities', 'lack confidence', 'worried that i might fail', 'worry that i might fail', 'react strongly', 'strong emotional reaction', 'difficult to calm down', 'hard to calm down', 'get very upset', 'stress affects me', 'stressful things affect me', 'affects my mood', "can't stop worrying", 'cannot stop worrying', 'keep worrying', 'keeps worrying', 'worry stays on my mind', 'worries stay on my mind', 'worry for hours', 'worry for days', 'worry for a long time'}
-    if any((phrase in normalized_response for phrase in assessment_phrases)):
-        return 'relevant'
-    assessment_keywords = {'worry', 'worried', 'future', 'happen', 'upcoming', 'risk', 'think', 'thinking', 'thought', 'thoughts', 'mistake', 'mistakes', 'remember', 'embarrassing', 'replay', 'uncertain', 'uncertainty', 'unknown', 'unsure', 'outcome', 'waiting', 'overthink', 'overthinking', 'analyze', 'analysis', 'decision', 'decide', 'possibilities', 'options', 'people', 'others', 'judge', 'judging', 'judgment', 'opinion', 'social', 'myself', 'ability', 'abilities', 'capable', 'failure', 'fail', 'confidence', 'confident', 'compare', 'doubt', 'question', 'stress', 'stressful', 'upset', 'angry', 'anger', 'sad', 'emotion', 'emotional', 'calm', 'mood', 'continue', 'continues', 'hours', 'days', 'long'}
-    if any((keyword in normalized_response for keyword in assessment_keywords)):
-        return 'relevant'
-    return 'neutral'
+#     IMPORTANT:
+#     Neutral responses NEVER contribute evidence.
+#     """
+#     if not isinstance(user_response, str):
+#         return 'unclear'
+#     response = user_response.strip()
+#     if not response:
+#         return 'unclear'
+#     response_lower = response.lower()
+#     response_lower = response_lower.replace('’', "'").replace('‘', "'")
+#     normalized_response = re.sub("[^\\w\\s']", '', response_lower)
+#     normalized_response = re.sub('\\s+', ' ', normalized_response).strip()
+#     unclear_responses = {'idk', "i don't know", 'dont know', "don't know", 'not sure', 'maybe', 'perhaps', 'no idea', 'nothing'}
+#     if normalized_response in unclear_responses:
+#         return 'unclear'
+#     assessment_phrases = {'worry about the future', 'worried about the future', 'worry about what might happen', 'worried about what might happen', 'what could go wrong', 'what might go wrong', 'possible problems', 'keep thinking about', 'keeps thinking about', 'think about it again', 'thinking about it again', 'replay it in my mind', 'replay it in my head', 'think about my mistakes', 'thinking about my mistakes', "don't know what will happen", 'do not know what will happen', 'uncertain about', 'uncertain situation', 'uncertain outcome', 'waiting for an outcome', 'overthink', 'overthinking', 'think about it repeatedly', 'analyze it repeatedly', 'analyze things repeatedly', 'keep analyzing', 'different possibilities', 'what other people think', 'what people think of me', 'what others think', 'people judging me', 'being judged', 'judge me', 'said something wrong', 'question whether i can', 'question if i can', 'question my ability', 'not capable', "don't think i can", 'do not think i can', 'not good enough', 'doubt myself', 'doubt my abilities', 'lack confidence', 'worried that i might fail', 'worry that i might fail', 'react strongly', 'strong emotional reaction', 'difficult to calm down', 'hard to calm down', 'get very upset', 'stress affects me', 'stressful things affect me', 'affects my mood', "can't stop worrying", 'cannot stop worrying', 'keep worrying', 'keeps worrying', 'worry stays on my mind', 'worries stay on my mind', 'worry for hours', 'worry for days', 'worry for a long time'}
+#     if any((phrase in normalized_response for phrase in assessment_phrases)):
+#         return 'relevant'
+#     assessment_keywords = {'worry', 'worried', 'future', 'happen', 'upcoming', 'risk', 'think', 'thinking', 'thought', 'thoughts', 'mistake', 'mistakes', 'remember', 'embarrassing', 'replay', 'uncertain', 'uncertainty', 'unknown', 'unsure', 'outcome', 'waiting', 'overthink', 'overthinking', 'analyze', 'analysis', 'decision', 'decide', 'possibilities', 'options', 'people', 'others', 'judge', 'judging', 'judgment', 'opinion', 'social', 'myself', 'ability', 'abilities', 'capable', 'failure', 'fail', 'confidence', 'confident', 'compare', 'doubt', 'question', 'stress', 'stressful', 'upset', 'angry', 'anger', 'sad', 'emotion', 'emotional', 'calm', 'mood', 'continue', 'continues', 'hours', 'days', 'long'}
+#     if any((keyword in normalized_response for keyword in assessment_keywords)):
+#         return 'relevant'
+#     return 'neutral'
 
 
 def analyze_response(user_response, response_type):
@@ -84,6 +84,579 @@ def analyze_response(user_response, response_type):
         "prediction": prediction,
         "response_type": response_type
     }
+    
+FREQUENCY_RESPONSES = {
+    'always',
+    'usually',
+    'mostly',
+    'often',
+    'sometimes',
+    'rarely',
+    'never',
+    'frequently',
+    'occasionally',
+    'constantly',
+    'hardly ever',
+    'almost always',
+    'almost never',
+    'most of the time',
+    'a lot',
+    'quite often',
+    'very often',
+    'not often'
+}
+
+
+DIMENSION_RESPONSE_KEYWORDS = {
+
+    'future_worry': {
+        'future',
+        'upcoming',
+        'happen',
+        'happens',
+        'worry',
+        'worried',
+        'worrying',
+        'problem',
+        'problems',
+        'wrong',
+        'risk',
+        'prepare',
+        'preparing'
+    },
+
+    'rumination': {
+        'afterward',
+        'after',
+        'embarrassing',
+        'unpleasant',
+        'mistake',
+        'mistakes',
+        'remember',
+        'replay',
+        'replaying',
+        'cry',
+        'crying',
+        'cried',
+        'sad',
+        'upset',
+        'regret',
+        'thought',
+        'thoughts',
+        'thinking',
+        'felt',
+        'feel',
+        'feeling'
+    },
+
+    'uncertainty': {
+        'uncertain',
+        'uncertainty',
+        'unknown',
+        'unsure',
+        'outcome',
+        'waiting',
+        'wait',
+        'answers',
+        'answer',
+        'clear',
+        'worry',
+        'worried',
+        'uncomfortable'
+    },
+
+    'overthinking': {
+        'analyze',
+        'analyzing',
+        'analysis',
+        'decision',
+        'decide',
+        'possibilities',
+        'options',
+        'repeatedly',
+        'overthink',
+        'overthinking',
+        'thoughts',
+        'thinking',
+        'choice',
+        'choices'
+    },
+
+    'social_evaluation': {
+        'people',
+        'others',
+        'judge',
+        'judging',
+        'judgment',
+        'opinion',
+        'embarrassed',
+        'said',
+        'wrong',
+        'social',
+        'think',
+        'thinking'
+    },
+
+    'self_doubt': {
+        'capable',
+        'ability',
+        'abilities',
+        'fail',
+        'failure',
+        'confidence',
+        'confident',
+        'doubt',
+        'compare',
+        'task',
+        'difficult',
+        'good',
+        'better',
+        'worse'
+    },
+
+    'emotional_reactivity': {
+        'stress',
+        'stressful',
+        'upset',
+        'angry',
+        'anger',
+        'sad',
+        'emotion',
+        'emotional',
+        'calm',
+        'mood',
+        'cry',
+        'crying',
+        'react',
+        'reaction',
+        'feel',
+        'feeling'
+    },
+
+    'worry_persistence': {
+        'worry',
+        'worried',
+        'worrying',
+        'stop',
+        'continue',
+        'continues',
+        'hours',
+        'days',
+        'long',
+        'mind',
+        'keep',
+        'keeps'
+    }
+}
+
+
+
+def route_response(user_response, current_dimension=None, current_question=None):
+    """
+    Classify the user's response.
+
+    IMPORTANT:
+    This function only decides the response TYPE.
+    It does NOT decide whether the next question should be asked.
+
+    Response types:
+        relevant -> analyze with neuroticism model
+        unclear  -> understandable as an answer type, but needs more detail
+        neutral  -> not sufficiently related to the assessment
+
+    Every response will still advance to the next question.
+    """
+
+    # ---------------------------------------------------------
+    # 1. Invalid / empty response
+    # ---------------------------------------------------------
+
+    if not isinstance(user_response, str):
+        return 'unclear'
+
+    response = user_response.strip()
+
+    if not response:
+        return 'unclear'
+
+    # ---------------------------------------------------------
+    # 2. Normalize text
+    # ---------------------------------------------------------
+
+    response_lower = response.lower()
+
+    response_lower = (
+        response_lower
+        .replace('’', "'")
+        .replace('‘', "'")
+    )
+
+    normalized_response = re.sub(
+        r"[^\w\s']",
+        '',
+        response_lower
+    )
+
+    normalized_response = re.sub(
+        r'\s+',
+        ' ',
+        normalized_response
+    ).strip()
+
+    # ---------------------------------------------------------
+    # 3. Explicit unclear responses
+    # ---------------------------------------------------------
+
+    unclear_responses = {
+        'idk',
+        'i dont know',
+        "i don't know",
+        'dont know',
+        "don't know",
+        'not sure',
+        'no idea',
+        'maybe',
+        'perhaps',
+        'cannot say',
+        "can't say",
+        'i cannot say',
+        "i can't say",
+        'unsure'
+    }
+
+    if normalized_response in unclear_responses:
+        return 'unclear'
+
+    # ---------------------------------------------------------
+    # 4. Very common short answers
+    # ---------------------------------------------------------
+
+    # These are valid answers for many assessment questions.
+    frequency_responses = {
+        'always',
+        'usually',
+        'mostly',
+        'often',
+        'sometimes',
+        'rarely',
+        'never',
+        'frequently',
+        'occasionally',
+        'constantly',
+        'hardly ever',
+        'almost always',
+        'almost never',
+        'most of the time',
+        'a lot',
+        'quite often',
+        'very often',
+        'not often'
+    }
+
+    if normalized_response in frequency_responses:
+        return 'relevant'
+
+    # ---------------------------------------------------------
+    # 5. Yes / No answers
+    # ---------------------------------------------------------
+
+    binary_answers = {
+        'yes',
+        'yeah',
+        'yep',
+        'yup',
+        'no',
+        'nope',
+        'not really',
+        'definitely',
+        'definitely not'
+    }
+
+    if normalized_response in binary_answers:
+
+        # Yes/no is a valid answer when the question itself
+        # is asking something in a yes/no form.
+        if current_question:
+
+            question_lower = current_question.lower().strip()
+
+            binary_starters = (
+                'do ',
+                'does ',
+                'did ',
+                'can ',
+                'could ',
+                'is ',
+                'are ',
+                'was ',
+                'were '
+            )
+
+            if question_lower.startswith(binary_starters):
+                return 'relevant'
+
+        # Even if the question is not perfectly binary,
+        # treat a short yes/no answer as relevant rather
+        # than forcing the user to write a long response.
+        return 'relevant'
+
+    # ---------------------------------------------------------
+    # 6. Dimension-specific vocabulary
+    # ---------------------------------------------------------
+
+    dimension_keywords = {
+
+        'future_worry': {
+            'future',
+            'upcoming',
+            'happen',
+            'happens',
+            'happened',
+            'worry',
+            'worried',
+            'worrying',
+            'problem',
+            'problems',
+            'wrong',
+            'risk',
+            'prepare',
+            'preparing',
+            'event',
+            'events',
+            'tomorrow',
+            'later'
+        },
+
+        'rumination': {
+            'afterward',
+            'after',
+            'embarrassing',
+            'unpleasant',
+            'mistake',
+            'mistakes',
+            'remember',
+            'remembering',
+            'replay',
+            'replaying',
+            'cry',
+            'crying',
+            'cried',
+            'sad',
+            'upset',
+            'regret',
+            'regretting',
+            'thought',
+            'thoughts',
+            'thinking',
+            'felt',
+            'feel',
+            'feeling',
+            'mind',
+            'past',
+            'again'
+        },
+
+        'uncertainty': {
+            'uncertain',
+            'uncertainty',
+            'unknown',
+            'unsure',
+            'outcome',
+            'waiting',
+            'wait',
+            'answers',
+            'answer',
+            'clear',
+            'unclear',
+            'worry',
+            'worried',
+            'uncomfortable',
+            'confused',
+            'confusion',
+            'unknown'
+        },
+
+        'overthinking': {
+            'analyze',
+            'analyzing',
+            'analysis',
+            'decision',
+            'decide',
+            'possibilities',
+            'possibility',
+            'options',
+            'option',
+            'repeatedly',
+            'overthink',
+            'overthinking',
+            'thoughts',
+            'thinking',
+            'choice',
+            'choices',
+            'mind',
+            'consider',
+            'considering'
+        },
+
+        'social_evaluation': {
+            'people',
+            'others',
+            'judge',
+            'judging',
+            'judgment',
+            'opinion',
+            'opinions',
+            'embarrassed',
+            'embarrassing',
+            'said',
+            'say',
+            'wrong',
+            'social',
+            'think',
+            'thinking',
+            'friends',
+            'everyone',
+            'public'
+        },
+
+        'self_doubt': {
+            'capable',
+            'ability',
+            'abilities',
+            'fail',
+            'failure',
+            'confidence',
+            'confident',
+            'doubt',
+            'doubtful',
+            'compare',
+            'comparison',
+            'task',
+            'difficult',
+            'good',
+            'better',
+            'worse',
+            'myself',
+            'myself',
+            'believe'
+        },
+
+        'emotional_reactivity': {
+            'stress',
+            'stressed',
+            'stressful',
+            'upset',
+            'angry',
+            'anger',
+            'sad',
+            'sadness',
+            'emotion',
+            'emotional',
+            'calm',
+            'mood',
+            'cry',
+            'crying',
+            'react',
+            'reaction',
+            'feel',
+            'feeling',
+            'feelings',
+            'frustrated',
+            'frustration'
+        },
+
+        'worry_persistence': {
+            'worry',
+            'worried',
+            'worrying',
+            'stop',
+            'continue',
+            'continues',
+            'continued',
+            'hours',
+            'days',
+            'long',
+            'mind',
+            'keep',
+            'keeps',
+            'stays',
+            'stayed',
+            'cannot stop',
+            "can't stop"
+        }
+    }
+
+    # ---------------------------------------------------------
+    # 7. Use the CURRENT dimension
+    # ---------------------------------------------------------
+
+    if current_dimension in dimension_keywords:
+
+        keywords = dimension_keywords[current_dimension]
+
+        words = set(normalized_response.split())
+
+        # Direct word match
+        if words.intersection(keywords):
+            return 'relevant'
+
+        # Phrase match
+        for keyword in keywords:
+            if ' ' in keyword and keyword in normalized_response:
+                return 'relevant'
+
+    # ---------------------------------------------------------
+    # 8. General meaningful assessment vocabulary
+    # ---------------------------------------------------------
+
+    general_keywords = {
+        'feel',
+        'feeling',
+        'felt',
+        'think',
+        'thinking',
+        'thought',
+        'thoughts',
+        'mind',
+        'worry',
+        'worried',
+        'stress',
+        'stressed',
+        'upset',
+        'sad',
+        'angry',
+        'calm',
+        'problem',
+        'problems',
+        'often',
+        'usually',
+        'sometimes',
+        'mostly',
+        'always',
+        'never',
+        'rarely',
+        'frequently',
+        'yes',
+        'no',
+        'good',
+        'bad',
+        'difficult',
+        'easy',
+        'hard',
+        'comfortable',
+        'uncomfortable'
+    }
+
+    words = set(normalized_response.split())
+
+    if words.intersection(general_keywords):
+        return 'relevant'
+
+    # ---------------------------------------------------------
+    # 9. Fallback
+    # ---------------------------------------------------------
+
+    return 'neutral'
 
 
 def add_response(state, dimension, user_response, analysis_result):
@@ -110,43 +683,105 @@ def update_dimension_score(state, dimension):
     """
     Calculate the current score for a dimension.
 
-    The score is the mean neuroticism probability across
-    relevant responses for that dimension.
+    IMPORTANT:
+    A dimension is NOT considered complete because it has
+    two relevant answers.
+
+    Completion is controlled by the question flow:
+    all questions for the dimension must be asked.
+
+    Score:
+        average of probabilities from relevant responses only.
+
+    If there are no relevant responses:
+        score = None
     """
+
     if dimension not in state['dimensions']:
         raise ValueError(f'Unknown dimension: {dimension}')
+
     dimension_data = state['dimensions'][dimension]
+
     probabilities = dimension_data['probabilities']
+
+    # ---------------------------------------------------------
+    # No relevant responses
+    # ---------------------------------------------------------
+
     if not probabilities:
+
         dimension_data['score'] = None
-        dimension_data['status'] = 'not_started'
+
+        # Keep track of whether questions have started.
+        if dimension_data['responses']:
+            dimension_data['status'] = 'in_progress'
+        else:
+            dimension_data['status'] = 'not_started'
+
         return None
+
+    # ---------------------------------------------------------
+    # Calculate average probability
+    # ---------------------------------------------------------
+
     score = sum(probabilities) / len(probabilities)
+
     dimension_data['score'] = float(score)
-    if dimension_data['evidence_count'] >= MIN_EVIDENCE_PER_DIMENSION:
-        dimension_data['status'] = 'complete'
-    else:
-        dimension_data['status'] = 'in_progress'
+
+    # The dimension remains in progress until ALL questions
+    # have been asked.
+    dimension_data['status'] = 'in_progress'
+
     return float(score)
+
+# def select_next_dimension(state):
+#     """
+#     Select the next dimension that still needs evidence.
+
+#     During the initial assessment, dimensions are processed
+#     in the predefined DIMENSIONS order.
+
+#     Returns:
+#         dimension name if more assessment is needed
+#         None if all dimensions are complete
+#     """
+#     for dimension in DIMENSIONS:
+#         dimension_data = state['dimensions'][dimension]
+#         if dimension_data['status'] != 'complete':
+#             return dimension
+#     state['assessment_complete'] = True
+#     state['phase'] = 'assessment_complete'
+#     return None
 
 def select_next_dimension(state):
     """
-    Select the next dimension that still needs evidence.
+    Select the next dimension in the predefined order.
 
-    During the initial assessment, dimensions are processed
-    in the predefined DIMENSIONS order.
+    A dimension is considered finished only when its
+    questions have all been asked.
 
-    Returns:
-        dimension name if more assessment is needed
-        None if all dimensions are complete
+    The actual completion is handled by process_chat_turn()
+    after select_question() returns None.
     """
+
     for dimension in DIMENSIONS:
+
         dimension_data = state['dimensions'][dimension]
+
         if dimension_data['status'] != 'complete':
             return dimension
+
+    # ---------------------------------------------------------
+    # All dimensions have been completed
+    # ---------------------------------------------------------
+
     state['assessment_complete'] = True
     state['phase'] = 'assessment_complete'
+    state['current_dimension'] = None
+    state['current_question'] = None
+
     return None
+
 
 def select_question(state, dimension):
     """
@@ -167,49 +802,338 @@ def select_question(state, dimension):
             return question
     return None
 
+# def process_chat_turn(state, user_response):
+#     """
+#     Process one user response during the assessment.
+
+#     Flow:
+#         1. Route response
+#         2. Handle unclear / neutral responses
+#         3. Analyze relevant responses
+#         4. Store evidence
+#         5. Update dimension score
+#         6. Decide whether to continue or move forward
+
+#     Returns a consistent response dictionary.
+#     """
+#     if state['phase'] != 'initial_assessment':
+#         return {'response_type': 'system', 'message': 'The initial assessment is not currently active.', 'analysis': None, 'dimension': state['current_dimension'], 'next_dimension': None, 'next_question': None}
+#     current_dimension = state['current_dimension']
+#     if current_dimension is None:
+#         current_dimension = select_next_dimension(state)
+#         if current_dimension is None:
+#             return {'response_type': 'system', 'message': 'The initial assessment is complete.', 'analysis': None, 'dimension': None, 'next_dimension': None, 'next_question': None}
+#         state['current_dimension'] = current_dimension
+#     state['turn_count'] += 1
+#     # response_type = route_response(user_response)
+#     response_type = route_response(
+#     user_response,
+#     current_dimension=current_dimension,
+#     current_question=state['current_question']
+# )
+#     state['last_response_type'] = response_type
+#     state['conversation_history'].append({'turn': state['turn_count'], 'dimension': current_dimension, 'question': state['current_question'], 'user_response': user_response, 'response_type': response_type})
+#     if response_type == 'unclear':
+#         return {'response_type': 'unclear', 'message': 'Could you tell me a little more about that?', 'analysis': None, 'dimension': current_dimension, 'next_dimension': current_dimension, 'next_question': state['current_question']}
+#     if response_type == 'neutral':
+#         return {'response_type': 'neutral', 'message': "That's okay. Let's continue with the assessment.", 'analysis': None, 'dimension': current_dimension, 'next_dimension': current_dimension, 'next_question': state['current_question']}
+#     analysis = analyze_response(user_response, response_type)
+#     state['last_analysis'] = analysis
+#     add_response(state, current_dimension, user_response, analysis)
+#     dimension_score = update_dimension_score(state, current_dimension)
+#     dimension_complete = state['dimensions'][current_dimension]['status'] == 'complete'
+#     if not dimension_complete:
+#         next_question = select_question(state, current_dimension)
+#         return {'response_type': 'relevant', 'message': "Thank you. Let's continue.", 'analysis': analysis, 'dimension': current_dimension, 'dimension_score': dimension_score, 'dimension_complete': False, 'next_dimension': current_dimension, 'next_question': next_question}
+#     next_dimension = select_next_dimension(state)
+#     if next_dimension is None:
+#         return {'response_type': 'relevant', 'message': 'Thank you. The initial assessment is complete.', 'analysis': analysis, 'dimension': current_dimension, 'dimension_score': dimension_score, 'dimension_complete': True, 'next_dimension': None, 'next_question': None}
+#     next_question = select_question(state, next_dimension)
+#     return {'response_type': 'relevant', 'message': "Thank you. Let's explore another area.", 'analysis': analysis, 'dimension': current_dimension, 'dimension_score': dimension_score, 'dimension_complete': True, 'next_dimension': next_dimension, 'next_question': next_question}
+
+
 def process_chat_turn(state, user_response):
     """
-    Process one user response during the assessment.
+    Process one user response during the initial assessment.
 
-    Flow:
-        1. Route response
-        2. Handle unclear / neutral responses
-        3. Analyze relevant responses
-        4. Store evidence
-        5. Update dimension score
-        6. Decide whether to continue or move forward
+    IMPORTANT DESIGN:
 
-    Returns a consistent response dictionary.
+    Every question is asked exactly once.
+
+    For every answer:
+
+        relevant
+            -> analyze with neuroticism model
+            -> store probability
+            -> update dimension score
+            -> move to next question
+
+        unclear
+            -> record response type
+            -> no neuroticism score
+            -> move to next question
+
+        neutral
+            -> record response type
+            -> no neuroticism score
+            -> move to next question
+
+    The chatbot asks ALL questions from ALL dimensions.
     """
+
+    # =========================================================
+    # 1. CHECK PHASE
+    # =========================================================
+
     if state['phase'] != 'initial_assessment':
-        return {'response_type': 'system', 'message': 'The initial assessment is not currently active.', 'analysis': None, 'dimension': state['current_dimension'], 'next_dimension': None, 'next_question': None}
+
+        return {
+            'response_type': 'system',
+            'message': (
+                'The initial assessment is not currently active.'
+            ),
+            'analysis': None,
+            'dimension': state['current_dimension'],
+            'next_dimension': None,
+            'next_question': None
+        }
+
+    # =========================================================
+    # 2. GET CURRENT DIMENSION
+    # =========================================================
+
     current_dimension = state['current_dimension']
+
     if current_dimension is None:
+
         current_dimension = select_next_dimension(state)
+
         if current_dimension is None:
-            return {'response_type': 'system', 'message': 'The initial assessment is complete.', 'analysis': None, 'dimension': None, 'next_dimension': None, 'next_question': None}
-        state['current_dimension'] = current_dimension
+
+            return {
+                'response_type': 'system',
+                'message': (
+                    'The initial assessment is complete.'
+                ),
+                'analysis': None,
+                'dimension': None,
+                'next_dimension': None,
+                'next_question': None
+            }
+
+    # =========================================================
+    # 3. GET CURRENT QUESTION
+    # =========================================================
+
+    current_question = state['current_question']
+
+    if current_question is None:
+
+        current_question = select_question(
+            state,
+            current_dimension
+        )
+
+        if current_question is None:
+
+            # No questions remain in this dimension.
+            state['dimensions'][current_dimension]['status'] = 'complete'
+
+            next_dimension = select_next_dimension(state)
+
+            if next_dimension is None:
+
+                return {
+                    'response_type': 'system',
+                    'message': (
+                        'The initial assessment is complete.'
+                    ),
+                    'analysis': None,
+                    'dimension': current_dimension,
+                    'next_dimension': None,
+                    'next_question': None
+                }
+
+            next_question = select_question(
+                state,
+                next_dimension
+            )
+
+            return {
+                'response_type': 'system',
+                'message': (
+                    "Let's continue with another area "
+                    "of the assessment."
+                ),
+                'analysis': None,
+                'dimension': current_dimension,
+                'next_dimension': next_dimension,
+                'next_question': next_question
+            }
+
+    # =========================================================
+    # 4. INCREASE TURN COUNT
+    # =========================================================
+
     state['turn_count'] += 1
-    response_type = route_response(user_response)
+
+    # =========================================================
+    # 5. CLASSIFY RESPONSE
+    # =========================================================
+
+    response_type = route_response(
+        user_response,
+        current_dimension=current_dimension,
+        current_question=current_question
+    )
+
     state['last_response_type'] = response_type
-    state['conversation_history'].append({'turn': state['turn_count'], 'dimension': current_dimension, 'question': state['current_question'], 'user_response': user_response, 'response_type': response_type})
-    if response_type == 'unclear':
-        return {'response_type': 'unclear', 'message': 'Could you tell me a little more about that?', 'analysis': None, 'dimension': current_dimension, 'next_dimension': current_dimension, 'next_question': state['current_question']}
-    if response_type == 'neutral':
-        return {'response_type': 'neutral', 'message': "That's okay. Let's continue with the assessment.", 'analysis': None, 'dimension': current_dimension, 'next_dimension': current_dimension, 'next_question': state['current_question']}
-    analysis = analyze_response(user_response, response_type)
-    state['last_analysis'] = analysis
-    add_response(state, current_dimension, user_response, analysis)
-    dimension_score = update_dimension_score(state, current_dimension)
-    dimension_complete = state['dimensions'][current_dimension]['status'] == 'complete'
-    if not dimension_complete:
-        next_question = select_question(state, current_dimension)
-        return {'response_type': 'relevant', 'message': "Thank you. Let's continue.", 'analysis': analysis, 'dimension': current_dimension, 'dimension_score': dimension_score, 'dimension_complete': False, 'next_dimension': current_dimension, 'next_question': next_question}
+
+    # =========================================================
+    # 6. SAVE RESPONSE HISTORY
+    # =========================================================
+
+    state['conversation_history'].append({
+        'turn': state['turn_count'],
+        'speaker': 'user',
+        'dimension': current_dimension,
+        'question': current_question,
+        'user_response': user_response,
+        'response_type': response_type
+    })
+
+    # =========================================================
+    # 7. RELEVANT RESPONSE
+    # =========================================================
+
+    analysis = None
+    dimension_score = state['dimensions'][current_dimension]['score']
+
+    if response_type == 'relevant':
+
+        # -----------------------------------------------------
+        # Run neuroticism model
+        # -----------------------------------------------------
+
+        analysis = analyze_response(
+            user_response,
+            response_type='relevant'
+        )
+
+        state['last_analysis'] = analysis
+
+        # -----------------------------------------------------
+        # Store relevant response
+        # -----------------------------------------------------
+
+        add_response(
+            state,
+            current_dimension,
+            user_response,
+            analysis
+        )
+
+        # -----------------------------------------------------
+        # Update dimension score
+        # -----------------------------------------------------
+
+        dimension_score = update_dimension_score(
+            state,
+            current_dimension
+        )
+
+    # =========================================================
+    # 8. UNCLEAR / NEUTRAL RESPONSE
+    # =========================================================
+
+    elif response_type in ('unclear', 'neutral'):
+
+        # -----------------------------------------------------
+        # Do NOT run the neuroticism model.
+        # Do NOT add probability.
+        #
+        # But the question IS considered answered and
+        # the chatbot MUST move forward.
+        # -----------------------------------------------------
+
+        state['last_analysis'] = None
+
+    # =========================================================
+    # 9. CHECK FOR ANOTHER QUESTION IN SAME DIMENSION
+    # =========================================================
+
+    next_question = select_question(
+        state,
+        current_dimension
+    )
+
+    if next_question is not None:
+
+        return {
+            'response_type': response_type,
+            'message': (
+                "Thank you. Let's continue."
+            ),
+            'analysis': analysis,
+            'dimension': current_dimension,
+            'dimension_score': dimension_score,
+            'dimension_complete': False,
+            'next_dimension': current_dimension,
+            'next_question': next_question
+        }
+
+    # =========================================================
+    # 10. ALL QUESTIONS FOR CURRENT DIMENSION ARE DONE
+    # =========================================================
+
+    state['dimensions'][current_dimension]['status'] = 'complete'
+
+    # =========================================================
+    # 11. MOVE TO NEXT DIMENSION
+    # =========================================================
+
     next_dimension = select_next_dimension(state)
+
+    # =========================================================
+    # 12. ALL 8 DIMENSIONS ARE DONE
+    # =========================================================
+
     if next_dimension is None:
-        return {'response_type': 'relevant', 'message': 'Thank you. The initial assessment is complete.', 'analysis': analysis, 'dimension': current_dimension, 'dimension_score': dimension_score, 'dimension_complete': True, 'next_dimension': None, 'next_question': None}
-    next_question = select_question(state, next_dimension)
-    return {'response_type': 'relevant', 'message': "Thank you. Let's explore another area.", 'analysis': analysis, 'dimension': current_dimension, 'dimension_score': dimension_score, 'dimension_complete': True, 'next_dimension': next_dimension, 'next_question': next_question}
+
+        return {
+            'response_type': response_type,
+            'message': (
+                'Thank you. The initial assessment is complete.'
+            ),
+            'analysis': analysis,
+            'dimension': current_dimension,
+            'dimension_score': dimension_score,
+            'dimension_complete': True,
+            'next_dimension': None,
+            'next_question': None
+        }
+
+    # =========================================================
+    # 13. START NEXT DIMENSION
+    # =========================================================
+
+    next_question = select_question(
+        state,
+        next_dimension
+    )
+
+    return {
+        'response_type': response_type,
+        'message': (
+            "Thank you. Let's explore another area."
+        ),
+        'analysis': analysis,
+        'dimension': current_dimension,
+        'dimension_score': dimension_score,
+        'dimension_complete': True,
+        'next_dimension': next_dimension,
+        'next_question': next_question
+    }
 
 def start_conversation(state):
     """
@@ -231,32 +1155,113 @@ def start_conversation(state):
 
 def generate_baseline_results(state):
     """
-    Generate the baseline assessment results after all
-    8 dimensions have been completed.
+    Generate baseline results after ALL 24 questions
+    have been answered.
+
+    A dimension score is the average neuroticism probability
+    from its relevant responses.
+
+    Neutral and unclear responses do not contribute to the score.
     """
+
     if not state['assessment_complete']:
-        return {'status': 'incomplete', 'message': 'The initial assessment is not complete yet.', 'results': None}
+
+        return {
+            'status': 'incomplete',
+            'message': (
+                'The initial assessment is not complete yet.'
+            ),
+            'results': None
+        }
+
     results = {}
+
     for dimension in DIMENSIONS:
+
         dimension_data = state['dimensions'][dimension]
-        results[dimension] = {'score': dimension_data['score'], 'evidence_count': dimension_data['evidence_count'], 'status': dimension_data['status']}
+
+        results[dimension] = {
+            'score': dimension_data['score'],
+            'evidence_count': dimension_data['evidence_count'],
+            'status': dimension_data['status'],
+            'responses': dimension_data['responses'],
+            'probabilities': dimension_data['probabilities']
+        }
+
     state['baseline_results'] = results
-    return {'status': 'complete', 'message': 'Baseline assessment results generated.', 'results': results}
+
+    return {
+        'status': 'complete',
+        'message': (
+            'Baseline assessment results generated.'
+        ),
+        'results': results
+    }
+
 
 def recommend_exercises(state, top_n=TOP_N_EXERCISES):
     """
-    Recommend coping exercises based on the user's
-    highest baseline dimension scores.
+    Recommend exercises based on dimensions that have
+    an actual calculated score.
+
+    Dimensions with no relevant responses are not used
+    for exercise ranking.
     """
+
     if not state['baseline_results']:
-        return {'status': 'unavailable', 'message': 'Baseline results are not available yet.', 'recommendations': []}
-    ranked_dimensions = sorted(state['baseline_results'].items(), key=lambda item: item[1]['score'], reverse=True)
+
+        return {
+            'status': 'unavailable',
+            'message': (
+                'Baseline results are not available yet.'
+            ),
+            'recommendations': []
+        }
+
+    # ---------------------------------------------------------
+    # Only use dimensions that have a numeric score
+    # ---------------------------------------------------------
+
+    scored_dimensions = [
+        item
+        for item in state['baseline_results'].items()
+        if item[1]['score'] is not None
+    ]
+
+    # ---------------------------------------------------------
+    # Sort by score
+    # ---------------------------------------------------------
+
+    ranked_dimensions = sorted(
+        scored_dimensions,
+        key=lambda item: item[1]['score'],
+        reverse=True
+    )
+
     recommendations = []
+
     for dimension, result in ranked_dimensions[:top_n]:
+
         exercise = EXERCISE_BANK[dimension]
-        recommendations.append({'dimension': dimension, 'score': result['score'], 'title': exercise['title'], 'description': exercise['description'], 'activity': exercise['activity'], 'completed': False})
+
+        recommendations.append({
+            'dimension': dimension,
+            'score': result['score'],
+            'title': exercise['title'],
+            'description': exercise['description'],
+            'activity': exercise['activity'],
+            'completed': False
+        })
+
     state['recommended_exercises'] = recommendations
-    return {'status': 'complete', 'message': 'Personalized exercises generated.', 'recommendations': recommendations}
+
+    return {
+        'status': 'complete',
+        'message': (
+            'Personalized exercises generated.'
+        ),
+        'recommendations': recommendations
+    }
 
 def complete_exercise(state, dimension):
     """
@@ -316,7 +1321,12 @@ def process_reassessment_turn(state, user_response):
     current_dimension = state['current_dimension']
     if current_dimension is None:
         return {'status': 'complete', 'message': 'Reassessment is already complete.'}
-    response_type = route_response(user_response)
+    # response_type = route_response(user_response)
+    response_type = route_response(
+    user_response,
+    current_dimension=current_dimension,
+    current_question=state['current_question']
+)
     if response_type == 'unclear':
         return {'status': 'needs_clarification', 'response_type': 'unclear', 'message': "That's okay. Could you tell me a little more about how you usually feel or respond in this situation?", 'dimension': current_dimension, 'question': state['current_question']}
     if response_type == 'neutral':

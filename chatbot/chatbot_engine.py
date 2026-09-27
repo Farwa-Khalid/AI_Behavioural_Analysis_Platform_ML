@@ -1312,48 +1312,292 @@ def process_reassessment_turn(state, user_response):
     """
     Process one user response during reassessment.
 
-    Neutral and unclear responses do not contribute evidence.
-    Relevant responses are analyzed and stored separately
-    from the original baseline assessment.
-    """
-    if state['phase'] != 'reassessment':
-        return {'status': 'unavailable', 'message': 'The chatbot is not currently in reassessment.'}
-    current_dimension = state['current_dimension']
-    if current_dimension is None:
-        return {'status': 'complete', 'message': 'Reassessment is already complete.'}
-    # response_type = route_response(user_response)
-    response_type = route_response(
-    user_response,
-    current_dimension=current_dimension,
-    current_question=state['current_question']
-)
-    if response_type == 'unclear':
-        return {'status': 'needs_clarification', 'response_type': 'unclear', 'message': "That's okay. Could you tell me a little more about how you usually feel or respond in this situation?", 'dimension': current_dimension, 'question': state['current_question']}
-    if response_type == 'neutral':
-        return {'status': 'continue', 'response_type': 'neutral', 'message': "Let's focus on the situation in the question. How does this usually affect you?", 'dimension': current_dimension, 'question': state['current_question']}
-    analysis = analyze_response(user_response, response_type='relevant')
-    probability = analysis['probability']
-    dimension_data = state['reassessment_dimensions'][current_dimension]
-    dimension_data['responses'].append(user_response)
-    dimension_data['probabilities'].append(probability)
-    dimension_data['evidence_count'] += 1
-    dimension_data['score'] = sum(dimension_data['probabilities']) / len(dimension_data['probabilities'])
-    if dimension_data['evidence_count'] >= MIN_EVIDENCE_PER_DIMENSION:
-        dimension_data['status'] = 'complete'
-        current_index = DIMENSIONS.index(current_dimension)
-        if current_index == len(DIMENSIONS) - 1:
-            state['reassessment_complete'] = True
-            state['phase'] = 'reassessment_complete'
-            state['current_dimension'] = None
-            state['current_question'] = None
-            return {'status': 'reassessment_complete', 'response_type': 'relevant', 'dimension': current_dimension, 'probability': probability, 'score': dimension_data['score'], 'message': 'Thank you. The reassessment is now complete.'}
-        next_dimension = DIMENSIONS[current_index + 1]
-        state['current_dimension'] = next_dimension
-        next_question = select_question(state, next_dimension)
-        return {'status': 'next_dimension', 'response_type': 'relevant', 'dimension': current_dimension, 'probability': probability, 'score': dimension_data['score'], 'next_dimension': next_dimension, 'question': next_question}
-    next_question = select_question(state, current_dimension)
-    return {'status': 'continue', 'response_type': 'relevant', 'dimension': current_dimension, 'probability': probability, 'score': dimension_data['score'], 'evidence_count': dimension_data['evidence_count'], 'question': next_question}
+    Reassessment follows the EXACT same question-flow logic
+    as the initial assessment.
 
+    For every question:
+        relevant
+            -> analyze with neuroticism model
+            -> store probability
+            -> update score
+            -> move to next question
+
+        unclear
+            -> record response type
+            -> no neuroticism score
+            -> move to next question
+
+        neutral
+            -> record response type
+            -> no neuroticism score
+            -> move to next question
+
+    IMPORTANT:
+        Every question is asked exactly once.
+        All 24 questions must be asked:
+            8 dimensions × 3 questions.
+    """
+
+    # =========================================================
+    # 1. CHECK PHASE
+    # =========================================================
+
+    if state['phase'] != 'reassessment':
+        return {
+            'status': 'unavailable',
+            'message': 'The chatbot is not currently in reassessment.'
+        }
+
+    # =========================================================
+    # 2. GET CURRENT DIMENSION
+    # =========================================================
+
+    current_dimension = state['current_dimension']
+
+    if current_dimension is None:
+        return {
+            'status': 'complete',
+            'message': 'Reassessment is already complete.'
+        }
+
+    # =========================================================
+    # 3. GET CURRENT QUESTION
+    # =========================================================
+
+    current_question = state['current_question']
+
+    if current_question is None:
+
+        current_question = select_question(
+            state,
+            current_dimension
+        )
+
+        if current_question is None:
+
+            # All questions for this dimension are complete.
+            state['reassessment_dimensions'][
+                current_dimension
+            ]['status'] = 'complete'
+
+            current_index = DIMENSIONS.index(
+                current_dimension
+            )
+
+            # -------------------------------------------------
+            # All dimensions completed
+            # -------------------------------------------------
+
+            if current_index == len(DIMENSIONS) - 1:
+
+                state['reassessment_complete'] = True
+                state['phase'] = 'reassessment_complete'
+                state['current_dimension'] = None
+                state['current_question'] = None
+
+                return {
+                    'status': 'reassessment_complete',
+                    'message': (
+                        'Thank you. The reassessment is now complete.'
+                    )
+                }
+
+            # -------------------------------------------------
+            # Move to next dimension
+            # -------------------------------------------------
+
+            next_dimension = DIMENSIONS[current_index + 1]
+
+            state['current_dimension'] = next_dimension
+
+            next_question = select_question(
+                state,
+                next_dimension
+            )
+
+            return {
+                'status': 'next_dimension',
+                'message': (
+                    "Thank you. Let's explore another area."
+                ),
+                'dimension': next_dimension,
+                'next_dimension': next_dimension,
+                'question': next_question
+            }
+
+    # =========================================================
+    # 4. CLASSIFY RESPONSE
+    # =========================================================
+
+    response_type = route_response(
+        user_response,
+        current_dimension=current_dimension,
+        current_question=current_question
+    )
+
+    # =========================================================
+    # 5. SAVE REASSESSMENT HISTORY
+    # =========================================================
+
+    state.setdefault(
+        'reassessment_history',
+        []
+    )
+
+    state['reassessment_history'].append({
+        'turn': len(state['reassessment_history']) + 1,
+        'dimension': current_dimension,
+        'question': current_question,
+        'user_response': user_response,
+        'response_type': response_type
+    })
+
+    # =========================================================
+    # 6. RELEVANT RESPONSE
+    # =========================================================
+
+    analysis = None
+    probability = None
+
+    if response_type == 'relevant':
+
+        analysis = analyze_response(
+            user_response,
+            response_type='relevant'
+        )
+
+        probability = analysis['probability']
+
+        dimension_data = (
+            state['reassessment_dimensions']
+            [current_dimension]
+        )
+
+        dimension_data['responses'].append(
+            user_response
+        )
+
+        dimension_data['probabilities'].append(
+            probability
+        )
+
+        dimension_data['evidence_count'] += 1
+
+        # Calculate score from relevant responses only.
+        dimension_data['score'] = (
+            sum(dimension_data['probabilities'])
+            /
+            len(dimension_data['probabilities'])
+        )
+
+    # =========================================================
+    # 7. UNCLEAR / NEUTRAL
+    # =========================================================
+
+    elif response_type in ('unclear', 'neutral'):
+
+        # Do NOT run the neuroticism model.
+        # Do NOT add probability.
+        #
+        # BUT the question has been answered.
+        # Therefore we MUST move to the next question.
+
+        analysis = None
+
+    # =========================================================
+    # 8. ASK NEXT QUESTION IN SAME DIMENSION
+    # =========================================================
+
+    next_question = select_question(
+        state,
+        current_dimension
+    )
+
+    if next_question is not None:
+
+        return {
+            'status': 'continue',
+            'response_type': response_type,
+            'analysis': analysis,
+            'dimension': current_dimension,
+            'probability': probability,
+            'score': (
+                state['reassessment_dimensions']
+                [current_dimension]['score']
+            ),
+            'evidence_count': (
+                state['reassessment_dimensions']
+                [current_dimension]['evidence_count']
+            ),
+            'next_dimension': current_dimension,
+            'question': next_question
+        }
+
+    # =========================================================
+    # 9. ALL 3 QUESTIONS FOR CURRENT DIMENSION ARE DONE
+    # =========================================================
+
+    dimension_data = (
+        state['reassessment_dimensions']
+        [current_dimension]
+    )
+
+    dimension_data['status'] = 'complete'
+
+    # =========================================================
+    # 10. CHECK WHETHER ALL 8 DIMENSIONS ARE DONE
+    # =========================================================
+
+    current_index = DIMENSIONS.index(
+        current_dimension
+    )
+
+    if current_index == len(DIMENSIONS) - 1:
+
+        state['reassessment_complete'] = True
+        state['phase'] = 'reassessment_complete'
+        state['current_dimension'] = None
+        state['current_question'] = None
+
+        return {
+            'status': 'reassessment_complete',
+            'response_type': response_type,
+            'analysis': analysis,
+            'dimension': current_dimension,
+            'probability': probability,
+            'score': dimension_data['score'],
+            'message': (
+                'Thank you. The reassessment is now complete.'
+            ),
+            'question': None
+        }
+
+    # =========================================================
+    # 11. MOVE TO NEXT DIMENSION
+    # =========================================================
+
+    next_dimension = DIMENSIONS[
+        current_index + 1
+    ]
+
+    state['current_dimension'] = next_dimension
+
+    next_question = select_question(
+        state,
+        next_dimension
+    )
+
+    return {
+        'status': 'next_dimension',
+        'response_type': response_type,
+        'analysis': analysis,
+        'dimension': current_dimension,
+        'probability': probability,
+        'score': dimension_data['score'],
+        'next_dimension': next_dimension,
+        'question': next_question
+    }
+    
 def compare_baseline_reassessment(state):
     """
     Compare baseline scores with reassessment scores

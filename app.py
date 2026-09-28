@@ -51,7 +51,7 @@ def home():
             "emotion": detect_emotions(processed_text),
             "toxicity": detect_toxicity(processed_text),
             "sentiment": detect_sentiment(processed_text),
-            "neuroticism": predict_neuroticism(text)
+            "neuroticism": predict_neuroticism(processed_text)
         }
 
     return render_template(
@@ -147,6 +147,10 @@ def chatbot_message():
 
         if state["phase"] == "assessment_complete":
 
+            # ----------------------------------------------------
+            # GENERATE BASELINE RESULTS
+            # ----------------------------------------------------
+
             baseline_results = generate_baseline_results(state)
 
             print("\n========== BASELINE RESULTS ==========")
@@ -155,7 +159,45 @@ def chatbot_message():
 
             result["baseline_results"] = baseline_results
 
-            next_question = None
+            # ----------------------------------------------------
+            # AUTOMATICALLY START EXERCISE PHASE
+            # ----------------------------------------------------
+
+            exercise_result = start_exercise_phase(state)
+
+            print("\n========== RECOMMENDED EXERCISES ==========")
+            print(state.get("recommended_exercises"))
+            print("============================================\n")
+
+            # ----------------------------------------------------
+            # GET FIRST INCOMPLETE EXERCISE
+            # ----------------------------------------------------
+
+            current_exercise = None
+
+            if state.get("recommended_exercises"):
+
+                incomplete_exercises = [
+                    exercise
+                    for exercise in state["recommended_exercises"]
+                    if not exercise["completed"]
+                ]
+
+                if incomplete_exercises:
+                    current_exercise = incomplete_exercises[0]
+
+            # ----------------------------------------------------
+            # SHOW FIRST EXERCISE
+            # ----------------------------------------------------
+
+            return render_template(
+                "chatbot.html",
+                message=exercise_result.get("message"),
+                question=None,
+                exercise=current_exercise,
+                result=exercise_result,
+                state=state
+            )
 
         else:
 
@@ -163,15 +205,6 @@ def chatbot_message():
                 result.get("question")
                 or result.get("next_question")
             )
-
-        
-        return render_template(
-            "chatbot.html",
-            message=result.get("message"),
-            question=next_question,
-            result=result,
-            state=state
-        )
 
     # ========================================================
     # EXERCISE PHASE

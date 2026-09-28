@@ -191,13 +191,14 @@ def chatbot_message():
             # ----------------------------------------------------
 
             return render_template(
-                "chatbot.html",
-                message=exercise_result.get("message"),
-                question=None,
-                exercise=current_exercise,
-                result=exercise_result,
-                state=state
-            )
+              "chatbot.html",
+               message=exercise_result.get("message"),
+               question=None,
+             exercise=current_exercise,
+             result=result,
+             baseline_results=baseline_results,
+              state=state
+)
 
         else:
 

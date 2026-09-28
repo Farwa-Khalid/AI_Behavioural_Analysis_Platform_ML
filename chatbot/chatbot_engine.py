@@ -1155,13 +1155,16 @@ def start_conversation(state):
 
 def generate_baseline_results(state):
     """
-    Generate baseline results after ALL 24 questions
+    Generate baseline results after all 24 questions
     have been answered.
 
-    A dimension score is the average neuroticism probability
-    from its relevant responses.
+    Each dimension score is the average neuroticism
+    probability from its relevant responses.
 
-    Neutral and unclear responses do not contribute to the score.
+    Dimensions without relevant evidence have score=None.
+
+    The overall score is calculated from dimensions
+    that have a valid numeric score.
     """
 
     if not state['assessment_complete']:
@@ -1176,17 +1179,47 @@ def generate_baseline_results(state):
 
     results = {}
 
+    valid_dimension_scores = []
+
     for dimension in DIMENSIONS:
 
         dimension_data = state['dimensions'][dimension]
 
+        score = dimension_data.get('score')
+
         results[dimension] = {
-            'score': dimension_data['score'],
+            'score': score,
             'evidence_count': dimension_data['evidence_count'],
             'status': dimension_data['status'],
             'responses': dimension_data['responses'],
             'probabilities': dimension_data['probabilities']
         }
+
+        if score is not None:
+            valid_dimension_scores.append(
+                float(score)
+            )
+
+    # --------------------------------------------------
+    # Overall neuroticism score
+    # --------------------------------------------------
+
+    if valid_dimension_scores:
+
+        overall_score = (
+            sum(valid_dimension_scores)
+            / len(valid_dimension_scores)
+        )
+
+    else:
+
+        overall_score = None
+
+    results['overall_neuroticism'] = {
+        'score': overall_score,
+        'dimensions_used': len(valid_dimension_scores),
+        'total_dimensions': len(DIMENSIONS)
+    }
 
     state['baseline_results'] = results
 
@@ -1197,7 +1230,6 @@ def generate_baseline_results(state):
         ),
         'results': results
     }
-
 
 def recommend_exercises(state, top_n=TOP_N_EXERCISES):
     """
@@ -1597,56 +1629,240 @@ def process_reassessment_turn(state, user_response):
         'next_dimension': next_dimension,
         'question': next_question
     }
-    
 def compare_baseline_reassessment(state):
     """
     Compare baseline scores with reassessment scores
     for all eight neuroticism dimensions.
+
+    If a dimension has no valid score in either assessment,
+    no numerical change is calculated for that dimension.
     """
-    if not state['baseline_results']:
-        return {'status': 'unavailable', 'message': 'Baseline results are not available.', 'comparison': []}
-    if not state['reassessment_complete']:
-        return {'status': 'unavailable', 'message': 'Reassessment is not complete yet.', 'comparison': []}
+
+    if not state.get('baseline_results'):
+        return {
+            'status': 'unavailable',
+            'message': 'Baseline results are not available.',
+            'comparison': []
+        }
+
+    if not state.get('reassessment_complete'):
+        return {
+            'status': 'unavailable',
+            'message': 'Reassessment is not complete yet.',
+            'comparison': []
+        }
+
     comparison = []
+
     for dimension in DIMENSIONS:
-        baseline_score = state['baseline_results'][dimension]['score']
-        reassessment_score = state['reassessment_dimensions'][dimension]['score']
-        change = reassessment_score - baseline_score
+
+        baseline_score = (
+            state['baseline_results']
+            [dimension]
+            .get('score')
+        )
+
+        reassessment_score = (
+            state['reassessment_dimensions']
+            [dimension]
+            .get('score')
+        )
+
+        # --------------------------------------------------
+        # No valid score for this dimension
+        # --------------------------------------------------
+
+        if baseline_score is None or reassessment_score is None:
+
+            comparison.append({
+                'dimension': dimension,
+                'baseline_score': baseline_score,
+                'reassessment_score': reassessment_score,
+                'change': None,
+                'interpretation': 'insufficient_evidence'
+            })
+
+            continue
+
+        # --------------------------------------------------
+        # Both scores are valid
+        # --------------------------------------------------
+
+        change = (
+            float(reassessment_score)
+            - float(baseline_score)
+        )
+
         if change < -0.05:
             interpretation = 'improved'
+
         elif change > 0.05:
             interpretation = 'increased'
+
         else:
             interpretation = 'stable'
-        comparison.append({'dimension': dimension, 'baseline_score': baseline_score, 'reassessment_score': reassessment_score, 'change': change, 'interpretation': interpretation})
-    state['comparison_results'] = comparison
-    return {'status': 'complete', 'message': 'Baseline and reassessment comparison generated.', 'comparison': comparison}
 
+        comparison.append({
+            'dimension': dimension,
+            'baseline_score': float(baseline_score),
+            'reassessment_score': float(reassessment_score),
+            'change': float(change),
+            'interpretation': interpretation
+        })
+
+    state['comparison_results'] = comparison
+
+    return {
+        'status': 'complete',
+        'message': (
+            'Baseline and reassessment comparison generated.'
+        ),
+        'comparison': comparison
+    }
 def generate_progress_summary(state):
     """
-    Generate an overall summary from the baseline vs
-    reassessment comparison.
+    Generate an overall summary from valid baseline vs
+    reassessment comparisons.
+
+    Dimensions without scores are excluded from numerical
+    change calculations.
     """
+
     if not state.get('comparison_results'):
-        return {'status': 'unavailable', 'message': 'Comparison results are not available.', 'summary': None}
-    improved = [item for item in state['comparison_results'] if item['interpretation'] == 'improved']
-    increased = [item for item in state['comparison_results'] if item['interpretation'] == 'increased']
-    stable = [item for item in state['comparison_results'] if item['interpretation'] == 'stable']
-    total_change = sum((item['change'] for item in state['comparison_results']))
-    average_change = total_change / len(state['comparison_results'])
+        return {
+            'status': 'unavailable',
+            'message': 'Comparison results are not available.',
+            'summary': None
+        }
+
+    valid_comparisons = [
+        item
+        for item in state['comparison_results']
+        if item.get('change') is not None
+    ]
+
+    improved = [
+        item
+        for item in valid_comparisons
+        if item['interpretation'] == 'improved'
+    ]
+
+    increased = [
+        item
+        for item in valid_comparisons
+        if item['interpretation'] == 'increased'
+    ]
+
+    stable = [
+        item
+        for item in valid_comparisons
+        if item['interpretation'] == 'stable'
+    ]
+
+    insufficient = [
+        item
+        for item in state['comparison_results']
+        if item['interpretation'] == 'insufficient_evidence'
+    ]
+
+    # --------------------------------------------------
+    # No dimensions have valid comparison scores
+    # --------------------------------------------------
+
+    if not valid_comparisons:
+
+        summary = {
+            'overall_status': 'insufficient_evidence',
+            'average_change': None,
+            'improved_dimensions': [],
+            'increased_dimensions': [],
+            'stable_dimensions': [],
+            'insufficient_dimensions': [
+                item['dimension']
+                for item in insufficient
+            ],
+            'message': (
+                'There was not enough comparable evidence '
+                'to calculate an overall change.'
+            )
+        }
+
+        state['progress_summary'] = summary
+
+        return {
+            'status': 'complete',
+            'message': 'Overall progress summary generated.',
+            'summary': summary
+        }
+
+    # --------------------------------------------------
+    # Calculate average change from valid dimensions only
+    # --------------------------------------------------
+
+    total_change = sum(
+        item['change']
+        for item in valid_comparisons
+    )
+
+    average_change = (
+        total_change / len(valid_comparisons)
+    )
+
     if average_change < -0.05:
         overall = 'improved'
-        message = 'Your overall scores show improvement compared with your initial assessment.'
+        message = (
+            'Your overall scores show a decrease compared '
+            'with your initial assessment.'
+        )
+
     elif average_change > 0.05:
         overall = 'increased'
-        message = 'Your overall scores have increased compared with your initial assessment.'
+        message = (
+            'Your overall scores are higher compared '
+            'with your initial assessment.'
+        )
+
     else:
         overall = 'stable'
-        message = 'Your overall scores are relatively stable compared with your initial assessment.'
-    summary = {'overall_status': overall, 'average_change': average_change, 'improved_dimensions': [item['dimension'] for item in improved], 'increased_dimensions': [item['dimension'] for item in increased], 'stable_dimensions': [item['dimension'] for item in stable], 'message': message}
-    state['progress_summary'] = summary
-    return {'status': 'complete', 'message': 'Overall progress summary generated.', 'summary': summary}
+        message = (
+            'Your overall scores are relatively stable '
+            'compared with your initial assessment.'
+        )
 
+    summary = {
+        'overall_status': overall,
+        'average_change': average_change,
+
+        'improved_dimensions': [
+            item['dimension']
+            for item in improved
+        ],
+
+        'increased_dimensions': [
+            item['dimension']
+            for item in increased
+        ],
+
+        'stable_dimensions': [
+            item['dimension']
+            for item in stable
+        ],
+
+        'insufficient_dimensions': [
+            item['dimension']
+            for item in insufficient
+        ],
+
+        'message': message
+    }
+
+    state['progress_summary'] = summary
+
+    return {
+        'status': 'complete',
+        'message': 'Overall progress summary generated.',
+        'summary': summary
+    }
 def generate_progress_message(state):
     """
     Convert the technical progress summary into

@@ -10,13 +10,111 @@ from neuroticism_module.neuroticism_model import predict_neuroticism
 
 DIMENSIONS = ['future_worry', 'rumination', 'uncertainty', 'overthinking', 'social_evaluation', 'self_doubt', 'emotional_reactivity', 'worry_persistence']
 
-QUESTION_BANK = {'future_worry': ['When you have something important coming up, do you usually prepare for it and move on, or keep imagining things that could go wrong?', 'How often do you find yourself worrying about what might happen in the future?', 'When you think about an upcoming event, do you expect things to go smoothly or focus on possible problems?'], 'rumination': ['When something embarrassing or unpleasant happens, what usually happens in your mind afterward?', 'Do you often keep thinking about something that happened even after it is over?', 'When you make a mistake, how long do you usually continue thinking about it?'], 'uncertainty': ['How do you usually feel when you do not know what is going to happen?', 'Do situations without clear answers make you feel uncomfortable or worried?', 'When you have to wait for an uncertain outcome, what usually goes through your mind?'], 'overthinking': ['Do you often analyze a situation repeatedly before making a decision?', 'When you have to make a choice, do you keep thinking about different possibilities even after deciding?', 'Do you sometimes find it difficult to stop your thoughts once you start analyzing something?'], 'social_evaluation': ['How much do you worry about what other people think of you?', 'After talking to someone, do you sometimes wonder whether you said or did something wrong?', 'How do you usually feel when you think other people might be judging you?'], 'self_doubt': ['How often do you question whether you are capable of doing something well?', 'When you receive a difficult task, do you usually trust yourself or worry that you might fail?', 'Do you often compare your abilities with other people and feel unsure about yourself?'], 'emotional_reactivity': ['How strongly do you usually react when something stressful or upsetting happens?', 'When something goes wrong, how difficult is it for you to calm yourself down?', 'Do small stressful events sometimes affect your mood more than you expect?'], 'worry_persistence': ['Once you start worrying about something, how difficult is it for you to stop worrying?', 'Do your worries sometimes continue even when you know there is nothing you can do about the situation?', 'How long do your worries usually stay on your mind after the stressful situation has passed?']}
+QUESTION_BANK = {
+'future_worry':
+    [
+        'When you have something important coming up, do you usually prepare for it and move on, or keep imagining things that could go wrong?', 
+        'How often do you find yourself worrying about what might happen in the future?',
+        'When you think about an upcoming event, do you expect things to go smoothly or focus on possible problems?'
+     ],
+'rumination': 
+    [
+        'When something embarrassing or unpleasant happens, what usually happens in your mind afterward?',
+        'Do you often keep thinking about something that happened even after it is over?',
+        'When you make a mistake, how long do you usually continue thinking about it?'
+     ], 
+'uncertainty':
+    [
+        'How do you usually feel when you do not know what is going to happen?',
+        'Do situations without clear answers make you feel uncomfortable or worried?',
+        'When you have to wait for an uncertain outcome, what usually goes through your mind?'
+     ],
+'overthinking':
+    [
+        'Do you often analyze a situation repeatedly before making a decision?',
+        'When you have to make a choice, do you keep thinking about different possibilities even after deciding?',
+        'Do you sometimes find it difficult to stop your thoughts once you start analyzing something?'
+     ],
+'social_evaluation':
+    [
+        'How much do you worry about what other people think of you?',
+        'After talking to someone, do you sometimes wonder whether you said or did something wrong?',
+        'How do you usually feel when you think other people might be judging you?'
+     ],
+'self_doubt':
+    [
+        'How often do you question whether you are capable of doing something well?', 
+        'When you receive a difficult task, do you usually trust yourself or worry that you might fail?',
+        'Do you often compare your abilities with other people and feel unsure about yourself?'
+    ],
+'emotional_reactivity':
+    [
+        'How strongly do you usually react when something stressful or upsetting happens?',
+        'When something goes wrong, how difficult is it for you to calm yourself down?',
+        'Do small stressful events sometimes affect your mood more than you expect?'
+     ],
+'worry_persistence':
+    [
+        'Once you start worrying about something, how difficult is it for you to stop worrying?',
+        'Do your worries sometimes continue even when you know there is nothing you can do about the situation?',
+        'How long do your worries usually stay on your mind after the stressful situation has passed?'
+        ]
+    }
 
 RESPONSE_TYPES = {'relevant', 'unclear', 'neutral'}
 
 MIN_EVIDENCE_PER_DIMENSION = 2
 
-EXERCISE_BANK = {'future_worry': {'title': 'Future Worry Reset', 'description': 'Write down one thing you are worried might happen. Then separate what you can control from what you cannot control.', 'activity': 'Ask yourself: What is one realistic action I can take right now?'}, 'rumination': {'title': 'Thought Release', 'description': 'Notice a past event that keeps returning to your mind. Write down what happened and what you learned from it.', 'activity': 'After writing it down, remind yourself that the event is already over.'}, 'uncertainty': {'title': 'Uncertainty Practice', 'description': 'Choose one small situation where the outcome is unknown and practice allowing yourself to wait without repeatedly checking.', 'activity': 'Notice the uncertainty without trying to immediately solve it.'}, 'overthinking': {'title': 'Decision Stop Point', 'description': 'Choose one decision you are currently overanalyzing. List the most important facts and give yourself a reasonable time limit for deciding.', 'activity': 'When the time limit ends, make the best decision you can with the information available.'}, 'social_evaluation': {'title': 'Social Judgment Check', 'description': 'Think of a recent situation where you worried about what someone else thought of you.', 'activity': 'Ask yourself: What evidence do I actually have about their opinion?'}, 'self_doubt': {'title': 'Self-Confidence Evidence', 'description': 'Write down three things you have successfully handled, even if they seem small.', 'activity': 'Use these examples as evidence that one difficult task does not automatically mean you will fail.'}, 'emotional_reactivity': {'title': 'Pause and Calm', 'description': 'When you notice a strong emotional reaction, pause before responding.', 'activity': 'Take several slow breaths and identify the emotion you are feeling before deciding what to do next.'}, 'worry_persistence': {'title': 'Worry Time Boundary', 'description': 'When a worry keeps returning, write it down instead of repeatedly thinking about it.', 'activity': 'Set aside a short period later to review the worry, then return your attention to the present activity.'}}
+EXERCISE_BANK = {
+    'future_worry':
+        {
+            'title': 'Future Worry Reset',
+            'description': 'Write down one thing you are worried might happen. Then separate what you can control from what you cannot control.',
+            'activity': 'Ask yourself: What is one realistic action I can take right now?'
+         },
+    'rumination':
+            {
+                'title': 'Thought Release',
+                'description': 'Notice a past event that keeps returning to your mind. Write down what happened and what you learned from it.',
+                'activity': 'After writing it down, remind yourself that the event is already over.'
+                },
+    'uncertainty':
+        {
+            'title': 'Uncertainty Practice',
+            'description': 'Choose one small situation where the outcome is unknown and practice allowing yourself to wait without repeatedly checking.',
+            'activity': 'Notice the uncertainty without trying to immediately solve it.'
+         },
+    'overthinking':
+        {
+            'title': 'Decision Stop Point',
+            'description': 'Choose one decision you are currently overanalyzing. List the most important facts and give yourself a reasonable time limit for deciding.',
+            'activity': 'When the time limit ends, make the best decision you can with the information available.'
+            },
+    'social_evaluation': 
+        {
+            'title': 'Social Judgment Check',
+            'description': 'Think of a recent situation where you worried about what someone else thought of you.',
+            'activity': 'Ask yourself: What evidence do I actually have about their opinion?'
+            },
+    'self_doubt':
+        {
+            'title': 'Self-Confidence Evidence',
+            'description': 'Write down three things you have successfully handled, even if they seem small.',
+            'activity': 'Use these examples as evidence that one difficult task does not automatically mean you will fail.'
+            },
+        'emotional_reactivity':
+            {
+                'title': 'Pause and Calm',
+                'description': 'When you notice a strong emotional reaction, pause before responding.',
+                'activity': 'Take several slow breaths and identify the emotion you are feeling before deciding what to do next.'
+                },
+            'worry_persistence': 
+                {
+                    'title': 'Worry Time Boundary',
+                    'description': 'When a worry keeps returning, write it down instead of repeatedly thinking about it.',
+                    'activity': 'Set aside a short period later to review the worry, then return your attention to the present activity.'
+         }
+    }
 
 TOP_N_EXERCISES = 3
 
@@ -34,39 +132,37 @@ def create_conversation_state():
     - Reassessment
     - Before/after comparison
     """
-    state = {'session_id': str(uuid.uuid4()), 'created_at': datetime.now().isoformat(), 'phase': 'initial_assessment', 'turn_count': 0, 'current_dimension': None, 'current_question': None, 'questions_asked': [], 'conversation_history': [], 'last_response_type': None, 'last_analysis': None, 'dimensions': {dimension: {'responses': [], 'probabilities': [], 'evidence_count': 0, 'score': None, 'status': 'not_started'} for dimension in DIMENSIONS}, 'baseline_results': None, 'assessment_complete': False, 'recommended_exercises': [], 'completed_exercises': [], 'reassessment_results': None, 'reassessment_complete': False, 'comparison_results': None}
+    state = {
+        'session_id': str(uuid.uuid4()),
+        'created_at': datetime.now().isoformat(),
+        'phase': 'initial_assessment',
+        'turn_count': 0,
+        'current_dimension': None,
+        'current_question': None,
+        'questions_asked': [],
+        'conversation_history': [],
+        'last_response_type': None, 
+        'last_analysis': None,
+        'dimensions': {
+            dimension:
+            {
+                'responses': [],
+                'probabilities': [],
+                'evidence_count': 0,
+                'score': None,
+                'status': 'not_started'
+             } 
+            for dimension in DIMENSIONS
+            },
+        'baseline_results': None,
+        'assessment_complete': False,
+        'recommended_exercises': [],
+        'completed_exercises': [],
+        'reassessment_results': None,
+        'reassessment_complete': False,
+        'comparison_results': None
+        }
     return state
-
-# def route_response(user_response):
-#     """
-#     Route a user's response into one of three categories.
-
-#     relevant -> response can be analyzed for the assessment
-#     unclear  -> response needs clarification
-#     neutral  -> understandable but unrelated to the assessment
-
-#     IMPORTANT:
-#     Neutral responses NEVER contribute evidence.
-#     """
-#     if not isinstance(user_response, str):
-#         return 'unclear'
-#     response = user_response.strip()
-#     if not response:
-#         return 'unclear'
-#     response_lower = response.lower()
-#     response_lower = response_lower.replace('’', "'").replace('‘', "'")
-#     normalized_response = re.sub("[^\\w\\s']", '', response_lower)
-#     normalized_response = re.sub('\\s+', ' ', normalized_response).strip()
-#     unclear_responses = {'idk', "i don't know", 'dont know', "don't know", 'not sure', 'maybe', 'perhaps', 'no idea', 'nothing'}
-#     if normalized_response in unclear_responses:
-#         return 'unclear'
-#     assessment_phrases = {'worry about the future', 'worried about the future', 'worry about what might happen', 'worried about what might happen', 'what could go wrong', 'what might go wrong', 'possible problems', 'keep thinking about', 'keeps thinking about', 'think about it again', 'thinking about it again', 'replay it in my mind', 'replay it in my head', 'think about my mistakes', 'thinking about my mistakes', "don't know what will happen", 'do not know what will happen', 'uncertain about', 'uncertain situation', 'uncertain outcome', 'waiting for an outcome', 'overthink', 'overthinking', 'think about it repeatedly', 'analyze it repeatedly', 'analyze things repeatedly', 'keep analyzing', 'different possibilities', 'what other people think', 'what people think of me', 'what others think', 'people judging me', 'being judged', 'judge me', 'said something wrong', 'question whether i can', 'question if i can', 'question my ability', 'not capable', "don't think i can", 'do not think i can', 'not good enough', 'doubt myself', 'doubt my abilities', 'lack confidence', 'worried that i might fail', 'worry that i might fail', 'react strongly', 'strong emotional reaction', 'difficult to calm down', 'hard to calm down', 'get very upset', 'stress affects me', 'stressful things affect me', 'affects my mood', "can't stop worrying", 'cannot stop worrying', 'keep worrying', 'keeps worrying', 'worry stays on my mind', 'worries stay on my mind', 'worry for hours', 'worry for days', 'worry for a long time'}
-#     if any((phrase in normalized_response for phrase in assessment_phrases)):
-#         return 'relevant'
-#     assessment_keywords = {'worry', 'worried', 'future', 'happen', 'upcoming', 'risk', 'think', 'thinking', 'thought', 'thoughts', 'mistake', 'mistakes', 'remember', 'embarrassing', 'replay', 'uncertain', 'uncertainty', 'unknown', 'unsure', 'outcome', 'waiting', 'overthink', 'overthinking', 'analyze', 'analysis', 'decision', 'decide', 'possibilities', 'options', 'people', 'others', 'judge', 'judging', 'judgment', 'opinion', 'social', 'myself', 'ability', 'abilities', 'capable', 'failure', 'fail', 'confidence', 'confident', 'compare', 'doubt', 'question', 'stress', 'stressful', 'upset', 'angry', 'anger', 'sad', 'emotion', 'emotional', 'calm', 'mood', 'continue', 'continues', 'hours', 'days', 'long'}
-#     if any((keyword in normalized_response for keyword in assessment_keywords)):
-#         return 'relevant'
-#     return 'neutral'
 
 
 def analyze_response(user_response, response_type):
@@ -248,7 +344,6 @@ DIMENSION_RESPONSE_KEYWORDS = {
         'keeps'
     }
 }
-
 
 
 def route_response(user_response, current_dimension=None, current_question=None):
@@ -734,24 +829,6 @@ def update_dimension_score(state, dimension):
 
     return float(score)
 
-# def select_next_dimension(state):
-#     """
-#     Select the next dimension that still needs evidence.
-
-#     During the initial assessment, dimensions are processed
-#     in the predefined DIMENSIONS order.
-
-#     Returns:
-#         dimension name if more assessment is needed
-#         None if all dimensions are complete
-#     """
-#     for dimension in DIMENSIONS:
-#         dimension_data = state['dimensions'][dimension]
-#         if dimension_data['status'] != 'complete':
-#             return dimension
-#     state['assessment_complete'] = True
-#     state['phase'] = 'assessment_complete'
-#     return None
 
 def select_next_dimension(state):
     """
@@ -801,55 +878,6 @@ def select_question(state, dimension):
             state['questions_asked'].append(question)
             return question
     return None
-
-# def process_chat_turn(state, user_response):
-#     """
-#     Process one user response during the assessment.
-
-#     Flow:
-#         1. Route response
-#         2. Handle unclear / neutral responses
-#         3. Analyze relevant responses
-#         4. Store evidence
-#         5. Update dimension score
-#         6. Decide whether to continue or move forward
-
-#     Returns a consistent response dictionary.
-#     """
-#     if state['phase'] != 'initial_assessment':
-#         return {'response_type': 'system', 'message': 'The initial assessment is not currently active.', 'analysis': None, 'dimension': state['current_dimension'], 'next_dimension': None, 'next_question': None}
-#     current_dimension = state['current_dimension']
-#     if current_dimension is None:
-#         current_dimension = select_next_dimension(state)
-#         if current_dimension is None:
-#             return {'response_type': 'system', 'message': 'The initial assessment is complete.', 'analysis': None, 'dimension': None, 'next_dimension': None, 'next_question': None}
-#         state['current_dimension'] = current_dimension
-#     state['turn_count'] += 1
-#     # response_type = route_response(user_response)
-#     response_type = route_response(
-#     user_response,
-#     current_dimension=current_dimension,
-#     current_question=state['current_question']
-# )
-#     state['last_response_type'] = response_type
-#     state['conversation_history'].append({'turn': state['turn_count'], 'dimension': current_dimension, 'question': state['current_question'], 'user_response': user_response, 'response_type': response_type})
-#     if response_type == 'unclear':
-#         return {'response_type': 'unclear', 'message': 'Could you tell me a little more about that?', 'analysis': None, 'dimension': current_dimension, 'next_dimension': current_dimension, 'next_question': state['current_question']}
-#     if response_type == 'neutral':
-#         return {'response_type': 'neutral', 'message': "That's okay. Let's continue with the assessment.", 'analysis': None, 'dimension': current_dimension, 'next_dimension': current_dimension, 'next_question': state['current_question']}
-#     analysis = analyze_response(user_response, response_type)
-#     state['last_analysis'] = analysis
-#     add_response(state, current_dimension, user_response, analysis)
-#     dimension_score = update_dimension_score(state, current_dimension)
-#     dimension_complete = state['dimensions'][current_dimension]['status'] == 'complete'
-#     if not dimension_complete:
-#         next_question = select_question(state, current_dimension)
-#         return {'response_type': 'relevant', 'message': "Thank you. Let's continue.", 'analysis': analysis, 'dimension': current_dimension, 'dimension_score': dimension_score, 'dimension_complete': False, 'next_dimension': current_dimension, 'next_question': next_question}
-#     next_dimension = select_next_dimension(state)
-#     if next_dimension is None:
-#         return {'response_type': 'relevant', 'message': 'Thank you. The initial assessment is complete.', 'analysis': analysis, 'dimension': current_dimension, 'dimension_score': dimension_score, 'dimension_complete': True, 'next_dimension': None, 'next_question': None}
-#     next_question = select_question(state, next_dimension)
-#     return {'response_type': 'relevant', 'message': "Thank you. Let's explore another area.", 'analysis': analysis, 'dimension': current_dimension, 'dimension_score': dimension_score, 'dimension_complete': True, 'next_dimension': next_dimension, 'next_question': next_question}
 
 
 def process_chat_turn(state, user_response):
@@ -1300,16 +1328,30 @@ def complete_exercise(state, dimension):
     Mark a recommended exercise as completed.
     """
     if not state['recommended_exercises']:
-        return {'status': 'unavailable', 'message': 'No recommended exercises are available.'}
+        return {
+            'status': 'unavailable',
+            'message': 'No recommended exercises are available.'
+            }
     for exercise in state['recommended_exercises']:
         if exercise['dimension'] == dimension:
             if exercise['completed']:
-                return {'status': 'already_completed', 'message': 'This exercise has already been completed.'}
+                return {
+                    'status': 'already_completed',
+                    'message': 'This exercise has already been completed.'
+                    }
             exercise['completed'] = True
             if dimension not in state['completed_exercises']:
                 state['completed_exercises'].append(dimension)
-            return {'status': 'complete', 'message': f"Exercise '{exercise['title']}' marked as completed.", 'dimension': dimension, 'title': exercise['title']}
-    return {'status': 'not_found', 'message': 'No recommended exercise found for this dimension.'}
+            return {
+                'status': 'complete',
+                'message': f"Exercise '{exercise['title']}' marked as completed.",
+                'dimension': dimension,
+                'title': exercise['title']
+                }
+    return {
+        'status': 'not_found',
+        'message': 'No recommended exercise found for this dimension.'
+        }
 
 def start_reassessment(state):
     """
@@ -1317,16 +1359,34 @@ def start_reassessment(state):
     preserving the original baseline results.
     """
     if not state['assessment_complete']:
-        return {'status': 'unavailable', 'message': 'Complete the initial assessment first.'}
+        return {
+            'status': 'unavailable',
+            'message': 'Complete the initial assessment first.'
+            }
     if not state['baseline_results']:
-        return {'status': 'unavailable', 'message': 'Baseline results are not available.'}
+        return {
+            'status': 'unavailable',
+            'message': 'Baseline results are not available.'
+            }
     state['phase'] = 'reassessment'
     state['reassessment_complete'] = False
     state['reassessment_results'] = None
     state['current_dimension'] = None
     state['current_question'] = None
-    state['reassessment_dimensions'] = {dimension: {'responses': [], 'probabilities': [], 'evidence_count': 0, 'score': None, 'status': 'not_started'} for dimension in DIMENSIONS}
-    return {'status': 'ready', 'message': 'Reassessment is ready to begin.', 'phase': state['phase'], 'dimensions': state['reassessment_dimensions']}
+    state['reassessment_dimensions'] = {
+        dimension: {'responses': [],
+                    'probabilities': [],
+                    'evidence_count': 0,
+                    'score': None,
+                    'status': 'not_started'
+                    } 
+        for dimension in DIMENSIONS}
+    return {
+        'status': 'ready',
+        'message': 'Reassessment is ready to begin.', 
+        'phase': state['phase'],
+        'dimensions': state['reassessment_dimensions']
+        }
 
 def begin_reassessment(state):
     """
@@ -1334,11 +1394,19 @@ def begin_reassessment(state):
     reassessment state has been prepared.
     """
     if state['phase'] != 'reassessment':
-        return {'status': 'unavailable', 'message': 'Reassessment has not been prepared yet.'}
+        return {
+            'status': 'unavailable',
+            'message': 'Reassessment has not been prepared yet.'
+            }
     state['questions_asked'] = []
     first_dimension = DIMENSIONS[0]
     question = select_question(state, first_dimension)
-    return {'status': 'started', 'message': "Welcome back. Let's check how things have changed since your initial assessment.", 'dimension': first_dimension, 'question': question}
+    return {
+        'status': 'started',
+        'message': "Welcome back. Let's check how things have changed since your initial assessment.",
+        'dimension': first_dimension,
+        'question': question
+        }
 
 def process_reassessment_turn(state, user_response):
     """
@@ -1870,7 +1938,10 @@ def generate_progress_message(state):
     """
     summary = state.get('progress_summary')
     if not summary:
-        return {'status': 'unavailable', 'message': 'Progress summary is not available.'}
+        return {
+            'status': 'unavailable', 
+            'message': 'Progress summary is not available.'
+            }
     overall_status = summary['overall_status']
     improved = summary['improved_dimensions']
     increased = summary['increased_dimensions']
@@ -1912,17 +1983,31 @@ def start_exercise_phase(state):
         if exercise_result['status'] != 'complete':
             return exercise_result
     state['phase'] = 'exercises'
-    return {'status': 'started', 'phase': 'exercises', 'message': 'Your initial assessment is complete. Based on your responses, here are some exercises you can practice.', 'recommendations': state['recommended_exercises']}
+    return {
+        'status': 'started',
+        'phase': 'exercises',
+        'message': 'Your initial assessment is complete. Based on your responses, here are some exercises you can practice.',
+        'recommendations': state['recommended_exercises']
+        }
 
 def finish_exercise_phase(state):
     """
     Finish the exercise phase and make reassessment available.
     """
     if state['phase'] != 'exercises':
-        return {'status': 'unavailable', 'message': 'The chatbot is not currently in the exercise phase.'}
+        return {
+            'status': 'unavailable',
+            'message': 'The chatbot is not currently in the exercise phase.'
+            }
     completed = len(state.get('completed_exercises', []))
     total = len(state.get('recommended_exercises', []))
-    return {'status': 'ready_for_reassessment', 'phase': state['phase'], 'completed_exercises': completed, 'total_exercises': total, 'message': "You've completed the exercise phase. When you're ready, we can reassess your responses and compare them with your initial assessment."}
+    return {
+        'status': 'ready_for_reassessment',
+        'phase': state['phase'],
+        'completed_exercises': completed,
+        'total_exercises': total, 
+        'message': "You've completed the exercise phase. When you're ready, we can reassess your responses and compare them with your initial assessment."
+        }
 
 def chatbot_turn(state, user_response=None, action=None, dimension=None):
     """
@@ -1952,7 +2037,13 @@ def chatbot_turn(state, user_response=None, action=None, dimension=None):
     phase = state['phase']
     if phase == 'initial_assessment':
         if user_response is None:
-            return {'status': 'started', 'phase': phase, 'message': "Let's begin with a few questions to understand some of the patterns you may experience.", 'dimension': state['current_dimension'], 'question': state['current_question']}
+            return {
+                'status': 'started',
+                'phase': phase,
+                'message': "Let's begin with a few questions to understand some of the patterns you may experience.",
+                'dimension': state['current_dimension'],
+                'question': state['current_question']
+                }
         return process_chat_turn(state, user_response)
     if phase == 'assessment_complete':
         if not state.get('baseline_results'):
@@ -1961,11 +2052,20 @@ def chatbot_turn(state, user_response=None, action=None, dimension=None):
                 return baseline_result
         if action == 'start_exercises':
             return start_exercise_phase(state)
-        return {'status': 'assessment_complete', 'phase': phase, 'message': 'Your initial assessment is complete. You can now review your results and practice some personalized exercises.', 'baseline_results': state['baseline_results']}
+        return {
+            'status': 'assessment_complete',
+            'phase': phase, 
+            'message': 'Your initial assessment is complete. You can now review your results and practice some personalized exercises.', 
+            'baseline_results': state['baseline_results']
+            }
     if phase == 'exercises':
         if action == 'complete_exercise':
             if dimension is None:
-                return {'status': 'error', 'phase': phase, 'message': 'A dimension is required to complete an exercise.'}
+                return {
+                    'status': 'error',
+                    'phase': phase,
+                    'message': 'A dimension is required to complete an exercise.'
+                    }
             return complete_exercise(state, dimension)
         if action == 'finish_exercises':
             return finish_exercise_phase(state)
@@ -1974,12 +2074,25 @@ def chatbot_turn(state, user_response=None, action=None, dimension=None):
             if reassessment_result['status'] != 'ready':
                 return reassessment_result
             return begin_reassessment(state)
-        return {'status': 'exercise_phase', 'phase': phase, 'message': "You can practice the recommended exercises and mark an exercise as completed when you're ready.", 'recommendations': state['recommended_exercises'], 'completed_exercises': state['completed_exercises'], 'total_exercises': len(state['recommended_exercises'])}
+        return {
+            'status': 'exercise_phase',
+            'phase': phase,
+            'message': "You can practice the recommended exercises and mark an exercise as completed when you're ready.",
+            'recommendations': state['recommended_exercises'],
+            'completed_exercises': state['completed_exercises'],
+            'total_exercises': len(state['recommended_exercises'])
+            }
     if phase == 'reassessment':
         if state['current_dimension'] is None and user_response is None:
             return begin_reassessment(state)
         if user_response is None:
-            return {'status': 'reassessment_started', 'phase': phase, 'message': "Welcome back. Let's check how things have changed since your initial assessment.", 'dimension': state['current_dimension'], 'question': state['current_question']}
+            return {
+                'status': 'reassessment_started',
+                'phase': phase,
+                'message': "Welcome back. Let's check how things have changed since your initial assessment.",
+                'dimension': state['current_dimension'],
+                'question': state['current_question']
+                }
         return process_reassessment_turn(state, user_response)
     if phase == 'reassessment_complete':
         if not state.get('comparison_results'):
@@ -1994,6 +2107,15 @@ def chatbot_turn(state, user_response=None, action=None, dimension=None):
             message_result = generate_progress_message(state)
             if message_result['status'] != 'complete':
                 return message_result
-        return {'status': 'complete', 'phase': phase, 'message': state['progress_message'], 'comparison': state['comparison_results'], 'summary': state['progress_summary']}
-    return {'status': 'error', 'phase': phase, 'message': f'Unknown chatbot phase: {phase}'}
+        return {
+            'status': 'complete', 
+            'phase': phase,
+            'message': state['progress_message'],
+            'comparison': state['comparison_results'],
+            'summary': state['progress_summary']
+            }
+    return {'status': 'error',
+            'phase': phase,
+            'message': f'Unknown chatbot phase: {phase}'
+            }
 

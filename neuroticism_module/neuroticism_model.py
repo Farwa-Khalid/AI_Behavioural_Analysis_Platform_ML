@@ -39,7 +39,7 @@ MODEL_PATH = os.path.join(
 EMBEDDER_DIR = os.path.join(
     BASE_DIR,
     "mpnet_embedder",
-    "mpnet_embedder"
+    
 )
 
 

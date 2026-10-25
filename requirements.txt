@@ -1,0 +1,6 @@
+torch
+transformers
+shap
+spacy
+scikit-learn
+emoji

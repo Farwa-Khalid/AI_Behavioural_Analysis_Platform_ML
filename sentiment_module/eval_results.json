@@ -1,0 +1,3593 @@
+{
+  "results": {
+    "all": {
+      "sentence_label": {
+        "accuracy": 0.5316,
+        "macro_f1": 0.5308
+      },
+      "own_shap": {
+        "accuracy": 0.6729,
+        "macro_f1": 0.6666
+      },
+      "window_shap": {
+        "accuracy": 0.7695,
+        "macro_f1": 0.7686
+      },
+      "ours_linked": {
+        "accuracy": 0.8216,
+        "macro_f1": 0.8213
+      },
+      "ours_fallback": {
+        "accuracy": 0.8178,
+        "macro_f1": 0.8176
+      }
+    },
+    "mixed_sentences": {
+      "sentence_label": {
+        "accuracy": 0.5316,
+        "macro_f1": 0.5308
+      },
+      "own_shap": {
+        "accuracy": 0.6729,
+        "macro_f1": 0.6666
+      },
+      "window_shap": {
+        "accuracy": 0.7695,
+        "macro_f1": 0.7686
+      },
+      "ours_linked": {
+        "accuracy": 0.8216,
+        "macro_f1": 0.8213
+      },
+      "ours_fallback": {
+        "accuracy": 0.8178,
+        "macro_f1": 0.8176
+      }
+    },
+    "opinion_link_coverage": 0.807
+  },
+  "details": [
+    {
+      "sentence": "All the money went into the interior decoration, none of it went to the chefs.",
+      "term": "interior decoration",
+      "gold": "positive",
+      "opinion_words": [
+        "went"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "All the money went into the interior decoration, none of it went to the chefs.",
+      "term": "chefs",
+      "gold": "negative",
+      "opinion_words": [
+        "went"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The price is reasonable although the service is poor.",
+      "term": "price",
+      "gold": "positive",
+      "opinion_words": [
+        "reasonable"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The price is reasonable although the service is poor.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "poor"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The menu is limited but almost all of the dishes are excellent.",
+      "term": "menu",
+      "gold": "negative",
+      "opinion_words": [
+        "limited"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The menu is limited but almost all of the dishes are excellent.",
+      "term": "dishes",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "They are often crowded on the weekends but they are efficient and accurate with their service.",
+      "term": "service",
+      "gold": "positive",
+      "opinion_words": [
+        "accurate"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "They are often crowded on the weekends but they are efficient and accurate with their service.",
+      "term": "crowded",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "It may be a bit packed on weekends, but the vibe is good and it is the best French food you will find in the area.",
+      "term": "vibe",
+      "gold": "positive",
+      "opinion_words": [
+        "good"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "It may be a bit packed on weekends, but the vibe is good and it is the best French food you will find in the area.",
+      "term": "French food",
+      "gold": "positive",
+      "opinion_words": [
+        "best"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "It may be a bit packed on weekends, but the vibe is good and it is the best French food you will find in the area.",
+      "term": "packed",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Service is highly refined: our seating was delayed 35 minutes past our reservation and the maitre d' apologized and regularly kept us apprised of progress.",
+      "term": "Service",
+      "gold": "positive",
+      "opinion_words": [
+        "highly",
+        "refined"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Service is highly refined: our seating was delayed 35 minutes past our reservation and the maitre d' apologized and regularly kept us apprised of progress.",
+      "term": "maitre",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Service is highly refined: our seating was delayed 35 minutes past our reservation and the maitre d' apologized and regularly kept us apprised of progress.",
+      "term": "reservation",
+      "gold": "negative",
+      "opinion_words": [
+        "delayed"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Yes, they use fancy ingredients, but even fancy ingredients don't make for good pizza unless someone knows how to get the crust right.",
+      "term": "ingredients",
+      "gold": "positive",
+      "opinion_words": [
+        "use",
+        "fancy"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Yes, they use fancy ingredients, but even fancy ingredients don't make for good pizza unless someone knows how to get the crust right.",
+      "term": "ingredients",
+      "gold": "positive",
+      "opinion_words": [
+        "fancy",
+        "n't",
+        "make"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Yes, they use fancy ingredients, but even fancy ingredients don't make for good pizza unless someone knows how to get the crust right.",
+      "term": "pizza",
+      "gold": "negative",
+      "opinion_words": [
+        "n't",
+        "make",
+        "good"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Service could be improved but overall this is a place that understands the importance of little things (the heavy, black, antique-seeming teapot, for one) in the restaurant experience.",
+      "term": "Service",
+      "gold": "negative",
+      "opinion_words": [
+        "improved"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Service could be improved but overall this is a place that understands the importance of little things (the heavy, black, antique-seeming teapot, for one) in the restaurant experience.",
+      "term": "teapot",
+      "gold": "positive",
+      "opinion_words": [
+        "heavy",
+        "black",
+        "antique",
+        "seeming"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The pizza is delicious - they use fresh mozzarella instead of the cheap, frozen, shredded cheese common to most pizzaria's.",
+      "term": "pizza",
+      "gold": "positive",
+      "opinion_words": [
+        "delicious"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The pizza is delicious - they use fresh mozzarella instead of the cheap, frozen, shredded cheese common to most pizzaria's.",
+      "term": "fresh mozzarella",
+      "gold": "positive",
+      "opinion_words": [
+        "use"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The pizza is delicious - they use fresh mozzarella instead of the cheap, frozen, shredded cheese common to most pizzaria's.",
+      "term": "cheese",
+      "gold": "negative",
+      "opinion_words": [
+        "use",
+        "cheap",
+        "shredded",
+        "common"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The fish is fresh but the variety of fish is nothing out of ordinary.",
+      "term": "fish",
+      "gold": "positive",
+      "opinion_words": [
+        "fresh"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The fish is fresh but the variety of fish is nothing out of ordinary.",
+      "term": "variety of fish",
+      "gold": "negative",
+      "opinion_words": [
+        "nothing"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Granted the space is smaller than most, it is the best service you will find in even the largest of restaurants.",
+      "term": "space",
+      "gold": "negative",
+      "opinion_words": [
+        "smaller"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Granted the space is smaller than most, it is the best service you will find in even the largest of restaurants.",
+      "term": "service",
+      "gold": "positive",
+      "opinion_words": [
+        "best"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The environment is romantic, but the food is horrible, the service is pathetic, and gabriella lies about everything she could.",
+      "term": "environment",
+      "gold": "positive",
+      "opinion_words": [
+        "romantic"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The environment is romantic, but the food is horrible, the service is pathetic, and gabriella lies about everything she could.",
+      "term": "food",
+      "gold": "negative",
+      "opinion_words": [
+        "horrible"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The environment is romantic, but the food is horrible, the service is pathetic, and gabriella lies about everything she could.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "pathetic"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "If you're craving for Haru's great food, especially the House Roll, but can't stand the wait building outisde, head across the street to their Sake Bar!",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "craving",
+        "great"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "If you're craving for Haru's great food, especially the House Roll, but can't stand the wait building outisde, head across the street to their Sake Bar!",
+      "term": "wait building",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "They might be all business at the counter when you give your order, but their food says I love you.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "says"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "They might be all business at the counter when you give your order, but their food says I love you.",
+      "term": "counter",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "We were seated promptly as we had reservations, however after that the service was slow.",
+      "term": "reservations",
+      "gold": "positive",
+      "opinion_words": [
+        "had"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "We were seated promptly as we had reservations, however after that the service was slow.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "however",
+        "slow"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The menu looked good, except for offering the Chilean Sea Bass, but the server does not offer up the specials that were written on the board outside.",
+      "term": "menu",
+      "gold": "positive",
+      "opinion_words": [
+        "looked",
+        "good"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The menu looked good, except for offering the Chilean Sea Bass, but the server does not offer up the specials that were written on the board outside.",
+      "term": "Chilean Sea Bass",
+      "gold": "negative",
+      "opinion_words": [
+        "offering"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The menu looked good, except for offering the Chilean Sea Bass, but the server does not offer up the specials that were written on the board outside.",
+      "term": "server",
+      "gold": "negative",
+      "opinion_words": [
+        "not",
+        "offer"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Based on the reviews for dinner, this is a place I would reconsider revisiting for that, but definitely not for Dim Sum again.",
+      "term": "Dim Sum",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Based on the reviews for dinner, this is a place I would reconsider revisiting for that, but definitely not for Dim Sum again.",
+      "term": "dinner",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Moules were excellent, lobster ravioli was VERY salty!",
+      "term": "Moules",
+      "gold": "positive",
+      "opinion_words": [
+        "excellent"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Moules were excellent, lobster ravioli was VERY salty!",
+      "term": "lobster ravioli",
+      "gold": "negative",
+      "opinion_words": [
+        "VERY",
+        "salty"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "A cheap eat for NYC, but not for dosa.",
+      "term": "dosa",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "A cheap eat for NYC, but not for dosa.",
+      "term": "eat",
+      "gold": "positive",
+      "opinion_words": [
+        "cheap"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The ambience was nice, but service wasn't so great.",
+      "term": "ambience",
+      "gold": "positive",
+      "opinion_words": [
+        "nice"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The ambience was nice, but service wasn't so great.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "n't",
+        "so",
+        "great"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "This is one great place to eat pizza more out but not a good place for take-out pizza.",
+      "term": "pizza",
+      "gold": "positive",
+      "opinion_words": [
+        "eat",
+        "out"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "This is one great place to eat pizza more out but not a good place for take-out pizza.",
+      "term": "take-out pizza",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "While the $20 entree range is not overly expensive, in New York City, there is definitely better food in that range, and so Sapphire, despite it's lovely atmosphere, will most likely not be a restaurant to which I will return.",
+      "term": "food",
+      "gold": "negative",
+      "opinion_words": [
+        "better"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "While the $20 entree range is not overly expensive, in New York City, there is definitely better food in that range, and so Sapphire, despite it's lovely atmosphere, will most likely not be a restaurant to which I will return.",
+      "term": "atmosphere",
+      "gold": "positive",
+      "opinion_words": [
+        "lovely"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "While the $20 entree range is not overly expensive, in New York City, there is definitely better food in that range, and so Sapphire, despite it's lovely atmosphere, will most likely not be a restaurant to which I will return.",
+      "term": "entree range",
+      "gold": "positive",
+      "opinion_words": [
+        "not",
+        "overly",
+        "expensive"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Prices are higher to dine in and their chicken tikka marsala is quite good.",
+      "term": "Prices",
+      "gold": "negative",
+      "opinion_words": [
+        "higher"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Prices are higher to dine in and their chicken tikka marsala is quite good.",
+      "term": "chicken tikka marsala",
+      "gold": "positive",
+      "opinion_words": [
+        "quite",
+        "good"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "First, the waiter who served us neglected to fill us in on the specials, which I would have chosen had I known about them.",
+      "term": "waiter",
+      "gold": "negative",
+      "opinion_words": [
+        "First",
+        "neglected"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "First, the waiter who served us neglected to fill us in on the specials, which I would have chosen had I known about them.",
+      "term": "specials",
+      "gold": "positive",
+      "opinion_words": [
+        "fill"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "First, the waiter who served us neglected to fill us in on the specials, which I would have chosen had I known about them.",
+      "term": "served",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "We were fans of the half-price Saturday night option until some inedible squid during a recent visit.",
+      "term": "squid",
+      "gold": "negative",
+      "opinion_words": [
+        "inedible"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "We were fans of the half-price Saturday night option until some inedible squid during a recent visit.",
+      "term": "half-price Saturday night option",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "While the ambiance and atmosphere were great, the food and service could have been a lot better.",
+      "term": "ambiance",
+      "gold": "positive",
+      "opinion_words": [
+        "great"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "While the ambiance and atmosphere were great, the food and service could have been a lot better.",
+      "term": "atmosphere",
+      "gold": "positive",
+      "opinion_words": [
+        "great"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "While the ambiance and atmosphere were great, the food and service could have been a lot better.",
+      "term": "food",
+      "gold": "negative",
+      "opinion_words": [
+        "better"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "While the ambiance and atmosphere were great, the food and service could have been a lot better.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "better"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The food is usually good but it certainly isn't a relaxing place to go.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "usually",
+        "good"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The food is usually good but it certainly isn't a relaxing place to go.",
+      "term": "place",
+      "gold": "negative",
+      "opinion_words": [
+        "relaxing"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Food was very good as well, considering that we tried the budget selection (though I wish the pork belly that I ordered was roasted a bit longer, so that fat was more of a melt-in-your-mouth experience).",
+      "term": "Food",
+      "gold": "positive",
+      "opinion_words": [
+        "very",
+        "good",
+        "as",
+        "well"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Food was very good as well, considering that we tried the budget selection (though I wish the pork belly that I ordered was roasted a bit longer, so that fat was more of a melt-in-your-mouth experience).",
+      "term": "pork belly",
+      "gold": "negative",
+      "opinion_words": [
+        "wish"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Food was very good as well, considering that we tried the budget selection (though I wish the pork belly that I ordered was roasted a bit longer, so that fat was more of a melt-in-your-mouth experience).",
+      "term": "fat",
+      "gold": "negative",
+      "opinion_words": [
+        "more"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "It is kinda nosiy and the tables are close together but it's still a beautiful place to enjoy a nice dinner.",
+      "term": "tables",
+      "gold": "negative",
+      "opinion_words": [
+        "close",
+        "together"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "It is kinda nosiy and the tables are close together but it's still a beautiful place to enjoy a nice dinner.",
+      "term": "dinner",
+      "gold": "positive",
+      "opinion_words": [
+        "enjoy",
+        "nice"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "It is kinda nosiy and the tables are close together but it's still a beautiful place to enjoy a nice dinner.",
+      "term": "place",
+      "gold": "positive",
+      "opinion_words": [
+        "beautiful"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The plain pizza was soggy and the creative wild mushroom(third generation-Fornini) pizza we had was drenched with truffle oil in the middle( again making it soggy) and nothingon the rest.",
+      "term": "plain pizza",
+      "gold": "negative",
+      "opinion_words": [
+        "soggy"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The plain pizza was soggy and the creative wild mushroom(third generation-Fornini) pizza we had was drenched with truffle oil in the middle( again making it soggy) and nothingon the rest.",
+      "term": "wild mushroom(third generation-Fornini) pizza",
+      "gold": "positive",
+      "opinion_words": [
+        "creative",
+        "drenched"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Despite a slightly limited menu, everything prepared is done to perfection, ultra fresh and a work of food art.",
+      "term": "menu",
+      "gold": "negative",
+      "opinion_words": [
+        "slightly",
+        "limited",
+        "done"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Despite a slightly limited menu, everything prepared is done to perfection, ultra fresh and a work of food art.",
+      "term": "food art",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The sweet lassi was excellent as was the lamb chettinad and the garlic naan but the rasamalai was forgettable.",
+      "term": "sweet lassi",
+      "gold": "positive",
+      "opinion_words": [
+        "excellent"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The sweet lassi was excellent as was the lamb chettinad and the garlic naan but the rasamalai was forgettable.",
+      "term": "lamb chettinad",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The sweet lassi was excellent as was the lamb chettinad and the garlic naan but the rasamalai was forgettable.",
+      "term": "garlic naan",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The sweet lassi was excellent as was the lamb chettinad and the garlic naan but the rasamalai was forgettable.",
+      "term": "rasamalai",
+      "gold": "negative",
+      "opinion_words": [
+        "forgettable"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Even though its good seafood, the prices are too high.",
+      "term": "seafood",
+      "gold": "positive",
+      "opinion_words": [
+        "Even",
+        "good",
+        "too",
+        "high"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Even though its good seafood, the prices are too high.",
+      "term": "prices",
+      "gold": "negative",
+      "opinion_words": [
+        "Even",
+        "too",
+        "high"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "However, in the summer of 2003, it seems the management has changed and the great big door has been replaced for a glass front ridding itself of the dark romantic getup.",
+      "term": "door",
+      "gold": "positive",
+      "opinion_words": [
+        "great",
+        "big",
+        "replaced"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "However, in the summer of 2003, it seems the management has changed and the great big door has been replaced for a glass front ridding itself of the dark romantic getup.",
+      "term": "glass front",
+      "gold": "negative",
+      "opinion_words": [
+        "ridding"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Barbecued codfish was gorgeously moist - as if poached - yet the fabulous texture was let down by curiously bland seasoning - a spice rub might have overwhelmed, however herb mix or other sauce would have done much to enhance.",
+      "term": "Barbecued codfish",
+      "gold": "positive",
+      "opinion_words": [
+        "gorgeously",
+        "moist"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Barbecued codfish was gorgeously moist - as if poached - yet the fabulous texture was let down by curiously bland seasoning - a spice rub might have overwhelmed, however herb mix or other sauce would have done much to enhance.",
+      "term": "seasoning",
+      "gold": "negative",
+      "opinion_words": [
+        "curiously",
+        "bland"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Barbecued codfish was gorgeously moist - as if poached - yet the fabulous texture was let down by curiously bland seasoning - a spice rub might have overwhelmed, however herb mix or other sauce would have done much to enhance.",
+      "term": "spice rub",
+      "gold": "negative",
+      "opinion_words": [
+        "curiously",
+        "bland"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Barbecued codfish was gorgeously moist - as if poached - yet the fabulous texture was let down by curiously bland seasoning - a spice rub might have overwhelmed, however herb mix or other sauce would have done much to enhance.",
+      "term": "herb mix",
+      "gold": "negative",
+      "opinion_words": [
+        "done"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Barbecued codfish was gorgeously moist - as if poached - yet the fabulous texture was let down by curiously bland seasoning - a spice rub might have overwhelmed, however herb mix or other sauce would have done much to enhance.",
+      "term": "sauce",
+      "gold": "negative",
+      "opinion_words": [
+        "other",
+        "done"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Looking around, I saw a room full of New Yorkers enjoying a real meal in a real restaurant, not a clubhouse of the fabulous trying to be seen.",
+      "term": "meal",
+      "gold": "positive",
+      "opinion_words": [
+        "enjoying",
+        "real"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Looking around, I saw a room full of New Yorkers enjoying a real meal in a real restaurant, not a clubhouse of the fabulous trying to be seen.",
+      "term": "clubhouse",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I had a terrific meal, and our server guided us toward a very nice wine in our price range, instead of allowing us to purchase a similarly priced wine that wasn't as good.",
+      "term": "meal",
+      "gold": "positive",
+      "opinion_words": [
+        "had",
+        "terrific"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "I had a terrific meal, and our server guided us toward a very nice wine in our price range, instead of allowing us to purchase a similarly priced wine that wasn't as good.",
+      "term": "server",
+      "gold": "positive",
+      "opinion_words": [
+        "guided"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I had a terrific meal, and our server guided us toward a very nice wine in our price range, instead of allowing us to purchase a similarly priced wine that wasn't as good.",
+      "term": "wine",
+      "gold": "positive",
+      "opinion_words": [
+        "guided",
+        "very",
+        "nice"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "I had a terrific meal, and our server guided us toward a very nice wine in our price range, instead of allowing us to purchase a similarly priced wine that wasn't as good.",
+      "term": "wine",
+      "gold": "negative",
+      "opinion_words": [
+        "purchase",
+        "similarly",
+        "priced"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I had a terrific meal, and our server guided us toward a very nice wine in our price range, instead of allowing us to purchase a similarly priced wine that wasn't as good.",
+      "term": "price range",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "After 2 tries by the waiter to take it away (we hadn't even looked at it yet, we had full beers yet to drink), the manager approached and told us they needed the table for people with reservations.",
+      "term": "waiter",
+      "gold": "negative",
+      "opinion_words": [
+        "tries"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "After 2 tries by the waiter to take it away (we hadn't even looked at it yet, we had full beers yet to drink), the manager approached and told us they needed the table for people with reservations.",
+      "term": "manager",
+      "gold": "negative",
+      "opinion_words": [
+        "approached"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "After 2 tries by the waiter to take it away (we hadn't even looked at it yet, we had full beers yet to drink), the manager approached and told us they needed the table for people with reservations.",
+      "term": "reservations",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "There was a long wait for a table outside, but it was a little too hot in the sun anyway so our insde table was very nice.",
+      "term": "insde table",
+      "gold": "positive",
+      "opinion_words": [
+        "so",
+        "very",
+        "nice"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "There was a long wait for a table outside, but it was a little too hot in the sun anyway so our insde table was very nice.",
+      "term": "wait",
+      "gold": "negative",
+      "opinion_words": [
+        "long"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Given the incredible architecture surrounding it, this place has no character.",
+      "term": "architecture",
+      "gold": "positive",
+      "opinion_words": [
+        "incredible",
+        "has"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Given the incredible architecture surrounding it, this place has no character.",
+      "term": "place",
+      "gold": "negative",
+      "opinion_words": [
+        "has"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "While the place is not a hotspot hangout, the drinks are unique and pack a lot of bang for the buck.",
+      "term": "drinks",
+      "gold": "positive",
+      "opinion_words": [
+        "unique"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "While the place is not a hotspot hangout, the drinks are unique and pack a lot of bang for the buck.",
+      "term": "place",
+      "gold": "negative",
+      "opinion_words": [
+        "not",
+        "hangout"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "It's a shame that a nice, convenient place like the Pink Pony can be so ruined by lousy service.",
+      "term": "place",
+      "gold": "positive",
+      "opinion_words": [
+        "nice",
+        "convenient",
+        "so",
+        "ruined"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "It's a shame that a nice, convenient place like the Pink Pony can be so ruined by lousy service.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "lousy"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Nha Trang, while being notorious for utter lack of comfort and decor, horribly slow wait staff and horribly quick meals, is one of the best vietnamese restaurants i've ever been to. the pho is delicious and comes with very fresh vegtables.",
+      "term": "comfort",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Nha Trang, while being notorious for utter lack of comfort and decor, horribly slow wait staff and horribly quick meals, is one of the best vietnamese restaurants i've ever been to. the pho is delicious and comes with very fresh vegtables.",
+      "term": "decor",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Nha Trang, while being notorious for utter lack of comfort and decor, horribly slow wait staff and horribly quick meals, is one of the best vietnamese restaurants i've ever been to. the pho is delicious and comes with very fresh vegtables.",
+      "term": "wait staff",
+      "gold": "negative",
+      "opinion_words": [
+        "horribly",
+        "slow"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Nha Trang, while being notorious for utter lack of comfort and decor, horribly slow wait staff and horribly quick meals, is one of the best vietnamese restaurants i've ever been to. the pho is delicious and comes with very fresh vegtables.",
+      "term": "meals",
+      "gold": "negative",
+      "opinion_words": [
+        "horribly",
+        "quick"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Nha Trang, while being notorious for utter lack of comfort and decor, horribly slow wait staff and horribly quick meals, is one of the best vietnamese restaurants i've ever been to. the pho is delicious and comes with very fresh vegtables.",
+      "term": "pho",
+      "gold": "positive",
+      "opinion_words": [
+        "delicious"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Nha Trang, while being notorious for utter lack of comfort and decor, horribly slow wait staff and horribly quick meals, is one of the best vietnamese restaurants i've ever been to. the pho is delicious and comes with very fresh vegtables.",
+      "term": "vegtables",
+      "gold": "positive",
+      "opinion_words": [
+        "comes",
+        "very",
+        "fresh"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "If I could rate the people this place would be off the charts - unfortunately - the pizza, sorry - not the best in NYC.",
+      "term": "people",
+      "gold": "positive",
+      "opinion_words": [
+        "rate"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "If I could rate the people this place would be off the charts - unfortunately - the pizza, sorry - not the best in NYC.",
+      "term": "pizza",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The portions are now very small, the sauces are overly-ambitious usually inedible while the service is still good, the restaurant, due to its popularity, seems frantic.",
+      "term": "portions",
+      "gold": "negative",
+      "opinion_words": [
+        "now",
+        "very",
+        "small"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The portions are now very small, the sauces are overly-ambitious usually inedible while the service is still good, the restaurant, due to its popularity, seems frantic.",
+      "term": "sauces",
+      "gold": "negative",
+      "opinion_words": [
+        "ambitious",
+        "usually",
+        "inedible"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The portions are now very small, the sauces are overly-ambitious usually inedible while the service is still good, the restaurant, due to its popularity, seems frantic.",
+      "term": "service",
+      "gold": "positive",
+      "opinion_words": [
+        "still",
+        "good"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The service is a little scatty at times but all is forgiven when the food arrives.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "little",
+        "scatty"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The service is a little scatty at times but all is forgiven when the food arrives.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "when",
+        "arrives"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The bruscetta is a bit soggy, but the salads were fresh, included a nice mix of greens (not iceberg) all dishes are served piping hot from the kitchen.",
+      "term": "bruscetta",
+      "gold": "negative",
+      "opinion_words": [
+        "soggy"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The bruscetta is a bit soggy, but the salads were fresh, included a nice mix of greens (not iceberg) all dishes are served piping hot from the kitchen.",
+      "term": "salads",
+      "gold": "positive",
+      "opinion_words": [
+        "fresh"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The bruscetta is a bit soggy, but the salads were fresh, included a nice mix of greens (not iceberg) all dishes are served piping hot from the kitchen.",
+      "term": "dishes",
+      "gold": "positive",
+      "opinion_words": [
+        "served"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The bruscetta is a bit soggy, but the salads were fresh, included a nice mix of greens (not iceberg) all dishes are served piping hot from the kitchen.",
+      "term": "mix of greens",
+      "gold": "positive",
+      "opinion_words": [
+        "included",
+        "nice"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The bruscetta is a bit soggy, but the salads were fresh, included a nice mix of greens (not iceberg) all dishes are served piping hot from the kitchen.",
+      "term": "served",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Decent Thai food in cute - though a bit dank - little Nolita hangout, BUT service terrible.",
+      "term": "Thai food",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Decent Thai food in cute - though a bit dank - little Nolita hangout, BUT service terrible.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "terrible"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Only wine and beer are served, but the house varities are actually quite good.",
+      "term": "house varities",
+      "gold": "positive",
+      "opinion_words": [
+        "actually",
+        "quite",
+        "good"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Only wine and beer are served, but the house varities are actually quite good.",
+      "term": "served",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Mine was a little burnt but still delicious with goat cheese and panchetta (raddichio was kind of bitter though).",
+      "term": "goat cheese",
+      "gold": "positive",
+      "opinion_words": [
+        "still",
+        "delicious"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Mine was a little burnt but still delicious with goat cheese and panchetta (raddichio was kind of bitter though).",
+      "term": "panchetta",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Mine was a little burnt but still delicious with goat cheese and panchetta (raddichio was kind of bitter though).",
+      "term": "raddichio",
+      "gold": "negative",
+      "opinion_words": [
+        "of",
+        "bitter",
+        "though"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "My husband said the portions were very small, but if my main course was good to eat the portion would've been fine for me.",
+      "term": "portions",
+      "gold": "negative",
+      "opinion_words": [
+        "very",
+        "small"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "My husband said the portions were very small, but if my main course was good to eat the portion would've been fine for me.",
+      "term": "portion",
+      "gold": "positive",
+      "opinion_words": [
+        "eat"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "My husband said the portions were very small, but if my main course was good to eat the portion would've been fine for me.",
+      "term": "main course",
+      "gold": "negative",
+      "opinion_words": [
+        "good"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Because we didn't have a reservation, we could only sit in the back garden, but it was great, secluded and perfect in nice weather.",
+      "term": "back garden",
+      "gold": "positive",
+      "opinion_words": [
+        "only",
+        "sit"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Because we didn't have a reservation, we could only sit in the back garden, but it was great, secluded and perfect in nice weather.",
+      "term": "reservation",
+      "gold": "negative",
+      "opinion_words": [
+        "n't",
+        "have"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "While the food was good (certainly no Il Mulino) the service was horrendous.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "good"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "While the food was good (certainly no Il Mulino) the service was horrendous.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "horrendous"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "While we enjoyed the food, we were highly disappointed by the poor service (waiter was not quite competent and SLOW service) and lack of remorse.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "enjoyed"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "While we enjoyed the food, we were highly disappointed by the poor service (waiter was not quite competent and SLOW service) and lack of remorse.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "poor"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "While we enjoyed the food, we were highly disappointed by the poor service (waiter was not quite competent and SLOW service) and lack of remorse.",
+      "term": "waiter",
+      "gold": "negative",
+      "opinion_words": [
+        "not",
+        "competent",
+        "service"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "While we enjoyed the food, we were highly disappointed by the poor service (waiter was not quite competent and SLOW service) and lack of remorse.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "quite",
+        "competent"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Guacamole+shrimp appetizer was really great, we both had the filet, very good, didn't much like the frites that came with, but the filet was so good, neither of us cared.",
+      "term": "Guacamole+shrimp appetizer",
+      "gold": "positive",
+      "opinion_words": [
+        "really",
+        "great"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Guacamole+shrimp appetizer was really great, we both had the filet, very good, didn't much like the frites that came with, but the filet was so good, neither of us cared.",
+      "term": "filet",
+      "gold": "positive",
+      "opinion_words": [
+        "had",
+        "very",
+        "good"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Guacamole+shrimp appetizer was really great, we both had the filet, very good, didn't much like the frites that came with, but the filet was so good, neither of us cared.",
+      "term": "frites",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Guacamole+shrimp appetizer was really great, we both had the filet, very good, didn't much like the frites that came with, but the filet was so good, neither of us cared.",
+      "term": "filet",
+      "gold": "positive",
+      "opinion_words": [
+        "so",
+        "good"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Although the tables may be closely situated, the candle-light, food-quality and service overcompensate.",
+      "term": "candle-light",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Although the tables may be closely situated, the candle-light, food-quality and service overcompensate.",
+      "term": "food-quality",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Although the tables may be closely situated, the candle-light, food-quality and service overcompensate.",
+      "term": "service",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Although the tables may be closely situated, the candle-light, food-quality and service overcompensate.",
+      "term": "tables",
+      "gold": "negative",
+      "opinion_words": [
+        "closely",
+        "situated"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "I really liked the noodle dishes at Rice Avenue compared to their Green Curry dish.",
+      "term": "noodle dishes",
+      "gold": "positive",
+      "opinion_words": [
+        "really",
+        "liked"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "I really liked the noodle dishes at Rice Avenue compared to their Green Curry dish.",
+      "term": "Green Curry dish",
+      "gold": "negative",
+      "opinion_words": [
+        "compared"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The service is a bit slow, but harkens back to my years growing up in Napoli, Italy where things are not rushed and when you sit down for dinner the table is yours all night.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "slow"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The service is a bit slow, but harkens back to my years growing up in Napoli, Italy where things are not rushed and when you sit down for dinner the table is yours all night.",
+      "term": "table",
+      "gold": "positive",
+      "opinion_words": [
+        "yours"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Service was decent, but not as smooth as I would expect from a place with these prices and reputation.",
+      "term": "prices",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Service was decent, but not as smooth as I would expect from a place with these prices and reputation.",
+      "term": "reputation",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "sometimes i get bad food and bad service, sometimes i get good good and bad service.",
+      "term": "food",
+      "gold": "negative",
+      "opinion_words": [
+        "sometimes",
+        "get",
+        "bad"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "sometimes i get bad food and bad service, sometimes i get good good and bad service.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "bad"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "sometimes i get bad food and bad service, sometimes i get good good and bad service.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "sometimes",
+        "get",
+        "good",
+        "good"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "sometimes i get bad food and bad service, sometimes i get good good and bad service.",
+      "term": "good",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "To begin, we were told there was a 30 minute wait and started to leave, when the hostess offered to call us on our cell phone when the table was ready.",
+      "term": "hostess",
+      "gold": "positive",
+      "opinion_words": [
+        "when",
+        "offered"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "To begin, we were told there was a 30 minute wait and started to leave, when the hostess offered to call us on our cell phone when the table was ready.",
+      "term": "wait",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "To begin, we were told there was a 30 minute wait and started to leave, when the hostess offered to call us on our cell phone when the table was ready.",
+      "term": "table",
+      "gold": "positive",
+      "opinion_words": [
+        "when",
+        "ready"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Wait staff is blantently unappreciative of your business but its the best pie on the UWS!",
+      "term": "Wait staff",
+      "gold": "negative",
+      "opinion_words": [
+        "blantently",
+        "unappreciative"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Wait staff is blantently unappreciative of your business but its the best pie on the UWS!",
+      "term": "pie",
+      "gold": "positive",
+      "opinion_words": [
+        "best"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The menu is Prix Fixe, so be prepared to spend at least $60 per person, but it is Well worth itsuperb food.",
+      "term": "menu",
+      "gold": "negative",
+      "opinion_words": [
+        "Fixe"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The menu is Prix Fixe, so be prepared to spend at least $60 per person, but it is Well worth itsuperb food.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "worth",
+        "itsuperb"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Decor is nice though service can be spotty.",
+      "term": "Decor",
+      "gold": "positive",
+      "opinion_words": [
+        "nice"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Decor is nice though service can be spotty.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "spotty"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Aside from the rushed service, we were very impressed with the food and the drinks.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "rushed"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Aside from the rushed service, we were very impressed with the food and the drinks.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "very",
+        "impressed"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Aside from the rushed service, we were very impressed with the food and the drinks.",
+      "term": "drinks",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "While the new restaurant still features much of the same classical furniture that made Tiffin so attractive, the menu has been overhauled.",
+      "term": "classical furniture",
+      "gold": "positive",
+      "opinion_words": [
+        "much",
+        "same"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "While the new restaurant still features much of the same classical furniture that made Tiffin so attractive, the menu has been overhauled.",
+      "term": "menu",
+      "gold": "negative",
+      "opinion_words": [
+        "overhauled"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The people with carts of food don't understand you because they don't speak English, their job is to give you the delicious food you point at.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "give",
+        "delicious"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The people with carts of food don't understand you because they don't speak English, their job is to give you the delicious food you point at.",
+      "term": "people with carts of food",
+      "gold": "negative",
+      "opinion_words": [
+        "n't",
+        "understand"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Great roofdeck, nice group of 30 somethings, but no music, kind of quiet.",
+      "term": "roofdeck",
+      "gold": "positive",
+      "opinion_words": [
+        "Great"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Great roofdeck, nice group of 30 somethings, but no music, kind of quiet.",
+      "term": "music",
+      "gold": "negative",
+      "opinion_words": [
+        "of",
+        "quiet"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The wait here is long for dim sum, but if you don't like sharing tables or if the typical raucous dim sum atmosphere is not your gig, this is a sleek (for Chinatown) alternative.",
+      "term": "wait",
+      "gold": "negative",
+      "opinion_words": [
+        "long"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The wait here is long for dim sum, but if you don't like sharing tables or if the typical raucous dim sum atmosphere is not your gig, this is a sleek (for Chinatown) alternative.",
+      "term": "tables",
+      "gold": "positive",
+      "opinion_words": [
+        "sharing"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Where tanks in other Chinatown restaurants display a lurking myriad of sad-looking marine life in their murky waters, the tanks at Ping's are clear as glass with healthy-looking creatures who do not yet know that they will be part of some dim sum lover's brunch.",
+      "term": "tanks",
+      "gold": "negative",
+      "opinion_words": [
+        "Where",
+        "display"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Where tanks in other Chinatown restaurants display a lurking myriad of sad-looking marine life in their murky waters, the tanks at Ping's are clear as glass with healthy-looking creatures who do not yet know that they will be part of some dim sum lover's brunch.",
+      "term": "tanks",
+      "gold": "positive",
+      "opinion_words": [
+        "clear"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "However, go for the ambience, and consider the food just a companion for a trip across the world!",
+      "term": "ambience",
+      "gold": "positive",
+      "opinion_words": [
+        "However",
+        "go"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "However, go for the ambience, and consider the food just a companion for a trip across the world!",
+      "term": "food",
+      "gold": "negative",
+      "opinion_words": [
+        "consider"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The first 2 courses were very good, but the chocolate sampler was too rich for me and the dessert wine far too sweet.",
+      "term": "courses",
+      "gold": "positive",
+      "opinion_words": [
+        "first",
+        "very",
+        "good"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The first 2 courses were very good, but the chocolate sampler was too rich for me and the dessert wine far too sweet.",
+      "term": "chocolate sampler",
+      "gold": "negative",
+      "opinion_words": [
+        "too",
+        "rich"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The first 2 courses were very good, but the chocolate sampler was too rich for me and the dessert wine far too sweet.",
+      "term": "dessert wine",
+      "gold": "negative",
+      "opinion_words": [
+        "far",
+        "too",
+        "sweet"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "My entree of hot pot with seafood was full of imitation crabmeat with a couple pieces of shrimp and squid, and was unnecessarily heated with a burner.",
+      "term": "hot pot with seafood",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "My entree of hot pot with seafood was full of imitation crabmeat with a couple pieces of shrimp and squid, and was unnecessarily heated with a burner.",
+      "term": "shrimp",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "My entree of hot pot with seafood was full of imitation crabmeat with a couple pieces of shrimp and squid, and was unnecessarily heated with a burner.",
+      "term": "squid",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "My entree of hot pot with seafood was full of imitation crabmeat with a couple pieces of shrimp and squid, and was unnecessarily heated with a burner.",
+      "term": "entree",
+      "gold": "positive",
+      "opinion_words": [
+        "full"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "My entree of hot pot with seafood was full of imitation crabmeat with a couple pieces of shrimp and squid, and was unnecessarily heated with a burner.",
+      "term": "crabmeat",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The bread is the soft paratha bread (unlike the plain bread they use in Calcutta), and the stuffing is tandoori styled and very flavorful.",
+      "term": "bread",
+      "gold": "positive",
+      "opinion_words": [
+        "soft",
+        "bread"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The bread is the soft paratha bread (unlike the plain bread they use in Calcutta), and the stuffing is tandoori styled and very flavorful.",
+      "term": "paratha bread",
+      "gold": "positive",
+      "opinion_words": [
+        "soft"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The bread is the soft paratha bread (unlike the plain bread they use in Calcutta), and the stuffing is tandoori styled and very flavorful.",
+      "term": "bread",
+      "gold": "negative",
+      "opinion_words": [
+        "plain"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The bread is the soft paratha bread (unlike the plain bread they use in Calcutta), and the stuffing is tandoori styled and very flavorful.",
+      "term": "stuffing",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The bread is the soft paratha bread (unlike the plain bread they use in Calcutta), and the stuffing is tandoori styled and very flavorful.",
+      "term": "tandoori",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Service is friendly, prices are good - delivery time was a little slow, but for the way this pizza tastes, I'm willing to overlook it.",
+      "term": "Service",
+      "gold": "positive",
+      "opinion_words": [
+        "friendly"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Service is friendly, prices are good - delivery time was a little slow, but for the way this pizza tastes, I'm willing to overlook it.",
+      "term": "prices",
+      "gold": "positive",
+      "opinion_words": [
+        "time"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Service is friendly, prices are good - delivery time was a little slow, but for the way this pizza tastes, I'm willing to overlook it.",
+      "term": "delivery time",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Service is friendly, prices are good - delivery time was a little slow, but for the way this pizza tastes, I'm willing to overlook it.",
+      "term": "pizza",
+      "gold": "positive",
+      "opinion_words": [
+        "tastes"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The food can get pricey but the prixe fixe tasting menu is the greatest food for a good price and they cater the food to any food allergies or food you don't like.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "greatest"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The food can get pricey but the prixe fixe tasting menu is the greatest food for a good price and they cater the food to any food allergies or food you don't like.",
+      "term": "price",
+      "gold": "positive",
+      "opinion_words": [
+        "good"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The food can get pricey but the prixe fixe tasting menu is the greatest food for a good price and they cater the food to any food allergies or food you don't like.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "cater"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The food can get pricey but the prixe fixe tasting menu is the greatest food for a good price and they cater the food to any food allergies or food you don't like.",
+      "term": "food",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The place is small and cramped but the food is fantastic.",
+      "term": "place",
+      "gold": "negative",
+      "opinion_words": [
+        "small"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The place is small and cramped but the food is fantastic.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "fantastic"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The food there is so good that even to order out the wait is incredible.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "is",
+        "so",
+        "good"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The food there is so good that even to order out the wait is incredible.",
+      "term": "wait",
+      "gold": "negative",
+      "opinion_words": [
+        "even",
+        "order"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Small servings for main entree, i had salmon (wasnt impressed) girlfriend had chicken, it was good.",
+      "term": "salmon",
+      "gold": "negative",
+      "opinion_words": [
+        "had"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Small servings for main entree, i had salmon (wasnt impressed) girlfriend had chicken, it was good.",
+      "term": "chicken",
+      "gold": "positive",
+      "opinion_words": [
+        "had"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Small servings for main entree, i had salmon (wasnt impressed) girlfriend had chicken, it was good.",
+      "term": "servings",
+      "gold": "negative",
+      "opinion_words": [
+        "Small"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Small servings for main entree, i had salmon (wasnt impressed) girlfriend had chicken, it was good.",
+      "term": "entree",
+      "gold": "negative",
+      "opinion_words": [
+        "main"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "It is far more popular as a bar than as a restaurant, with only a few tables and the waiter being the bartender, but we greatly enjoyed the unobtrusive atmosphere.",
+      "term": "bar",
+      "gold": "positive",
+      "opinion_words": [
+        "more",
+        "popular"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "It is far more popular as a bar than as a restaurant, with only a few tables and the waiter being the bartender, but we greatly enjoyed the unobtrusive atmosphere.",
+      "term": "tables",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "It is far more popular as a bar than as a restaurant, with only a few tables and the waiter being the bartender, but we greatly enjoyed the unobtrusive atmosphere.",
+      "term": "atmosphere",
+      "gold": "positive",
+      "opinion_words": [
+        "greatly",
+        "enjoyed",
+        "unobtrusive"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The food is very good for it's price, better than most fried dumplings I've had.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "very",
+        "good",
+        "better"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The food is very good for it's price, better than most fried dumplings I've had.",
+      "term": "price",
+      "gold": "positive",
+      "opinion_words": [
+        "very",
+        "good"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The food is very good for it's price, better than most fried dumplings I've had.",
+      "term": "fried dumplings",
+      "gold": "negative",
+      "opinion_words": [
+        "better",
+        "most"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Though you will undoubtedly be seated at a table with what seems like barely enough room (no matter what the size of your party), the warm atomosphere is worth the cramped quarters- you'll have fun and forgot about the tight spot you're in.",
+      "term": "table",
+      "gold": "negative",
+      "opinion_words": [
+        "undoubtedly",
+        "seated"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Though you will undoubtedly be seated at a table with what seems like barely enough room (no matter what the size of your party), the warm atomosphere is worth the cramped quarters- you'll have fun and forgot about the tight spot you're in.",
+      "term": "atomosphere",
+      "gold": "positive",
+      "opinion_words": [
+        "warm",
+        "worth"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Though you will undoubtedly be seated at a table with what seems like barely enough room (no matter what the size of your party), the warm atomosphere is worth the cramped quarters- you'll have fun and forgot about the tight spot you're in.",
+      "term": "room",
+      "gold": "negative",
+      "opinion_words": [
+        "seems",
+        "barely",
+        "enough",
+        "matter"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Though you will undoubtedly be seated at a table with what seems like barely enough room (no matter what the size of your party), the warm atomosphere is worth the cramped quarters- you'll have fun and forgot about the tight spot you're in.",
+      "term": "spot",
+      "gold": "negative",
+      "opinion_words": [
+        "forgot",
+        "tight"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Ambiance is barely romantic but management tries.",
+      "term": "Ambiance",
+      "gold": "negative",
+      "opinion_words": [
+        "barely",
+        "romantic"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Ambiance is barely romantic but management tries.",
+      "term": "management",
+      "gold": "positive",
+      "opinion_words": [
+        "tries"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I must warn the reader that the portions sizes are very small (especially the appetizers), so if you plan to eat until you are full and do not intend to order the chef's special tasting menu, prepare to order and pay for an appetizer (1 dish for each person because the portions are not for sharing), a main entree, and the cold udon at the end of the meal.",
+      "term": "portions",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I must warn the reader that the portions sizes are very small (especially the appetizers), so if you plan to eat until you are full and do not intend to order the chef's special tasting menu, prepare to order and pay for an appetizer (1 dish for each person because the portions are not for sharing), a main entree, and the cold udon at the end of the meal.",
+      "term": "appetizers",
+      "gold": "negative",
+      "opinion_words": [
+        "very",
+        "small"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I must warn the reader that the portions sizes are very small (especially the appetizers), so if you plan to eat until you are full and do not intend to order the chef's special tasting menu, prepare to order and pay for an appetizer (1 dish for each person because the portions are not for sharing), a main entree, and the cold udon at the end of the meal.",
+      "term": "appetizer",
+      "gold": "negative",
+      "opinion_words": [
+        "pay"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I must warn the reader that the portions sizes are very small (especially the appetizers), so if you plan to eat until you are full and do not intend to order the chef's special tasting menu, prepare to order and pay for an appetizer (1 dish for each person because the portions are not for sharing), a main entree, and the cold udon at the end of the meal.",
+      "term": "chef",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I must warn the reader that the portions sizes are very small (especially the appetizers), so if you plan to eat until you are full and do not intend to order the chef's special tasting menu, prepare to order and pay for an appetizer (1 dish for each person because the portions are not for sharing), a main entree, and the cold udon at the end of the meal.",
+      "term": "menu",
+      "gold": "positive",
+      "opinion_words": [
+        "order",
+        "special"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "I must warn the reader that the portions sizes are very small (especially the appetizers), so if you plan to eat until you are full and do not intend to order the chef's special tasting menu, prepare to order and pay for an appetizer (1 dish for each person because the portions are not for sharing), a main entree, and the cold udon at the end of the meal.",
+      "term": "dish",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I must warn the reader that the portions sizes are very small (especially the appetizers), so if you plan to eat until you are full and do not intend to order the chef's special tasting menu, prepare to order and pay for an appetizer (1 dish for each person because the portions are not for sharing), a main entree, and the cold udon at the end of the meal.",
+      "term": "portions",
+      "gold": "negative",
+      "opinion_words": [
+        "not"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Thalia is a beautiful restaurant with beautiful people serving you, but the food doesn't quite match up.",
+      "term": "people serving",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Thalia is a beautiful restaurant with beautiful people serving you, but the food doesn't quite match up.",
+      "term": "food",
+      "gold": "negative",
+      "opinion_words": [
+        "n't",
+        "quite",
+        "match"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The portions are small but being that the food was so good makes up for that.",
+      "term": "portions",
+      "gold": "negative",
+      "opinion_words": [
+        "small"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The portions are small but being that the food was so good makes up for that.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "so",
+        "good"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "It is nearly impossible to get a table, so if you ever have the chance to go here for dinner, DO NOT pass it up.",
+      "term": "table",
+      "gold": "negative",
+      "opinion_words": [
+        "get"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "It is nearly impossible to get a table, so if you ever have the chance to go here for dinner, DO NOT pass it up.",
+      "term": "dinner",
+      "gold": "positive",
+      "opinion_words": [
+        "go",
+        "here"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The puke green walls leave a lot to be desired, but the food is very good.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [
+        "very",
+        "good"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The puke green walls leave a lot to be desired, but the food is very good.",
+      "term": "walls",
+      "gold": "negative",
+      "opinion_words": [
+        "puke",
+        "green",
+        "leave"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "While Sapphire is certainly not lacking in ambiance, and probably has the best decor of any Indian restaurant I have been to in New York City, the food was not what I had hoped for.",
+      "term": "food",
+      "gold": "negative",
+      "opinion_words": [
+        "not"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "While Sapphire is certainly not lacking in ambiance, and probably has the best decor of any Indian restaurant I have been to in New York City, the food was not what I had hoped for.",
+      "term": "ambiance",
+      "gold": "positive",
+      "opinion_words": [
+        "certainly",
+        "not",
+        "lacking"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "While Sapphire is certainly not lacking in ambiance, and probably has the best decor of any Indian restaurant I have been to in New York City, the food was not what I had hoped for.",
+      "term": "decor",
+      "gold": "positive",
+      "opinion_words": [
+        "probably",
+        "has",
+        "best"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "You don't go to Mizu for excellent service, you go for the large amounts of food, the amiable atmosphere, and the hole-in-the-wall feeling of the place.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [
+        "n't",
+        "go",
+        "excellent"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "You don't go to Mizu for excellent service, you go for the large amounts of food, the amiable atmosphere, and the hole-in-the-wall feeling of the place.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "You don't go to Mizu for excellent service, you go for the large amounts of food, the amiable atmosphere, and the hole-in-the-wall feeling of the place.",
+      "term": "atmosphere",
+      "gold": "positive",
+      "opinion_words": [
+        "amiable"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The service is descent even when this small place is packed.",
+      "term": "service",
+      "gold": "positive",
+      "opinion_words": [
+        "descent"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The service is descent even when this small place is packed.",
+      "term": "place",
+      "gold": "negative",
+      "opinion_words": [
+        "even",
+        "when",
+        "small",
+        "packed"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Bottom line: B+ for the food, F for the service.",
+      "term": "food",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Bottom line: B+ for the food, F for the service.",
+      "term": "service",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The steak was excellent and one of the best I have had (I tasted the butter intitally but in no way did it overwhelm the flavor of the meat).",
+      "term": "steak",
+      "gold": "positive",
+      "opinion_words": [
+        "excellent"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The steak was excellent and one of the best I have had (I tasted the butter intitally but in no way did it overwhelm the flavor of the meat).",
+      "term": "butter",
+      "gold": "negative",
+      "opinion_words": [
+        "tasted",
+        "intitally"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The steak was excellent and one of the best I have had (I tasted the butter intitally but in no way did it overwhelm the flavor of the meat).",
+      "term": "meat",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "20 minutes for our reservation but it gave us time to have a few cocktails and enjoy our surroundings and each other.",
+      "term": "reservation",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "20 minutes for our reservation but it gave us time to have a few cocktails and enjoy our surroundings and each other.",
+      "term": "cocktails",
+      "gold": "positive",
+      "opinion_words": [
+        "have",
+        "few"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "20 minutes for our reservation but it gave us time to have a few cocktails and enjoy our surroundings and each other.",
+      "term": "surroundings",
+      "gold": "positive",
+      "opinion_words": [
+        "enjoy"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Our waiter was fine, the place looks nice in that not-trying-too-hard way, but at those prices, a little more should be expected of your food.",
+      "term": "waiter",
+      "gold": "positive",
+      "opinion_words": [
+        "fine"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Our waiter was fine, the place looks nice in that not-trying-too-hard way, but at those prices, a little more should be expected of your food.",
+      "term": "place",
+      "gold": "positive",
+      "opinion_words": [
+        "looks",
+        "nice"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Our waiter was fine, the place looks nice in that not-trying-too-hard way, but at those prices, a little more should be expected of your food.",
+      "term": "prices",
+      "gold": "negative",
+      "opinion_words": [
+        "expected"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Our waiter was fine, the place looks nice in that not-trying-too-hard way, but at those prices, a little more should be expected of your food.",
+      "term": "food",
+      "gold": "negative",
+      "opinion_words": [
+        "expected"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "in an effort to increase turnover, the restaurant offers no desserts beyond the complimentary espresso cup filled with chocolate mousse.",
+      "term": "espresso cup filled with chocolate mousse",
+      "gold": "positive",
+      "opinion_words": [
+        "complimentary"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "in an effort to increase turnover, the restaurant offers no desserts beyond the complimentary espresso cup filled with chocolate mousse.",
+      "term": "desserts",
+      "gold": "negative",
+      "opinion_words": [
+        "offers"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Average to good Thai food, but terrible delivery.",
+      "term": "Thai food",
+      "gold": "positive",
+      "opinion_words": [
+        "Average",
+        "good"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Average to good Thai food, but terrible delivery.",
+      "term": "delivery",
+      "gold": "negative",
+      "opinion_words": [
+        "terrible"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The space is nice but when we order our drink we were in for a surprise.",
+      "term": "space",
+      "gold": "positive",
+      "opinion_words": [
+        "nice"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The space is nice but when we order our drink we were in for a surprise.",
+      "term": "drink",
+      "gold": "negative",
+      "opinion_words": [
+        "when",
+        "order"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "While this is a pretty place in that overly cute French way, the food was insultingly horrible.",
+      "term": "place",
+      "gold": "positive",
+      "opinion_words": [
+        "pretty"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "While this is a pretty place in that overly cute French way, the food was insultingly horrible.",
+      "term": "food",
+      "gold": "negative",
+      "opinion_words": [
+        "insultingly",
+        "horrible"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Despite the fact that the space is large, they've overcrowded the floor with tables.",
+      "term": "space",
+      "gold": "positive",
+      "opinion_words": [
+        "large"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Despite the fact that the space is large, they've overcrowded the floor with tables.",
+      "term": "tables",
+      "gold": "negative",
+      "opinion_words": [
+        "overcrowded"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    }
+  ]
+}

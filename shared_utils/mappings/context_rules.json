@@ -1,0 +1,457 @@
+
+{
+  "slang_terms": {
+    "cooked": "cooked",
+    "bro": "address",
+    "bruh": "address",
+    "fr": "agreement",
+    "frfr": "agreement",
+    "ngl": "honesty",
+    "idk": "uncertainty",
+    "lowkey": "low_intensity",
+    "highkey": "high_intensity",
+    "cap": "dishonesty",
+    "no cap": "agreement",
+    "bet": "agreement",
+    "slay": "praise",
+    "ate": "praise",
+    "left no crumbs": "praise",
+    "mid": "negative",
+    "sus": "negative",
+    "delulu": "unrealistic",
+    "rizz": "attraction",
+    "ick": "negative",
+    "vibe": "vibe",
+    "valid": "praise",
+    "based": "praise",
+    "goated": "praise",
+    "fire": "praise",
+    "lit": "praise",
+    "savage": "praise",
+    "yapping": "talking",
+    "ghosted": "rejection",
+    "cringe": "negative",
+    "rent free": "fixation",
+    "main character": "confidence",
+    "touch grass": "criticism",
+    "sending me": "laughter",
+    "im dead": "laughter",
+    "deadass": "honesty",
+    "periodt": "emphasis",
+    "facts": "agreement",
+    "real": "agreement",
+    "so real": "agreement",
+    "say less": "agreement",
+    "yikes": "negative",
+    "oof": "sympathy",
+    "w": "success",
+    "l": "failure",
+    "skill issue": "negative",
+    "cope": "denial",
+    "down bad": "attraction",
+    "locked in": "focus",
+    "lmao": "laughter"
+  },
+
+  "slang_groups": {
+    "cooked": {
+      "rules": [
+        {
+          "meaning": "exhausted",
+          "keywords": ["tired", "exhausted", "sleep", "awake", "working"],
+          "reason": "Fatigue-related context"
+        },
+        {
+          "meaning": "overwhelmed or in trouble",
+          "keywords": ["exam", "test", "deadline", "assignment", "failed", "pressure", "stressed"],
+          "reason": "Academic or stressful context"
+        }
+      ]
+    },
+
+    "address": {
+      "default": "informal form of address",
+      "reason": "Conversational address detected"
+    },
+
+    "agreement": {
+      "default": "agreement or emphasis",
+      "reason": "Agreement expression detected"
+    },
+
+    "honesty": {
+      "default": "honest or emphatic expression",
+      "reason": "Honesty marker detected"
+    },
+
+    "uncertainty": {
+      "default": "uncertainty or lack of knowledge",
+      "reason": "Uncertainty expression detected"
+    },
+
+    "low_intensity": {
+      "default": "slight or subtle emphasis",
+      "reason": "Low-intensity expression detected"
+    },
+
+    "high_intensity": {
+      "default": "strong emphasis",
+      "reason": "High-intensity expression detected"
+    },
+
+    "dishonesty": {
+      "default": "false statement or exaggeration",
+      "reason": "Dishonesty marker detected"
+    },
+
+    "praise": {
+      "rules": [
+        {
+          "meaning": "admiration",
+          "keywords": ["amazing", "awesome", "talented", "beautiful", "incredible"],
+          "reason": "Positive evaluation detected"
+        },
+        {
+          "meaning": "excitement",
+          "keywords": ["concert", "party", "song", "game", "performance"],
+          "reason": "Exciting situation detected"
+        }
+      ]
+    },
+
+    "negative": {
+      "rules": [
+        {
+          "meaning": "disapproval",
+          "keywords": ["bad", "terrible", "wrong", "awful", "disappointing"],
+          "reason": "Negative evaluation detected"
+        },
+        {
+          "meaning": "disgust or discomfort",
+          "keywords": ["gross", "uncomfortable", "creepy", "weird"],
+          "reason": "Discomfort-related context detected"
+        }
+      ]
+    },
+
+    "unrealistic": {
+      "default": "unrealistic belief or expectation",
+      "reason": "Unrealistic expectation expression detected"
+    },
+
+    "attraction": {
+      "rules": [
+        {
+          "meaning": "romantic attraction",
+          "keywords": ["crush", "cute", "date", "love", "attractive"],
+          "reason": "Romantic context detected"
+        },
+        {
+          "meaning": "desperation or strong interest",
+          "keywords": ["obsessed", "begging", "attention", "texting"],
+          "reason": "Strong-interest context detected"
+        }
+      ]
+    },
+
+    "vibe": {
+      "default": "mood or atmosphere",
+      "reason": "Mood-related expression detected"
+    },
+
+    "talking": {
+      "default": "excessive or continuous talking",
+      "reason": "Talking-related expression detected"
+    },
+
+    "rejection": {
+      "rules": [
+        {
+          "meaning": "social rejection",
+          "keywords": ["ignored", "blocked", "message", "reply"],
+          "reason": "Communication rejection context detected"
+        },
+        {
+          "meaning": "sadness",
+          "keywords": ["sad", "lonely", "hurt", "upset"],
+          "reason": "Negative emotional context detected"
+        }
+      ]
+    },
+
+    "fixation": {
+      "default": "something constantly occupying attention",
+      "reason": "Repeated-thought expression detected"
+    },
+
+    "confidence": {
+      "default": "self-confidence or self-importance",
+      "reason": "Confidence-related expression detected"
+    },
+
+    "criticism": {
+      "default": "criticism or disapproval",
+      "reason": "Critical expression detected"
+    },
+
+    "laughter": {
+      "rules": [
+        {
+          "meaning": "amusement or laughter",
+          "keywords": ["funny", "joke", "meme", "hilarious", "laugh", "comedy"],
+          "reason": "Humorous context detected"
+        },
+        {
+          "meaning": "shock or disbelief",
+          "keywords": ["omg", "unbelievable", "seriously", "shocked"],
+          "reason": "Surprise-related context detected"
+        }
+      ]
+    },
+
+    "emphasis": {
+      "default": "strong emphasis or finality",
+      "reason": "Emphasis expression detected"
+    },
+
+    "sympathy": {
+      "rules": [
+        {
+          "meaning": "sympathy",
+          "keywords": ["sorry", "hurt", "pain", "injured", "unfortunate"],
+          "reason": "Sympathetic context detected"
+        },
+        {
+          "meaning": "surprise",
+          "keywords": ["wow", "unexpected", "unbelievable"],
+          "reason": "Surprising context detected"
+        }
+      ]
+    },
+
+    "success": {
+      "default": "success or positive outcome",
+      "reason": "Positive outcome expression detected"
+    },
+
+    "failure": {
+      "default": "failure or negative outcome",
+      "reason": "Negative outcome expression detected"
+    },
+
+    "denial": {
+      "default": "denial or refusal to accept a situation",
+      "reason": "Denial-related expression detected"
+    },
+
+    "focus": {
+      "default": "concentration or determination",
+      "reason": "Focus-related expression detected"
+    }
+  },
+
+  "emoji_terms": {
+    "💀": "skull",
+    "😭": "crying",
+    "😂": "laughing",
+    "🤣": "laughing",
+    "🥲": "bittersweet",
+    "🫠": "overwhelmed",
+    "🙃": "sarcasm",
+    "🙄": "annoyance",
+    "🤡": "embarrassment",
+    "🤦": "frustration",
+    "🫡": "respect",
+    "🤝": "agreement",
+    "🔥": "positive",
+    "❤️": "affection",
+    "💔": "heartbreak",
+    "🥺": "pleading",
+    "✨": "positive",
+    "💅": "confidence",
+    "👀": "curiosity",
+    "🤯": "shock"
+  },
+
+  "emoji_groups": {
+    "skull": {
+      "rules": [
+        {
+          "meaning": "laughter",
+          "keywords": ["funny", "joke", "meme", "hilarious", "lol", "haha"],
+          "reason": "Humorous context detected"
+        },
+        {
+          "meaning": "feeling overwhelmed",
+          "keywords": ["exam", "test", "deadline", "assignment", "stressed", "pressure", "cooked"],
+          "reason": "Stress-related context detected"
+        },
+        {
+          "meaning": "shock or disbelief",
+          "keywords": ["omg", "unbelievable", "seriously", "shocked", "unexpected"],
+          "reason": "Surprise-related context detected"
+        }
+      ]
+    },
+
+    "crying": {
+      "rules": [
+        {
+          "meaning": "extreme laughter",
+          "keywords": ["funny", "joke", "meme", "hilarious", "lol", "haha"],
+          "reason": "Humorous context detected"
+        },
+        {
+          "meaning": "sadness",
+          "keywords": ["miss", "sad", "lost", "sorry", "lonely", "heartbroken"],
+          "reason": "Sadness-related context detected"
+        },
+        {
+          "meaning": "feeling overwhelmed",
+          "keywords": ["exam", "stress", "pressure", "tired", "overwhelmed", "deadline"],
+          "reason": "Stress-related context detected"
+        }
+      ]
+    },
+
+    "laughing": {
+      "default": "laughter or amusement",
+      "reason": "Laughter emoji detected"
+    },
+
+    "bittersweet": {
+      "rules": [
+        {
+          "meaning": "sadness",
+          "keywords": ["miss", "lost", "goodbye", "lonely"],
+          "reason": "Sadness-related context detected"
+        },
+        {
+          "meaning": "relief",
+          "keywords": ["finally", "finished", "done", "safe"],
+          "reason": "Relief-related context detected"
+        }
+      ]
+    },
+
+    "overwhelmed": {
+      "rules": [
+        {
+          "meaning": "embarrassment",
+          "keywords": ["awkward", "embarrassed", "mistake"],
+          "reason": "Embarrassing context detected"
+        },
+        {
+          "meaning": "feeling overwhelmed",
+          "keywords": ["stress", "exam", "work", "deadline", "pressure"],
+          "reason": "Overwhelming situation detected"
+        }
+      ]
+    },
+
+    "sarcasm": {
+      "rules": [
+        {
+          "meaning": "sarcasm or irony",
+          "keywords": ["great", "perfect", "sure", "yeah", "wonderful"],
+          "reason": "Potentially ironic context detected"
+        },
+        {
+          "meaning": "frustration",
+          "keywords": ["annoying", "problem", "again", "seriously"],
+          "reason": "Frustration-related context detected"
+        }
+      ]
+    },
+
+    "annoyance": {
+      "default": "annoyance or disapproval",
+      "reason": "Annoyance emoji detected"
+    },
+
+    "embarrassment": {
+      "default": "embarrassment or self-deprecation",
+      "reason": "Embarrassment-related emoji detected"
+    },
+
+    "frustration": {
+      "default": "frustration or disbelief",
+      "reason": "Frustration emoji detected"
+    },
+
+    "respect": {
+      "default": "respect or acknowledgment",
+      "reason": "Respectful acknowledgment detected"
+    },
+
+    "agreement": {
+      "default": "agreement or cooperation",
+      "reason": "Agreement emoji detected"
+    },
+
+    "positive": {
+      "rules": [
+        {
+          "meaning": "admiration or excitement",
+          "keywords": ["amazing", "awesome", "perfect", "great", "best", "incredible"],
+          "reason": "Positive evaluation detected"
+        },
+        {
+          "meaning": "emphasis or celebration",
+          "keywords": ["won", "success", "achievement", "congratulations"],
+          "reason": "Celebratory context detected"
+        }
+      ]
+    },
+
+    "affection": {
+      "rules": [
+        {
+          "meaning": "love or affection",
+          "keywords": ["love", "miss", "care", "sweet", "dear"],
+          "reason": "Affectionate context detected"
+        },
+        {
+          "meaning": "gratitude",
+          "keywords": ["thank", "thanks", "grateful", "appreciate"],
+          "reason": "Gratitude-related context detected"
+        }
+      ]
+    },
+
+    "heartbreak": {
+      "default": "heartbreak or sadness",
+      "reason": "Heartbreak emoji detected"
+    },
+
+    "pleading": {
+      "rules": [
+        {
+          "meaning": "pleading or asking",
+          "keywords": ["please", "help", "want", "need", "beg"],
+          "reason": "Request-related context detected"
+        },
+        {
+          "meaning": "affection",
+          "keywords": ["love", "cute", "sweet", "adorable"],
+          "reason": "Affectionate context detected"
+        }
+      ]
+    },
+
+    "confidence": {
+      "default": "confidence or sassiness",
+      "reason": "Confident expression detected"
+    },
+
+    "curiosity": {
+      "default": "curiosity or interest",
+      "reason": "Curiosity emoji detected"
+    },
+
+    "shock": {
+      "default": "shock or amazement",
+      "reason": "Surprise emoji detected"
+    }
+  }
+}

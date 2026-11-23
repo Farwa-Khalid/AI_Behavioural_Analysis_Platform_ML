@@ -1,19 +1,66 @@
+
+import json
 import emoji
+from pathlib import Path
 
-GENZ_MAP = {
-    ":skull:": " shocked overwhelmed",
-    ":loudly_crying_face:": " emotional crying ",
-    ":face_with_tears_of_joy:": " laughing amusement ",
-    ":fire:": " amazing exciting ",
-    ":red_heart:": " love affection ",
-    ":enraged_face:": " anger furious "
-}
 
-def replace_emojis(text):
+# Locate the emoji JSON file
+MAPPING_FILE = (
+    Path(__file__).parent / "mappings" / "emojis.json"
+)
 
-    text = emoji.demojize(text)
 
-    for emoji_code, meaning in GENZ_MAP.items():
-        text = text.replace(emoji_code, meaning)
+# Load Gen Z emoji interpretations
+def load_emoji_map():
 
-    return text
+    with open(MAPPING_FILE, "r", encoding="utf-8") as file:
+        data = json.load(file)
+
+    if not isinstance(data, dict):
+        raise ValueError("Emoji JSON must contain an object.")
+
+    return data
+
+
+GENZ_MAP = load_emoji_map()
+
+
+# Detect emojis in text
+def detect_emojis(text):
+
+    if not isinstance(text, str):
+        raise TypeError("Input must be a string.")
+
+    detected_emojis = []
+
+    emoji_matches = emoji.emoji_list(text)
+
+    for match in emoji_matches:
+
+        emoji_character = match["emoji"]
+
+        shortcode = emoji.demojize(
+            emoji_character,
+            language="en"
+        )
+
+        standard_meaning = (
+            shortcode.strip(":").replace("_", " ")
+        )
+
+        genz_meanings = GENZ_MAP.get(
+            emoji_character,
+            []
+        )
+
+        detected_emojis.append({
+            "emoji": emoji_character,
+            "shortcode": shortcode,
+            "standard_meaning": standard_meaning,
+            "genz_interpretations": genz_meanings,
+            "start": match["match_start"],
+            "end": match["match_end"]
+        })
+
+    return detected_emojis
+

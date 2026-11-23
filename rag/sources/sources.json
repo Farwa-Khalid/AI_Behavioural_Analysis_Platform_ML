@@ -1,0 +1,122 @@
+[
+  {
+    "id": "SRC001",
+    "title": "Psychology 2e",
+    "author": "OpenStax",
+    "source_type": "open_textbook",
+    "license": "CC BY-NC-SA / verify AI reuse permission",
+    "url": "https://openstax.org/books/psychology-2e/",
+    "topics": [
+      "personality",
+      "big_five",
+      "neuroticism"
+    ],
+    "usage": "reference_only",
+    "status": "verified_reference"
+  },
+  {
+    "id": "SRC002",
+    "title": "International Personality Item Pool",
+    "author": "IPIP",
+    "source_type": "public_domain_personality_resource",
+    "license": "public_domain",
+    "url": "https://www.ipip.ori.org/",
+    "topics": [
+      "personality",
+      "big_five",
+      "neuroticism",
+      "assessment"
+    ],
+    "usage": "knowledge_and_assessment_reference",
+    "status": "verified"
+  },
+  {
+    "id": "SRC003",
+    "title": "A roadmap to rumination: A review of the definition, assessment, and conceptualization of this multifaceted construct",
+    "author": "Nolen-Hoeksema and colleagues",
+    "source_type": "open_access_research",
+    "license": "open_access",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2832862/",
+    "topics": [
+      "rumination",
+      "worry",
+      "assessment",
+      "repetitive_thinking"
+    ],
+    "usage": "knowledge_base",
+    "status": "selected"
+  },
+  {
+    "id": "SRC004",
+    "title": "From Tripping and Falling to Ruminating and Worrying: A Meta-Control Account of Repetitive Negative Thinking",
+    "author": "Hitchcock and Frank",
+    "source_type": "open_access_research",
+    "license": "open_access",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11314892/",
+    "topics": [
+      "rumination",
+      "worry",
+      "repetitive_negative_thinking",
+      "controllability"
+    ],
+    "usage": "knowledge_base",
+    "status": "selected"
+  },
+  {
+    "id": "SRC005",
+    "title": "Exposure and reactivity to repetitive thought in the neuroticism-distress relationship",
+    "source_type": "open_access_research",
+    "license": "open_access",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7928268/",
+    "topics": [
+      "neuroticism",
+      "repetitive_thought",
+      "emotional_reactivity"
+    ],
+    "usage": "knowledge_base",
+    "status": "selected"
+  },
+  {
+    "id": "SRC006",
+    "title": "Effects of neuroticism and depressive symptoms on psychophysiological responses to social evaluation",
+    "source_type": "open_access_research",
+    "license": "CC BY 4.0",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5018028/",
+    "topics": [
+      "neuroticism",
+      "social_evaluation",
+      "emotional_response"
+    ],
+    "usage": "knowledge_base",
+    "status": "selected"
+  },
+  {
+    "id": "SRC007",
+    "title": "The Role of Personality in Emotional Reactivity",
+    "source_type": "open_access_research",
+    "license": "open_access",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6246090/",
+    "topics": [
+      "personality",
+      "emotional_reactivity",
+      "individual_differences"
+    ],
+    "usage": "knowledge_base",
+    "status": "selected"
+  },
+  {
+    "id": "SRC008",
+    "title": "Delineating the Role of Negative Verbal Thinking in Promoting Worry, Perceived Threat, and Anxiety",
+    "source_type": "open_access_research",
+    "license": "CC BY 3.0",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4827167/",
+    "topics": [
+      "worry",
+      "future_threat",
+      "controllability",
+      "negative_thinking"
+    ],
+    "usage": "knowledge_base",
+    "status": "selected"
+  }
+]

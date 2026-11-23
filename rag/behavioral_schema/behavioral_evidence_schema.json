@@ -1,0 +1,321 @@
+{
+  "schema_name": "behavioral_evidence_schema",
+  "schema_version": "1.0",
+  "purpose": "Machine-readable contract for representing behavioral evidence in the adaptive neuroticism assessment chatbot.",
+  "design_principles": [
+    "Behavioral evidence is not the same as a neuroticism diagnosis.",
+    "The constructs are engineered behavioral representations informed by literature, not official Neuroticism dimensions.",
+    "Missing evidence must remain unknown rather than being inferred.",
+    "Ambiguous evidence may be represented as uncertain.",
+    "Questions are generated dynamically; the schema does not define a fixed question sequence.",
+    "The existing neuroticism ML model remains separate from behavioral evidence."
+  ],
+  "evidence_states": [
+    "known",
+    "unknown",
+    "uncertain"
+  ],
+  "universal_attributes": {
+    "detected": "Whether evidence for the construct is present.",
+    "trigger": "What initiated the thought or emotional response.",
+    "context": "Situation in which the behavior or experience occurs.",
+    "content": "Topic or subject of the thought or experience.",
+    "frequency": "How often it occurs.",
+    "intensity": "Strength of the experience.",
+    "persistence": "How long it continues.",
+    "repetition": "Whether the same type of thought or response recurs.",
+    "controllability": "Ability to control or stop it.",
+    "switching_difficulty": "Difficulty shifting attention away.",
+    "recovery": "How quickly the person returns toward baseline.",
+    "functional_impact": "Whether it interferes with normal functioning.",
+    "repeated_pattern": "Whether it appears repeatedly across situations."
+  },
+  "construct_hierarchy": {
+    "repetitive_negative_thinking": {
+      "type": "cross_cutting_process",
+      "children": [
+        "worry",
+        "rumination"
+      ]
+    },
+    "emotional_reactivity": {
+      "type": "behavioral_construct",
+      "children": []
+    },
+    "social_evaluation": {
+      "type": "behavioral_construct",
+      "children": []
+    },
+    "stress_vulnerability": {
+      "type": "behavioral_construct",
+      "children": []
+    },
+    "negative_self_evaluation": {
+      "type": "behavioral_construct",
+      "children": []
+    }
+  },
+  "constructs": {
+    "repetitive_negative_thinking": {
+      "description": "Broad pattern of repetitive, negatively oriented thinking.",
+      "attributes": [
+        "detected",
+        "negative_content",
+        "repetition",
+        "persistence",
+        "controllability",
+        "switching_difficulty",
+        "functional_impact",
+        "context",
+        "content"
+      ]
+    },
+    "worry": {
+      "description": "Future-oriented negative thinking involving possible negative outcomes and related appraisals.",
+      "attributes": [
+        "detected",
+        "temporal_orientation",
+        "negative_outcome",
+        "content",
+        "repetition",
+        "persistence",
+        "controllability",
+        "switching_difficulty",
+        "perceived_likelihood",
+        "perceived_severity",
+        "perceived_coping",
+        "functional_impact"
+      ]
+    },
+    "rumination": {
+      "description": "Repetitive thinking about negative experiences, events, self-related concerns, or their causes and consequences.",
+      "attributes": [
+        "detected",
+        "temporal_orientation",
+        "content",
+        "trigger",
+        "repetition",
+        "persistence",
+        "controllability",
+        "switching_difficulty",
+        "self_focus",
+        "post_event_thinking",
+        "functional_impact"
+      ]
+    },
+    "emotional_reactivity": {
+      "description": "Emotional response characteristics including sensitivity, intensity, persistence, recovery, and perceived control.",
+      "attributes": [
+        "detected",
+        "trigger",
+        "sensitivity",
+        "intensity",
+        "persistence",
+        "recovery",
+        "controllability",
+        "functional_impact",
+        "repeated_pattern"
+      ]
+    },
+    "social_evaluation": {
+      "description": "Behavioral evidence related to being judged, criticized, evaluated, accepted, or rejected by others.",
+      "attributes": [
+        "detected",
+        "context",
+        "negative_expectation",
+        "perceived_judgment",
+        "criticism_sensitivity",
+        "emotional_reactivity",
+        "avoidance",
+        "post_event_thinking",
+        "persistence",
+        "controllability"
+      ]
+    },
+    "stress_vulnerability": {
+      "description": "Difficulty coping or feeling overwhelmed under stressful circumstances.",
+      "attributes": [
+        "detected",
+        "trigger",
+        "perceived_stress",
+        "feeling_overwhelmed",
+        "perceived_coping",
+        "coping_difficulty",
+        "recovery",
+        "persistence",
+        "functional_impact",
+        "repeated_pattern"
+      ]
+    },
+    "negative_self_evaluation": {
+      "description": "Self-doubt, self-criticism, perceived failure, and perceived inadequacy.",
+      "attributes": [
+        "detected",
+        "trigger",
+        "self_doubt",
+        "self_criticism",
+        "perceived_failure",
+        "perceived_inadequacy",
+        "persistence",
+        "controllability",
+        "emotional_reactivity",
+        "functional_impact"
+      ]
+    }
+  },
+  "construct_specific_attributes": {
+    "negative_content": "Whether the thought content is negatively valenced.",
+    "temporal_orientation": "Whether the experience primarily concerns the past, present, or future.",
+    "negative_outcome": "The feared or experienced negative outcome.",
+    "perceived_likelihood": "How likely the person believes the negative outcome is.",
+    "perceived_severity": "How severe or costly the person believes the outcome would be.",
+    "perceived_coping": "How capable the person believes they would be of coping with the situation.",
+    "self_focus": "Degree to which the thinking is focused on the self.",
+    "post_event_thinking": "Continued thinking after a social or other significant event.",
+    "sensitivity": "How readily an emotional response is triggered.",
+    "criticism_sensitivity": "Degree of emotional or cognitive response to criticism.",
+    "avoidance": "Whether the person avoids relevant situations.",
+    "perceived_judgment": "Perception that others are evaluating or judging the person.",
+    "negative_expectation": "Expectation of negative social evaluation or outcome.",
+    "perceived_stress": "Subjective level of stress experienced.",
+    "feeling_overwhelmed": "Whether demands are experienced as difficult to manage.",
+    "coping_difficulty": "Difficulty managing or responding effectively to stress.",
+    "self_doubt": "Doubt about one's own ability, performance, or adequacy.",
+    "self_criticism": "Negative or harsh evaluation of oneself.",
+    "perceived_failure": "Interpretation of an event as personal failure.",
+    "perceived_inadequacy": "Belief or feeling of not being good enough or capable enough."
+  },
+  "source_mapping": {
+    "SRC001": {
+      "role": "reference_only",
+      "contribution": [
+        "personality",
+        "big_five",
+        "dimensional_neuroticism"
+      ]
+    },
+    "SRC002": {
+      "role": "knowledge_and_assessment_reference",
+      "contribution": [
+        "anxiety",
+        "angry_hostility",
+        "depression",
+        "self_consciousness",
+        "impulsiveness",
+        "vulnerability"
+      ]
+    },
+    "SRC003": {
+      "role": "knowledge_base",
+      "contribution": [
+        "rumination",
+        "repetitive_thinking",
+        "persistence",
+        "controllability",
+        "post_event_thinking"
+      ]
+    },
+    "SRC004": {
+      "role": "knowledge_base",
+      "contribution": [
+        "repetitive_negative_thinking",
+        "rumination_worry_overlap",
+        "repetition",
+        "negative_content",
+        "persistence",
+        "controllability",
+        "switching_difficulty"
+      ]
+    },
+    "SRC005": {
+      "role": "knowledge_base",
+      "contribution": [
+        "neuroticism_repetitive_thought",
+        "exposure",
+        "frequency",
+        "affective_reactivity"
+      ]
+    },
+    "SRC006": {
+      "role": "knowledge_base",
+      "contribution": [
+        "social_evaluation",
+        "negative_expectation",
+        "perceived_judgment",
+        "criticism_sensitivity",
+        "emotional_reactivity",
+        "post_event_thinking"
+      ]
+    },
+    "SRC007": {
+      "role": "knowledge_base",
+      "contribution": [
+        "emotional_reactivity",
+        "sensitivity",
+        "intensity",
+        "persistence",
+        "recovery",
+        "controllability"
+      ]
+    },
+    "SRC008": {
+      "role": "knowledge_base",
+      "contribution": [
+        "worry",
+        "future_orientation",
+        "negative_outcome",
+        "perceived_likelihood",
+        "perceived_severity",
+        "perceived_coping",
+        "controllability"
+      ]
+    }
+  },
+  "evidence_item_contract": {
+    "construct": "Name of the behavioral construct.",
+    "attribute": "Attribute being represented.",
+    "value": "Observed or extracted value.",
+    "state": "known, unknown, or uncertain.",
+    "source_turn": "Conversation turn from which the evidence was extracted, when available.",
+    "confidence": "Extractor confidence between 0 and 1, when available."
+  },
+  "assessment_state_contract": {
+    "constructs": "Current behavioral evidence for each construct.",
+    "conversation": {
+      "turn_count": "Number of user-response turns.",
+      "recent_responses": "Recent conversation responses used for context."
+    },
+    "model_output": {
+      "neurotic_probability": "Existing model's predicted neurotic probability.",
+      "non_neurotic_probability": "Existing model's predicted non-neurotic probability.",
+      "confidence": "Existing model confidence."
+    }
+  },
+  "system_boundaries": {
+    "ml_model": "Produces model-based neuroticism prediction.",
+    "evidence_extractor": "Identifies behavioral evidence from user responses.",
+    "assessment_state": "Maintains known, unknown, and uncertain evidence across turns.",
+    "controller": "Selects useful missing behavioral evidence to investigate next.",
+    "rag": "Retrieves scientifically relevant knowledge for the controller target.",
+    "llm": "Generates one understandable, grounded follow-up question.",
+    "diagnosis": "Out of scope."
+  },
+  "adaptive_question_rules": [
+    "Select a target from missing or uncertain evidence rather than a fixed question number.",
+    "Prefer one high-value missing attribute at a time.",
+    "Do not ask for information that is already sufficiently known unless clarification is needed.",
+    "Do not assume an attribute is false because it was not mentioned.",
+    "Do not combine several unrelated targets into one question.",
+    "Avoid diagnostic wording.",
+    "Avoid repeating previously answered questions.",
+    "Use retrieved knowledge as grounding rather than as a source of fixed question sequences."
+  ],
+  "safety_rules": [
+    "Do not diagnose mental disorders.",
+    "Do not claim a single behavioral pattern proves neuroticism.",
+    "Do not treat model probability as a clinical diagnosis.",
+    "Do not make unsupported causal claims.",
+    "Represent missing information as unknown.",
+    "Represent ambiguous information as uncertain."
+  ]
+}

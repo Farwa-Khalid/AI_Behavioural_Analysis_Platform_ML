@@ -31,4 +31,6 @@ Thumbs.db
 *.temp
 
 # Large ML model
-neuroticism_module/mpnet_embedder/
+neuroticism_module/mpnet_embedder/*.backup 
+*.before_pull 
+neuroticism_module/mpnet_embedder/ 

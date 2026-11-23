@@ -1,0 +1,1593 @@
+{
+  "results": {
+    "all": {
+      "sentence_label": {
+        "accuracy": 0.5583,
+        "macro_f1": 0.5493
+      },
+      "own_shap": {
+        "accuracy": 0.5,
+        "macro_f1": 0.4302
+      },
+      "window_shap": {
+        "accuracy": 0.6083,
+        "macro_f1": 0.5719
+      },
+      "ours_linked": {
+        "accuracy": 0.575,
+        "macro_f1": 0.5523
+      },
+      "ours_fallback": {
+        "accuracy": 0.6083,
+        "macro_f1": 0.5906
+      }
+    },
+    "mixed_sentences": {
+      "sentence_label": {
+        "accuracy": 0.5583,
+        "macro_f1": 0.5493
+      },
+      "own_shap": {
+        "accuracy": 0.5,
+        "macro_f1": 0.4302
+      },
+      "window_shap": {
+        "accuracy": 0.6083,
+        "macro_f1": 0.5719
+      },
+      "ours_linked": {
+        "accuracy": 0.575,
+        "macro_f1": 0.5523
+      },
+      "ours_fallback": {
+        "accuracy": 0.6083,
+        "macro_f1": 0.5906
+      }
+    },
+    "opinion_link_coverage": 0.708
+  },
+  "details": [
+    {
+      "sentence": "In the shop, these MacBooks are encased in a soft rubber enclosure - so you will never know about the razor edge until you buy it, get it home, break the seal and use it (very clever con).",
+      "term": "rubber enclosure",
+      "gold": "positive",
+      "opinion_words": [
+        "encased",
+        "soft"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "In the shop, these MacBooks are encased in a soft rubber enclosure - so you will never know about the razor edge until you buy it, get it home, break the seal and use it (very clever con).",
+      "term": "edge",
+      "gold": "negative",
+      "opinion_words": [
+        "never",
+        "know"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Drivers updated ok but the BIOS update froze the system up and the computer shut down.",
+      "term": "Drivers",
+      "gold": "positive",
+      "opinion_words": [
+        "updated"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Drivers updated ok but the BIOS update froze the system up and the computer shut down.",
+      "term": "BIOS update",
+      "gold": "negative",
+      "opinion_words": [
+        "froze"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Drivers updated ok but the BIOS update froze the system up and the computer shut down.",
+      "term": "system",
+      "gold": "negative",
+      "opinion_words": [
+        "froze"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Everything is so easy to use, Mac software is just so much simpler than Microsoft software.",
+      "term": "Mac software",
+      "gold": "positive",
+      "opinion_words": [
+        "just",
+        "much",
+        "simpler"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Everything is so easy to use, Mac software is just so much simpler than Microsoft software.",
+      "term": "Microsoft software",
+      "gold": "negative",
+      "opinion_words": [
+        "just",
+        "much",
+        "simpler"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Everything is so easy to use, Mac software is just so much simpler than Microsoft software.",
+      "term": "use",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Also, if you need to talk to a representive at Microsoft, there is a charge, which I believe is robbery, since you are charged enormous amounts for a very badly designed system, which most people would have went with XP if they could.",
+      "term": "representive at Microsoft",
+      "gold": "negative",
+      "opinion_words": [
+        "talk"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Also, if you need to talk to a representive at Microsoft, there is a charge, which I believe is robbery, since you are charged enormous amounts for a very badly designed system, which most people would have went with XP if they could.",
+      "term": "system",
+      "gold": "negative",
+      "opinion_words": [
+        "charged",
+        "badly",
+        "designed"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Also, if you need to talk to a representive at Microsoft, there is a charge, which I believe is robbery, since you are charged enormous amounts for a very badly designed system, which most people would have went with XP if they could.",
+      "term": "XP",
+      "gold": "positive",
+      "opinion_words": [
+        "went"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I love WIndows 7 which is a vast improvment over Vista.",
+      "term": "WIndows 7",
+      "gold": "positive",
+      "opinion_words": [
+        "love"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "I love WIndows 7 which is a vast improvment over Vista.",
+      "term": "Vista",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "the only fact i dont like about apples is they generally use safari and i dont use safari but after i install Mozzilla firfox i love every single bit about it.",
+      "term": "safari",
+      "gold": "negative",
+      "opinion_words": [
+        "generally",
+        "use"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "the only fact i dont like about apples is they generally use safari and i dont use safari but after i install Mozzilla firfox i love every single bit about it.",
+      "term": "safari",
+      "gold": "negative",
+      "opinion_words": [
+        "nt",
+        "use"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "the only fact i dont like about apples is they generally use safari and i dont use safari but after i install Mozzilla firfox i love every single bit about it.",
+      "term": "Mozzilla firfox",
+      "gold": "positive",
+      "opinion_words": [
+        "install"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I've been impressed with the battery life and the performance for such a small amount of memory.",
+      "term": "battery life",
+      "gold": "positive",
+      "opinion_words": [
+        "impressed"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "I've been impressed with the battery life and the performance for such a small amount of memory.",
+      "term": "performance",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I've been impressed with the battery life and the performance for such a small amount of memory.",
+      "term": "memory",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The AMD Turin processor seems to always perform so much better than Intel.",
+      "term": "AMD Turin processor",
+      "gold": "positive",
+      "opinion_words": [
+        "seems"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The AMD Turin processor seems to always perform so much better than Intel.",
+      "term": "Intel",
+      "gold": "negative",
+      "opinion_words": [
+        "much",
+        "better"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "It seems they could have updated XP and done without creating Vista.",
+      "term": "XP",
+      "gold": "positive",
+      "opinion_words": [
+        "updated"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "It seems they could have updated XP and done without creating Vista.",
+      "term": "Vista",
+      "gold": "negative",
+      "opinion_words": [
+        "creating"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The store honored their warrenty and made the comment that they don't even recommend the HP brand because of the problems with their warrentys.",
+      "term": "warrenty",
+      "gold": "positive",
+      "opinion_words": [
+        "honored"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The store honored their warrenty and made the comment that they don't even recommend the HP brand because of the problems with their warrentys.",
+      "term": "warrentys",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Tech support tells me the latter problem is a power supply problem and have offered to fix it if it happens again.",
+      "term": "Tech support",
+      "gold": "positive",
+      "opinion_words": [
+        "tells"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Tech support tells me the latter problem is a power supply problem and have offered to fix it if it happens again.",
+      "term": "power supply",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "So what if the laptops/mobile phones look chic and cool? The after sales support is terrible.",
+      "term": "after sales support",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "So what if the laptops/mobile phones look chic and cool? The after sales support is terrible.",
+      "term": "look",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The price premium is a little much, but when you start looking at the features it is worth the added cash.",
+      "term": "price premium",
+      "gold": "negative",
+      "opinion_words": [
+        "little",
+        "much"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The price premium is a little much, but when you start looking at the features it is worth the added cash.",
+      "term": "features",
+      "gold": "positive",
+      "opinion_words": [
+        "looking"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The size is perfect and I do not recomend anything bigger except for any person who can exceed the limited space it gives you.",
+      "term": "size",
+      "gold": "positive",
+      "opinion_words": [
+        "perfect"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The size is perfect and I do not recomend anything bigger except for any person who can exceed the limited space it gives you.",
+      "term": "space",
+      "gold": "negative",
+      "opinion_words": [
+        "exceed",
+        "limited"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I like those programs better than Office and you can save your files to be completely compatible with the Office programs as well.",
+      "term": "programs",
+      "gold": "positive",
+      "opinion_words": [
+        "like",
+        "better"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "I like those programs better than Office and you can save your files to be completely compatible with the Office programs as well.",
+      "term": "Office",
+      "gold": "negative",
+      "opinion_words": [
+        "better"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "although its windows vista compared to windows xp sucks.",
+      "term": "windows vista",
+      "gold": "negative",
+      "opinion_words": [
+        "compared"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "although its windows vista compared to windows xp sucks.",
+      "term": "windows xp",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "the features are great, the only thing it needs is better speakers.",
+      "term": "features",
+      "gold": "positive",
+      "opinion_words": [
+        "great"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "the features are great, the only thing it needs is better speakers.",
+      "term": "speakers",
+      "gold": "negative",
+      "opinion_words": [
+        "better"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Navigation through the computer is far superior compared to Windows operating systems, as well.",
+      "term": "Navigation",
+      "gold": "positive",
+      "opinion_words": [
+        "far",
+        "superior"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Navigation through the computer is far superior compared to Windows operating systems, as well.",
+      "term": "Windows operating systems",
+      "gold": "negative",
+      "opinion_words": [
+        "compared",
+        "well"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Though the picture, video, and music software is nowhere close to professional grade software Im used to (CS5) but does the job for beginner and even intermediate media designers.",
+      "term": "music software",
+      "gold": "negative",
+      "opinion_words": [
+        "nowhere",
+        "close"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Though the picture, video, and music software is nowhere close to professional grade software Im used to (CS5) but does the job for beginner and even intermediate media designers.",
+      "term": "software",
+      "gold": "positive",
+      "opinion_words": [
+        "nowhere",
+        "close"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Though the picture, video, and music software is nowhere close to professional grade software Im used to (CS5) but does the job for beginner and even intermediate media designers.",
+      "term": "picture",
+      "gold": "negative",
+      "opinion_words": [
+        "nowhere",
+        "close"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Though the picture, video, and music software is nowhere close to professional grade software Im used to (CS5) but does the job for beginner and even intermediate media designers.",
+      "term": "video",
+      "gold": "negative",
+      "opinion_words": [
+        "nowhere",
+        "close"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Even though it is running Snow Leopard, 2.4 GHz C2D is a bit of an antiquated CPU and thus the occasional spinning wheel would appear when running Office Mac applications such as Word or Excel.",
+      "term": "Snow Leopard",
+      "gold": "positive",
+      "opinion_words": [
+        "Even",
+        "running"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Even though it is running Snow Leopard, 2.4 GHz C2D is a bit of an antiquated CPU and thus the occasional spinning wheel would appear when running Office Mac applications such as Word or Excel.",
+      "term": "CPU",
+      "gold": "negative",
+      "opinion_words": [
+        "antiquated"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Even though it is running Snow Leopard, 2.4 GHz C2D is a bit of an antiquated CPU and thus the occasional spinning wheel would appear when running Office Mac applications such as Word or Excel.",
+      "term": "Office Mac applications",
+      "gold": "negative",
+      "opinion_words": [
+        "when",
+        "running"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Even though it is running Snow Leopard, 2.4 GHz C2D is a bit of an antiquated CPU and thus the occasional spinning wheel would appear when running Office Mac applications such as Word or Excel.",
+      "term": "Word",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Even though it is running Snow Leopard, 2.4 GHz C2D is a bit of an antiquated CPU and thus the occasional spinning wheel would appear when running Office Mac applications such as Word or Excel.",
+      "term": "Excel",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Even though it is running Snow Leopard, 2.4 GHz C2D is a bit of an antiquated CPU and thus the occasional spinning wheel would appear when running Office Mac applications such as Word or Excel.",
+      "term": "spinning wheel",
+      "gold": "negative",
+      "opinion_words": [
+        "occasional"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "lots of extra space but the keyboard is ridiculously small.",
+      "term": "space",
+      "gold": "positive",
+      "opinion_words": [
+        "extra"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "lots of extra space but the keyboard is ridiculously small.",
+      "term": "keyboard",
+      "gold": "negative",
+      "opinion_words": [
+        "ridiculously",
+        "small"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Overall I feel this netbook was poor quality, had poor performance, although it did have great battery life when it did work.",
+      "term": "quality",
+      "gold": "negative",
+      "opinion_words": [
+        "poor"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Overall I feel this netbook was poor quality, had poor performance, although it did have great battery life when it did work.",
+      "term": "performance",
+      "gold": "negative",
+      "opinion_words": [
+        "had",
+        "poor"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Overall I feel this netbook was poor quality, had poor performance, although it did have great battery life when it did work.",
+      "term": "battery life",
+      "gold": "positive",
+      "opinion_words": [
+        "have",
+        "great"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "It's also very capable of doing moderate video editing (although you may need the performance boost of the larger MacBook Pros for heavy duty mobile video editing).",
+      "term": "video editing",
+      "gold": "positive",
+      "opinion_words": [
+        "doing",
+        "moderate"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "It's also very capable of doing moderate video editing (although you may need the performance boost of the larger MacBook Pros for heavy duty mobile video editing).",
+      "term": "performance",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Keyboard is great but primary and secondary control buttons could be more durable.",
+      "term": "Keyboard",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Keyboard is great but primary and secondary control buttons could be more durable.",
+      "term": "control buttons",
+      "gold": "negative",
+      "opinion_words": [
+        "great",
+        "more",
+        "durable"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "It could be a perfect laptop if it would have faster system memory and its radeon 5850 would have DDR5 instead of DDR3.",
+      "term": "system memory",
+      "gold": "negative",
+      "opinion_words": [
+        "have"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "It could be a perfect laptop if it would have faster system memory and its radeon 5850 would have DDR5 instead of DDR3.",
+      "term": "radeon 5850",
+      "gold": "negative",
+      "opinion_words": [
+        "have"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "It could be a perfect laptop if it would have faster system memory and its radeon 5850 would have DDR5 instead of DDR3.",
+      "term": "DDR5",
+      "gold": "positive",
+      "opinion_words": [
+        "have"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "It could be a perfect laptop if it would have faster system memory and its radeon 5850 would have DDR5 instead of DDR3.",
+      "term": "DDR3",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The battery doesn't last long but I'm sure an upgrade battery would solve that problem.",
+      "term": "battery",
+      "gold": "negative",
+      "opinion_words": [
+        "n't",
+        "last",
+        "long"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The battery doesn't last long but I'm sure an upgrade battery would solve that problem.",
+      "term": "battery",
+      "gold": "positive",
+      "opinion_words": [
+        "solve"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "That's very possible, but since they don't make Windows XP drivers for the sound card in this machine, I was stuck until Windows 7 came out.",
+      "term": "Windows XP drivers",
+      "gold": "negative",
+      "opinion_words": [
+        "n't",
+        "make"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "That's very possible, but since they don't make Windows XP drivers for the sound card in this machine, I was stuck until Windows 7 came out.",
+      "term": "sound card",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "That's very possible, but since they don't make Windows XP drivers for the sound card in this machine, I was stuck until Windows 7 came out.",
+      "term": "Windows 7",
+      "gold": "positive",
+      "opinion_words": [
+        "came"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "That included the extra Sony Sonic Stage software, the speakers and the subwoofer I got (that WAS worth the money), the bluetooth mouse for my supposedly bluetooth enabled computer, the extended life battery and the Docking port.",
+      "term": "speakers",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "That included the extra Sony Sonic Stage software, the speakers and the subwoofer I got (that WAS worth the money), the bluetooth mouse for my supposedly bluetooth enabled computer, the extended life battery and the Docking port.",
+      "term": "subwoofer",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "That included the extra Sony Sonic Stage software, the speakers and the subwoofer I got (that WAS worth the money), the bluetooth mouse for my supposedly bluetooth enabled computer, the extended life battery and the Docking port.",
+      "term": "bluetooth enabled",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The Material this Pro is made out of seems a lot nicer than any PC  Specs: Like I said this performs a lot better than any computer I've had in the past.",
+      "term": "Material",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The Material this Pro is made out of seems a lot nicer than any PC  Specs: Like I said this performs a lot better than any computer I've had in the past.",
+      "term": "Specs",
+      "gold": "negative",
+      "opinion_words": [
+        "nicer"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The Material this Pro is made out of seems a lot nicer than any PC  Specs: Like I said this performs a lot better than any computer I've had in the past.",
+      "term": "performs",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "First things first, Macbook pro has many applications to make life easier, unlike the windows computers.",
+      "term": "applications",
+      "gold": "positive",
+      "opinion_words": [
+        "pro",
+        "has",
+        "many"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "First things first, Macbook pro has many applications to make life easier, unlike the windows computers.",
+      "term": "windows",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "It didn't come with any software installed outside of windows media, but for the price, I was very pleased with the condition and the overall product.",
+      "term": "software",
+      "gold": "negative",
+      "opinion_words": [
+        "n't",
+        "come"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "It didn't come with any software installed outside of windows media, but for the price, I was very pleased with the condition and the overall product.",
+      "term": "price",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The most recent being that my Safari internet browser is freaking out on me, but I have just been using firefox instead.",
+      "term": "Safari internet browser",
+      "gold": "negative",
+      "opinion_words": [
+        "freaking"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The most recent being that my Safari internet browser is freaking out on me, but I have just been using firefox instead.",
+      "term": "firefox",
+      "gold": "positive",
+      "opinion_words": [
+        "just",
+        "using",
+        "instead"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The laptop is outstanding in all aspects except that it has the Windows 7 starter and not the full Windows 7.",
+      "term": "Windows 7 starter",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The laptop is outstanding in all aspects except that it has the Windows 7 starter and not the full Windows 7.",
+      "term": "Windows 7",
+      "gold": "positive",
+      "opinion_words": [
+        "full"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Supplied software: The software that comes with this machine is greatly welcomed compared to what Windows comes with.",
+      "term": "software",
+      "gold": "positive",
+      "opinion_words": [
+        "greatly",
+        "welcomed"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Supplied software: The software that comes with this machine is greatly welcomed compared to what Windows comes with.",
+      "term": "Windows",
+      "gold": "negative",
+      "opinion_words": [
+        "comes"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "My power supply cord developed exposed wires within the first year of ownership, so it was covered by the Applecare warranty plan.",
+      "term": "power supply cord",
+      "gold": "negative",
+      "opinion_words": [
+        "developed"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "My power supply cord developed exposed wires within the first year of ownership, so it was covered by the Applecare warranty plan.",
+      "term": "Applecare warranty plan",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I love windows 7 but i can't give Toshiba any credit for that, unless y'all get serious about ergonomics and making required connections less obtrusive i will be looking to different manufacturer next time.",
+      "term": "windows 7",
+      "gold": "positive",
+      "opinion_words": [
+        "love"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "I love windows 7 but i can't give Toshiba any credit for that, unless y'all get serious about ergonomics and making required connections less obtrusive i will be looking to different manufacturer next time.",
+      "term": "ergonomics",
+      "gold": "negative",
+      "opinion_words": [
+        "serious"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "I love windows 7 but i can't give Toshiba any credit for that, unless y'all get serious about ergonomics and making required connections less obtrusive i will be looking to different manufacturer next time.",
+      "term": "connections",
+      "gold": "negative",
+      "opinion_words": [
+        "making",
+        "required"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "and they replaced the awesome ergonomic small lightweight power supply with a power supply that weighed more than the machine itself.",
+      "term": "power supply",
+      "gold": "positive",
+      "opinion_words": [
+        "replaced",
+        "awesome",
+        "ergonomic",
+        "small",
+        "lightweight"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "and they replaced the awesome ergonomic small lightweight power supply with a power supply that weighed more than the machine itself.",
+      "term": "power supply",
+      "gold": "negative",
+      "opinion_words": [
+        "replaced"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Battery life could be better but overall for the price and Toshiba's reputation for laptops it's great!",
+      "term": "Battery life",
+      "gold": "negative",
+      "opinion_words": [
+        "better"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Battery life could be better but overall for the price and Toshiba's reputation for laptops it's great!",
+      "term": "price",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "The neat and organized icon list is a welcome change from cluttered and confusing desktop icons.",
+      "term": "icon list",
+      "gold": "positive",
+      "opinion_words": [
+        "welcome",
+        "change"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "The neat and organized icon list is a welcome change from cluttered and confusing desktop icons.",
+      "term": "desktop icons",
+      "gold": "negative",
+      "opinion_words": [
+        "cluttered"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "while the keyboard itself is alright, the plate around it is cheap plastic and makes a hollow sound when using the mouse command buttons.",
+      "term": "keyboard",
+      "gold": "positive",
+      "opinion_words": [
+        "alright"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "while the keyboard itself is alright, the plate around it is cheap plastic and makes a hollow sound when using the mouse command buttons.",
+      "term": "plate",
+      "gold": "negative",
+      "opinion_words": [
+        "cheap",
+        "plastic"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "while the keyboard itself is alright, the plate around it is cheap plastic and makes a hollow sound when using the mouse command buttons.",
+      "term": "mouse command buttons",
+      "gold": "negative",
+      "opinion_words": [
+        "when",
+        "using"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Sure, the initial out of pocket expense is greater, but that should not dissuade anyone from the fact that these machines run like none other on the planet, and when I factor in all the money in that I wasted on Geek Squad and the latest patches to de-corrupt my infested PCs, it probably comes out about even anyhow.",
+      "term": "expense",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Sure, the initial out of pocket expense is greater, but that should not dissuade anyone from the fact that these machines run like none other on the planet, and when I factor in all the money in that I wasted on Geek Squad and the latest patches to de-corrupt my infested PCs, it probably comes out about even anyhow.",
+      "term": "run",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Only other thing is that if you are using this for document creation Apple doesnt provide any kind of word processor (such as works for windows), but iwork is cheap compared to office.",
+      "term": "iwork",
+      "gold": "positive",
+      "opinion_words": [
+        "cheap"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Only other thing is that if you are using this for document creation Apple doesnt provide any kind of word processor (such as works for windows), but iwork is cheap compared to office.",
+      "term": "office",
+      "gold": "negative",
+      "opinion_words": [
+        "compared"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Only other thing is that if you are using this for document creation Apple doesnt provide any kind of word processor (such as works for windows), but iwork is cheap compared to office.",
+      "term": "word processor",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Overall : Poor, Features: Average, Performance: Poor, Battery Life: Excellent, Price-Value: Poor",
+      "term": "Performance",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Overall : Poor, Features: Average, Performance: Poor, Battery Life: Excellent, Price-Value: Poor",
+      "term": "Battery Life",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Overall : Poor, Features: Average, Performance: Poor, Battery Life: Excellent, Price-Value: Poor",
+      "term": "Price",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Overall : Poor, Features: Average, Performance: Poor, Battery Life: Excellent, Price-Value: Poor",
+      "term": "Value",
+      "gold": "negative",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": ", Applications respond immediately (not like the tired MS applications).",
+      "term": "Applications",
+      "gold": "positive",
+      "opinion_words": [
+        "respond",
+        "immediately"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": ", Applications respond immediately (not like the tired MS applications).",
+      "term": "MS applications",
+      "gold": "negative",
+      "opinion_words": [
+        "respond",
+        "immediately",
+        "tired"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Looks nice, but has a horribly cheap feel.",
+      "term": "feel",
+      "gold": "negative",
+      "opinion_words": [
+        "has",
+        "horribly",
+        "cheap"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Looks nice, but has a horribly cheap feel.",
+      "term": "Looks",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "negative",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "I have other computers that get strong signals that don't drop in places that this \"net\"book loses its signal.",
+      "term": "signals",
+      "gold": "positive",
+      "opinion_words": [
+        "get",
+        "strong"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I have other computers that get strong signals that don't drop in places that this \"net\"book loses its signal.",
+      "term": "signal",
+      "gold": "negative",
+      "opinion_words": [
+        "loses"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Also, one of the users mentioned how the edges on the macbook is sharp, if you have money to spend on one of the incase shells, it doesn't seem to be a problem.",
+      "term": "edges",
+      "gold": "negative",
+      "opinion_words": [
+        "how",
+        "sharp"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "positive",
+      "window_shap": "negative",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "Also, one of the users mentioned how the edges on the macbook is sharp, if you have money to spend on one of the incase shells, it doesn't seem to be a problem.",
+      "term": "incase shells",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Strengths:Well-shaped Weaknesses:A bad videocard!",
+      "term": "videocard",
+      "gold": "negative",
+      "opinion_words": [
+        "bad"
+      ],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "Strengths:Well-shaped Weaknesses:A bad videocard!",
+      "term": "shaped",
+      "gold": "positive",
+      "opinion_words": [],
+      "sentence_label": "negative",
+      "own_shap": "negative",
+      "window_shap": "negative",
+      "ours_linked": "negative",
+      "ours_fallback": "negative"
+    },
+    {
+      "sentence": "I love this program, it is superior to windows movie maker.",
+      "term": "program",
+      "gold": "positive",
+      "opinion_words": [
+        "love"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    },
+    {
+      "sentence": "I love this program, it is superior to windows movie maker.",
+      "term": "windows movie maker",
+      "gold": "negative",
+      "opinion_words": [
+        "superior"
+      ],
+      "sentence_label": "positive",
+      "own_shap": "negative",
+      "window_shap": "positive",
+      "ours_linked": "positive",
+      "ours_fallback": "positive"
+    }
+  ]
+}

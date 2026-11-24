@@ -1,3 +1,4 @@
+
 from transformers import pipeline
 
 from shared_utils.enrichment import generate_enriched_text

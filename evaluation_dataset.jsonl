@@ -1,0 +1,20 @@
+﻿{"id":"EV01","text":"That joke was so funny, I couldn't stop laughing ðŸ˜‚","gold_labels":["amusement"],"split":"validation","category":"humour"}
+{"id":"EV02","text":"I'm genuinely excited about my graduation tomorrow!","gold_labels":["excitement","joy"],"split":"validation","category":"positive"}
+{"id":"EV03","text":"I feel completely alone since everyone moved away.","gold_labels":["sadness","grief"],"split":"validation","category":"sadness"}
+{"id":"EV04","text":"This deadline is stressing me out and I don't know where to start ðŸ˜­","gold_labels":["nervousness","fear"],"split":"validation","category":"stress"}
+{"id":"EV05","text":"Bro, that outfit is fire ðŸ”¥","gold_labels":["admiration","approval"],"split":"validation","category":"slang_positive"}
+{"id":"EV06","text":"I can't believe you remembered my birthday. Thank you so much!","gold_labels":["gratitude","joy"],"split":"validation","category":"gratitude"}
+{"id":"EV07","text":"I'm not sure what you mean. Could you explain it again?","gold_labels":["confusion","curiosity"],"split":"validation","category":"neutral_question"}
+{"id":"EV08","text":"That was such a rude thing to say. I'm really annoyed.","gold_labels":["annoyance","anger"],"split":"validation","category":"negative"}
+{"id":"EV09","text":"Lowkey, I'm worried about the results of my interview.","gold_labels":["nervousness","fear"],"split":"validation","category":"slang_stress"}
+{"id":"EV10","text":"Everything is finally working out. I feel so relieved!","gold_labels":["relief","joy"],"split":"validation","category":"relief"}
+{"id":"EV11","text":"LMAO, I just watched that video three times ðŸ˜‚ðŸ’€","gold_labels":["amusement"],"split":"test","category":"humour_emoji"}
+{"id":"EV12","text":"I miss my old friends and the memories we shared.","gold_labels":["sadness","grief"],"split":"test","category":"sadness"}
+{"id":"EV13","text":"No cap, you absolutely nailed that presentation!","gold_labels":["admiration","approval"],"split":"test","category":"slang_positive"}
+{"id":"EV14","text":"I have three assignments due tonight and I'm panicking.","gold_labels":["fear","nervousness"],"split":"test","category":"academic_stress"}
+{"id":"EV15","text":"What an amazing surprise! I never expected this!","gold_labels":["surprise","joy"],"split":"test","category":"surprise"}
+{"id":"EV16","text":"I feel terrible for forgetting to call you. I'm sorry.","gold_labels":["remorse","sadness"],"split":"test","category":"remorse"}
+{"id":"EV17","text":"The instructions are clear, and I understand what I need to do.","gold_labels":["neutral"],"split":"test","category":"neutral"}
+{"id":"EV18","text":"Please don't give up. I care about you and I'm here for you.","gold_labels":["caring","love"],"split":"test","category":"support"}
+{"id":"EV19","text":"That plan makes no sense, and I strongly disagree with it.","gold_labels":["disapproval","annoyance"],"split":"test","category":"disagreement"}
+{"id":"EV20","text":"I really hope things get better next week. Stay positive!","gold_labels":["optimism"],"split":"test","category":"optimism"}

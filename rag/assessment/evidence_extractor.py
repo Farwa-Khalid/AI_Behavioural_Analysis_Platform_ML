@@ -12,8 +12,6 @@ It intentionally uses transparent rules instead of an LLM.
 import re
 
 
-
-
 def is_explicit_worry_denial(text):
     """Detect clear statements that the person does not experience worry."""
 
@@ -74,6 +72,20 @@ EMOTIONAL_REACTIVITY_PATTERNS = [
     r"\bgets upset easily\b",
     r"\bvery upset\b",
     r"\bstrong reaction\b",
+
+    # Informal expressions of emotional reactivity
+    r"\bvery reactive\b",
+    r"\bhighly reactive\b",
+    r"\bemotionally reactive\b",
+    r"\breactive person\b",
+    r"\bi am reactive\b",
+    r"\bi'm reactive\b",
+    r"\bi feel reactive\b",
+    r"\bi react emotionally\b",
+    r"\bi overreact\b",
+    r"\bi tend to overreact\b",
+    r"\boverreact easily\b",
+    r"\bvery sensitive to criticism\b",
 ]
 
 SOCIAL_EVALUATION_PATTERNS = [
@@ -297,14 +309,28 @@ def extract_worry_content(text):
 
 
 def extract_persistence(text):
-    """Extract how long a thought or worry continues."""
+    """
+    Extract how long a thought or worry continues.
+
+    Returns a broad duration category:
+        "minutes"
+        "hours"
+        "days"
+        "brief"
+        "uncertain"
+        "variable"
+        None
+    """
 
     if not isinstance(text, str) or not text.strip():
         return None
 
     text_lower = text.lower().strip()
 
-    # Check uncertainty and variability before matching durations.
+    # --------------------------------------------------------
+    # 1. Check uncertainty first.
+    # --------------------------------------------------------
+
     uncertain_patterns = [
         r"\bi don't know\b",
         r"\bi dont know\b",
@@ -316,7 +342,18 @@ def extract_persistence(text):
         r"\bhard to say\b",
         r"\bcan't say\b",
         r"\bcannot say\b",
+        r"\bno idea\b",
     ]
+
+    if any(
+        re.search(pattern, text_lower)
+        for pattern in uncertain_patterns
+    ):
+        return "uncertain"
+
+    # --------------------------------------------------------
+    # 2. Check variable duration.
+    # --------------------------------------------------------
 
     variable_patterns = [
         r"\bit varies\b",
@@ -327,47 +364,79 @@ def extract_persistence(text):
         r"\bdifferent each time\b",
     ]
 
-    if any(re.search(p, text_lower) for p in uncertain_patterns):
-        return "uncertain"
-
-    if any(re.search(p, text_lower) for p in variable_patterns):
+    if any(
+        re.search(pattern, text_lower)
+        for pattern in variable_patterns
+    ):
         return "variable"
 
-    # Longer durations first.
+    # --------------------------------------------------------
+    # 3. Check longer durations first.
+    # --------------------------------------------------------
+
     duration_patterns = [
+
         ("days", [
             r"\bfor a couple of days\b",
             r"\bfor several days\b",
             r"\bfor days\b",
             r"\b2 days\b",
             r"\btwo days\b",
+            r"\bthree days\b",
+            r"\b3 days\b",
             r"\ball week\b",
             r"\bfor weeks\b",
+            r"\b\d+\s*(?:days?|d)\b",
+            r"\bafter a few days\b",
+            r"\bafter several days\b",
+            r"\bafter two days\b",
+            r"\bafter three days\b",
+            r"\ba few days\b",
+            r"\bseveral days\b",
+            r"\b\d+\s*(?:days?|d)\b",
         ]),
+
         ("hours", [
-        r"\bfor hours\b",
-        r"\bfor an hour\b",
-        r"\bfor one hour\b",
-        r"\bfor 1 hour\b",
-        r"\b1 hour\b",
-        r"\bone hour\b",
-        r"\ban hour\b",
-        r"\bentire hour\b",
-        r"\bwhole hour\b",
-        r"\bentire hr\b",
-        r"\bwhole hr\b",
-        r"\bfor the whole day\b",
-        r"\bthe whole day\b",
-        r"\ball day\b",
-]),
+            # Numeric expressions:
+            # 2 hours, 2 hrs, 1 hr, 3h
+            r"\b\d+(?:\.\d+)?\s*(?:hours?|hrs?|hr|h)\b",
+
+            # Written number expressions:
+            r"\bone hour\b",
+            r"\btwo hours\b",
+            r"\bthree hours\b",
+            r"\bfour hours\b",
+            r"\bfive hours\b",
+            r"\bsix hours\b",
+            r"\ba couple of hours\b",
+            r"\bseveral hours\b",
+            r"\bfor hours\b",
+            r"\bfor an hour\b",
+            r"\ban hour\b",
+            r"\bhalf an hour\b",
+            r"\bwhole hour\b",
+            r"\bentire hour\b",
+            r"\bwhole day\b",
+            r"\bentire day\b",
+            r"\ball day\b",
+           r"\ban entire hr\b",
+            r"\bentire hr\b",
+        ]),
+
         ("minutes", [
+            # Numeric expressions:
+            # 30 minutes, 15 mins, 5 min
+            r"\b\d+\s*(?:minutes?|mins?|min)\b",
+
             r"\bfor minutes\b",
             r"\bfor a few minutes\b",
             r"\bfor several minutes\b",
             r"\ba few minutes\b",
             r"\bseveral minutes\b",
             r"\bfor a short time\b",
+            r"\bhalf an hour\b",
         ]),
+
         ("brief", [
             r"\bfor a second\b",
             r"\bfor seconds\b",
@@ -377,12 +446,20 @@ def extract_persistence(text):
             r"\bfor sometime\b",
             r"\bfor a while\b",
             r"\bfor some minutes\b",
-            
+            r"\bafter a while\b",
+            r"\bafter some time\b",
+            r"\bafter sometime\b",
+            r"\ba while\b",
+            r"\bsome time\b",
         ]),
     ]
 
     for duration, patterns in duration_patterns:
-        if any(re.search(p, text_lower) for p in patterns):
+
+        if any(
+            re.search(pattern, text_lower)
+            for pattern in patterns
+        ):
             return duration
 
     return None
@@ -679,6 +756,8 @@ def extract_contextual_answer(text, objective):
         "repetitive_negative_thinking",
         "stress_vulnerability",
         "emotional_reactivity",
+        "social_evaluation",
+        "negative_self_evaluation",
     }:
         return {}
 
@@ -869,6 +948,7 @@ def extract_contextual_answer(text, objective):
         ):
             evidence["frequency"] = "often"
 
+  
     # --------------------------------------------------------
     # 3. Controllability and switching difficulty
     # --------------------------------------------------------
@@ -899,6 +979,16 @@ def extract_contextual_answer(text, objective):
             "takes effort to stop",
             "hard to switch off",
             "unable to switch it off",
+            "struggle to manage",
+            "find it difficult to manage",
+            "cannot manage it",
+            "can't manage it",
+                        "struggle to control",
+            "struggle with controlling",
+            "find it hard to control",
+            "difficulty controlling",
+            "hard to manage",
+            "difficult to manage",
         ]
 
         manageable_patterns = [
@@ -933,6 +1023,20 @@ def extract_contextual_answer(text, objective):
             "if i make myself busy",
             "when i keep busy",
             "for that specific period of time",
+            "i manage it",
+            "i can manage it",
+            "i manage these reactions",
+            "i can manage these reactions",
+            "i handle it",
+            "i can handle it",
+            "i handle these feelings",
+            "i can handle these feelings",
+            "i deal with it",
+            "i can deal with it",
+            "i cope with it",
+            "i can cope with it",
+            "i am able to manage",
+            "i am able to control",
         ]
 
         # Check manageable phrases first.
@@ -1015,22 +1119,179 @@ def extract_contextual_answer(text, objective):
 
             if len(trigger.split()) >= 2:
                 evidence["trigger"] = trigger
+                # --------------------------------------------------------
+    # 6. Functional impact: How does the experience affect
+    #    everyday activities, work, studies, or relationships?
+    # --------------------------------------------------------
+    elif attribute == "functional_impact":
+
+        no_impact_patterns = [
+            r"\bno impact\b",
+            r"\bno effect\b",
+            r"\bdoesn't affect\b",
+            r"\bdoes not affect\b",
+            r"\bdoesn't interfere\b",
+            r"\bdoes not interfere\b",
+            r"\bnot affected\b",
+            r"\bdoesn't change anything\b",
+            r"\bdoes not change anything\b",
+            r"\bnot affecting my daily life\b",
+            r"\bdoesn't affect my daily life\b",
+            r"\bdoes not affect my daily life\b",
+            r"\bnot really\b",
+            r"\bnot at all\b",
+        ]
+
+        impact_patterns = [
+            r"\baffect(s|ed|ing)?\b",
+            r"\bimpact(s|ed|ing)?\b",
+            r"\binterfere(s|d|ing)?\b",
+            r"\bstruggle with\b",
+            r"\bdifficulty\b",
+            r"\bhard to\b",
+            r"\bfind it difficult\b",
+            r"\bcan't focus\b",
+            r"\bcannot focus\b",
+            r"\bcan't concentrate\b",
+            r"\bcannot concentrate\b",
+            r"\blose concentration\b",
+            r"\bavoid\b",
+            r"\bwithdraw\b",
+            r"\bmiss out\b",
+            r"\bunable to\b",
+            r"\bget in the way\b",
+            r"\bproblems with\b",
+            r"\btrouble with\b",
+        ]
+
+        if any(
+            re.search(pattern, answer)
+            for pattern in no_impact_patterns
+        ):
+            evidence["functional_impact"] = "none"
+
+        elif any(
+            re.search(pattern, answer)
+            for pattern in impact_patterns
+        ):
+            # Preserve the user's original description.
+            evidence["functional_impact"] = text.strip()
+                # --------------------------------------------------------
+    # 7. Recovery: How long does it take to return to the
+    #    person's usual emotional state?
+    # --------------------------------------------------------
+    elif attribute == "recovery":
+
+        recovery_patterns = [
+            r"\bfeel normal again\b",
+            r"\bback to normal\b",
+            r"\breturn to normal\b",
+            r"\bback to my usual self\b",
+            r"\bfeel like myself again\b",
+            r"\bback to my usual state\b",
+            r"\breturn to my usual state\b",
+            r"\bcalm down completely\b",
+            r"\bget back to normal\b",
+            r"\brecover\b",
+            r"\brecovery\b",
+        ]
+
+        if any(
+            re.search(pattern, answer)
+            for pattern in recovery_patterns
+        ):
+            recovery_duration = extract_persistence(answer)
+
+            if recovery_duration:
+                evidence["recovery"] = recovery_duration
         
     # --------------------------------------------------------
     # 5. Emotional intensity: How strong is the reaction?
     # --------------------------------------------------------
+    
+    # --------------------------------------------------------
+    # 8. Sensitivity: How easily does an emotional reaction occur?
+    # --------------------------------------------------------
+    elif construct == "emotional_reactivity" and attribute == "sensitivity":
+
+        # Check negative responses first to avoid false positives.
+        low_patterns = [
+            r"\bnot easily upset\b",
+            r"\bnot easily bothered\b",
+            r"\bnot sensitive to small things\b",
+            r"\bsmall things don't upset me\b",
+            r"\bsmall things do not upset me\b",
+            r"\bminor things don't bother me\b",
+            r"\bminor things do not bother me\b",
+            r"\bi rarely get upset over small things\b",
+            r"\bi rarely get bothered by little things\b",
+        ]
+
+        high_patterns = [
+            r"\beven small things\b",
+            r"\bsmall things can upset me\b",
+            r"\blittle things can upset me\b",
+            r"\bminor things can upset me\b",
+            r"\bget upset easily\b",
+            r"\bgets upset easily\b",
+            r"\beasily upset\b",
+            r"\beasily bothered\b",
+            r"\breact strongly to small things\b",
+            r"\breact strongly to minor things\b",
+            r"\bmore strongly than most people\b",
+            r"\bmore sensitive than most people\b",
+            r"\bvery sensitive\b",
+            r"\bhighly sensitive\b",
+            r"\boverreact to small things\b",
+            r"\boverreact to minor things\b",
+        ]
+
+        moderate_patterns = [
+            r"\bsomewhat sensitive\b",
+            r"\boccasionally upset by small things\b",
+            r"\bsometimes upset by small things\b",
+            r"\bsometimes bothered by minor things\b",
+            r"\bsometimes get upset by small things\b",
+        ]
+
+        if any(
+            re.search(pattern, answer)
+            for pattern in low_patterns
+        ):
+            evidence["sensitivity"] = "low"
+
+        elif any(
+            re.search(pattern, answer)
+            for pattern in moderate_patterns
+        ):
+            evidence["sensitivity"] = "moderate"
+
+        elif any(
+            re.search(pattern, answer)
+            for pattern in high_patterns
+        ):
+            evidence["sensitivity"] = "high"
+
+
+    # --------------------------------------------------------
+    # 6. Emotional intensity: How strong is the reaction?
+    # --------------------------------------------------------
     elif construct == "emotional_reactivity" and attribute == "intensity":
 
-        # Check lower intensity first so that negative
-        # expressions are not mistaken for strong reactions.
+        # Check low intensity first to avoid classifying
+        # phrases such as "a little upset" as high.
         low_patterns = [
             r"\bnot very strong\b",
             r"\bnot that strong\b",
             r"\bnot intense\b",
+            r"\bnot very upset\b",
+            r"\bnot that upset\b",
+            r"\bnot too upset\b",
             r"\bmild\b",
             r"\bslight\b",
             r"\ba little\b",
             r"\bslightly\b",
+            r"\ba bit\b",
         ]
 
         moderate_patterns = [
@@ -1038,23 +1299,56 @@ def extract_contextual_answer(text, objective):
             r"\bmedium\b",
             r"\bmoderately strong\b",
             r"\bnoticeable\b",
+            r"\bmoderately upsetting\b",
+            r"\bsomewhat upsetting\b",
+            r"\bsomewhat upset\b",
+            r"\bmoderately upset\b",
         ]
-
         high_patterns = [
             r"\bvery strong\b",
             r"\bextremely strong\b",
             r"\bquite strong\b",
-            r"\bintense\b",
             r"\bvery intense\b",
+            r"\bextremely intense\b",
+            r"\bintense\b",
             r"\boverwhelming\b",
+            r"\boverwhelmed\b",
+            r"\bextremely overwhelmed\b",
+            r"\bvery overwhelmed\b",
             r"\bvery overwhelming\b",
+            r"\bdistressing\b",
+            r"\bvery distressing\b",
+            r"\bextremely distressing\b",
+            r"\bso upset\b",
+            r"\bvery upset\b",
+            r"\breally upset\b",
+            r"\bextremely upset\b",
+            r"\bdeeply upset\b",
             r"\bfreak out\b",
             r"\bfreaking out\b",
             r"\bpanic attack(s)?\b",
+
+            # Strong anxiety and nervousness
+            r"\bvery anxious\b",
+            r"\bextremely anxious\b",
+            r"\bhighly anxious\b",
+            r"\bseverely anxious\b",
+            r"\bvery nervous\b",
+            r"\bextremely nervous\b",
+            r"\bhighly nervous\b",
         ]
 
+        # Detect explicit denial before accepting high intensity.
+        negated_patterns = [
+            r"\b(?:don't|do not|doesn't|does not|didn't|did not|never|not)\s+(?:(?:feel|feeling|seem|seems|be|am|is|are)\s+)?(?:very\s+|really\s+|that\s+|extremely\s+|highly\s+|severely\s+|quite\s+)?(?:overwhelmed|overwhelming|distressed|distressing|upset|intense|anxious|nervous)\b",
+        ]
         if any(re.search(p, answer) for p in low_patterns):
-            evidence["intensity"] = "low"
+                 evidence["intensity"] = "low"
+
+        elif any(re.search(p, answer) for p in negated_patterns):
+            # Explicit denial means there is no positive
+            # evidence of emotional intensity.
+            pass
 
         elif any(re.search(p, answer) for p in moderate_patterns):
             evidence["intensity"] = "moderate"

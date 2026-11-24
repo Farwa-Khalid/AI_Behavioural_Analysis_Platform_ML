@@ -37,8 +37,52 @@ EVIDENCE_PRIORITIES = {
     "switching_difficulty": 8,
     "functional_impact": 9,
     "recovery": 10,
+    "sensitivity": 11,
     "repetition": 4,
 }
+
+ASSESSMENT_ATTRIBUTES = {
+
+    "worry": {
+        "temporal_orientation",
+        "content",
+        "repetition",
+        "frequency",
+        "persistence",
+        "controllability",
+    },
+
+    "rumination": {
+        "temporal_orientation",
+        "content",
+        "repetition",
+        "persistence",
+        "controllability",
+    },
+
+    "emotional_reactivity": {
+        "trigger",
+        "sensitivity",
+        "intensity",
+        "persistence",
+        "controllability",
+        "recovery",
+        "functional_impact",
+    },
+
+    "social_evaluation": set(),
+
+    "stress_vulnerability": {
+        "trigger",
+        "persistence",
+        "recovery",
+        "functional_impact",
+    },
+
+    "negative_self_evaluation": set(),
+}
+
+
 
 CONSTRUCT_SPECIFICITY = {
     "social_evaluation": 1,
@@ -142,7 +186,10 @@ def rank_missing_evidence(missing):
 
 def select_next_evidence(state):
     """
-    Select the highest-priority missing behavioral attribute.
+    Select the highest-priority missing core assessment attribute.
+
+    Only attributes listed in ASSESSMENT_ATTRIBUTES are eligible.
+    Optional state attributes are ignored.
 
     Objectives already recorded in conversation["skipped_objectives"]
     are ignored without changing their actual evidence values.
@@ -194,23 +241,30 @@ def select_next_evidence(state):
         )
     )
 
-    # 5. Find missing attributes that have not been skipped.
+    # 5. Find missing approved assessment attributes.
     for construct in detected_constructs:
+
         attributes = constructs[construct]
+
+        # Only explicitly approved attributes can be assessed.
+        approved_attributes = ASSESSMENT_ATTRIBUTES.get(
+            construct,
+            set()
+        )
+
         missing_attributes = []
 
-        for attribute, value in attributes.items():
+        for attribute in approved_attributes:
 
-            if attribute == "detected":
-                continue
+            value = attributes.get(attribute)
 
             objective_key = f"{construct}.{attribute}"
 
-            # Skip objectives the conversation has already skipped.
+            # Ignore objectives already skipped.
             if objective_key in skipped_objectives:
                 continue
 
-            # None means that evidence has not been established.
+            # None means evidence has not been established.
             if value is None:
                 missing_attributes.append({
                     "construct": construct,
@@ -223,16 +277,22 @@ def select_next_evidence(state):
                     ),
                 })
 
-        # 6. Select the highest-priority remaining attribute.
+        # 6. Select the highest-priority missing attribute.
         if missing_attributes:
             ranked = rank_missing_evidence(
                 missing_attributes
             )
-            return ranked[0]
+
+            selected = ranked[0]
+
+            selected["objective"] = describe_evidence_objective(
+                selected
+            )
+
+            return selected
 
     # No eligible missing objectives remain.
     return None
-
 
     # --------------------------------------------------------
     # 7. No missing evidence
@@ -318,6 +378,8 @@ def describe_evidence_objective(objective):
 
         ("emotional_reactivity", "recovery"):
             "Determine how quickly the person returns to their normal emotional state.",
+        ("emotional_reactivity", "sensitivity"):
+            "Determine how easily the person experiences strong emotional reactions compared with their usual responses.",
 
         ("social_evaluation", "negative_expectation"):
             "Determine whether the person expects negative judgment from others.",

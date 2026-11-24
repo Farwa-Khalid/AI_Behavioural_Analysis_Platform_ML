@@ -82,3 +82,74 @@ for answer, expected in persistence_cases:
     )
 
 print("All persistence tests passed.")
+
+# ============================================================
+# Emotional intensity follow-up tests
+# ============================================================
+
+intensity_objective = {
+    "construct": "emotional_reactivity",
+    "attribute": "intensity",
+}
+
+intensity_cases = [
+    ("It is distressing and makes me so upset.", "high"),
+    ("I feel extremely overwhelmed.", "high"),
+    ("It is moderately upsetting.", "moderate"),
+    ("It bothers me a little.", "low"),
+    ("I feel slightly disturbed.", "low"),
+]
+
+for answer, expected in intensity_cases:
+    result = extract_contextual_answer(
+        answer,
+        intensity_objective,
+    )
+
+    actual = result.get(
+        "emotional_reactivity", {}
+    ).get("intensity")
+
+    print(
+        f"Answer: {answer!r} | "
+        f"Expected: {expected} | Actual: {actual}"
+    )
+
+    assert actual == expected, (
+        f"Intensity extraction failed for {answer!r}"
+    )
+
+print("All intensity tests passed.")
+
+# ============================================================
+# Negative and qualified intensity tests
+# ============================================================
+
+intensity_edge_cases = [
+    ("I don't feel overwhelmed.", None),
+    ("I'm not overwhelmed.", None),
+    ("I'm not that upset.", "low"),
+    ("Sometimes I feel overwhelmed.", "high"),
+    ("I feel upset, but only a little.", "low"),
+]
+
+for answer, expected in intensity_edge_cases:
+    result = extract_contextual_answer(
+        answer,
+        intensity_objective,
+    )
+
+    actual = result.get(
+        "emotional_reactivity", {}
+    ).get("intensity")
+
+    print(
+        f"Answer: {answer!r} | "
+        f"Expected: {expected} | Actual: {actual}"
+    )
+
+    assert actual == expected, (
+        f"Intensity edge case failed for {answer!r}"
+    )
+
+print("All intensity edge-case tests passed.")

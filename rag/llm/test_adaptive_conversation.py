@@ -99,28 +99,36 @@ def is_conversation_complaint(text):
 
 
 def user_wants_to_stop(text):
-    """Recognize explicit requests to stop the assessment."""
+    """Recognize direct and informal requests to stop the assessment."""
 
-    normalized = normalize_text(text)
+    normalized = normalize_text(text).strip()
 
-    stop_phrases = [
-        "exit",
-        "quit",
-        "stop the assessment",
-        "stop this assessment",
-        "i want to stop",
-        "i want to quit",
-        "leave me alone",
-        "end the assessment",
+    stop_patterns = [
+        # Direct stop requests: stop, stoppp, stop it, stop talking
+        r"^(?:(?:yes|yeah|yep|no|nope|okay|ok)\s+)*"
+        r"(?:please\s+)?stop+p*\b",
+
+         r"\b(?:can you|could you|would you)\s+"
+         r"(?:(?:please|pls)\s+)?stop+p*\b",
+        # Explicit requests to end or leave
+        r"\b(?:i want|i would like|i'd like)\s+"
+        r"(?:to\s+)?(?:stop|quit|end)\b",
+
+        r"\b(?:i do not|i don't|i dont)\s+"
+        r"want to continue\b",
+
+        r"\b(?:leave me alone|end the assessment|"
+        r"stop the assessment|stop this assessment)\b",
+
+        # Standalone exit commands
+        r"^(?:exit|quit|end)$",
     ]
 
-    return (
-        normalized in stop_phrases
-        or any(
-            phrase in normalized
-            for phrase in stop_phrases[2:]
-        )
+    return any(
+        re.search(pattern, normalized)
+        for pattern in stop_patterns
     )
+
 
 
 def get_targeted_evidence(
@@ -180,14 +188,15 @@ def get_targeted_evidence(
         }
     }
 
-
 def process_user_response(state, user_response):
     """
     Process one user response and generate the next question.
 
     Returns:
-        The next objective dictionary, or None when the
-        assessment should stop.
+        - Objective dictionary when assessment continues.
+        - Confirmation marker when waiting for user permission.
+        - Initial clarification marker when the first response is unclear.
+        - None when assessment stops or completes.
     """
 
     print("\n" + "=" * 60)
@@ -197,7 +206,10 @@ def process_user_response(state, user_response):
 
     conversation = state["conversation"]
 
-    # Save the answer once.
+    # --------------------------------------------------------
+    # 1. Save user response
+    # --------------------------------------------------------
+
     add_user_response(state, user_response)
 
     history = conversation.setdefault("history", [])
@@ -206,64 +218,253 @@ def process_user_response(state, user_response):
         "text": user_response,
     })
 
-    # Handle explicit stop requests.
+    normalized_response = normalize_text(user_response)
+
+    confirmed_continue = False
+
+    # --------------------------------------------------------
+    # 2. Handle pending continue/stop confirmation
+    # --------------------------------------------------------
+
+    if conversation.get("awaiting_continue_confirmation", False):
+
+        continue_patterns = [
+            r"^(?:yes|yeah|yep|sure|okay|ok)(?:\s|$)",
+            r"^continue(?:\s|$)",
+            r"^go on(?:\s|$)",
+            r"^lets continue(?:\s|$)",
+            r"^i want to continue(?:\s|$)",
+            r"^i would like to continue(?:\s|$)",
+            r"^continue the assessment(?:\s|$)",
+        ]
+
+        stop_patterns = [
+            r"^(?:no|nope)(?:\s|$)",
+            r"^no thanks(?:\s|$)",
+            r"^no thank you(?:\s|$)",
+            r"^stop(?:\s|$)",
+            r"^end(?:\s|$)",
+            r"^stop the assessment(?:\s|$)",
+            r"^i want to stop(?:\s|$)",
+            r"^i do not want to continue(?:\s|$)",
+            r"^i dont want to continue(?:\s|$)",
+            r"^i would rather stop(?:\s|$)",
+        ]
+
+        wants_to_continue = any(
+            re.search(pattern, normalized_response)
+            for pattern in continue_patterns
+        )
+
+        wants_to_stop = any(
+            re.search(pattern, normalized_response)
+            for pattern in stop_patterns
+        )
+
+        if wants_to_stop or user_wants_to_stop(user_response):
+
+            conversation["awaiting_continue_confirmation"] = False
+            conversation["exit_requested"] = True
+            conversation["termination_reason"] = "user_exit"
+            conversation["last_objective"] = None
+
+            print("\nAssessment ended at your request.")
+
+            return None
+
+        elif wants_to_continue:
+
+            conversation["awaiting_continue_confirmation"] = False
+            conversation["last_objective"] = None
+
+            confirmed_continue = True
+
+            print(
+                "\nThank you. We can continue the assessment."
+            )
+
+        else:
+
+            print(
+                "\nI just need a clear choice. "
+                "Would you like to continue the assessment, "
+                "or would you prefer to stop here?"
+            )
+
+            return {"status": "awaiting_confirmation"}
+
+    # --------------------------------------------------------
+    # 3. Handle explicit exit requests
+    # --------------------------------------------------------
+
     if user_wants_to_stop(user_response):
+
         print("\nAssessment ended at your request.")
+
         conversation["last_objective"] = None
+        conversation["exit_requested"] = True
+        conversation["termination_reason"] = "user_exit"
+
         return None
 
     previous_objective = conversation.get("last_objective")
     current_turn = conversation["turn_count"]
 
-    # Track unsuccessful answers separately for each objective.
     objective_attempts = conversation.setdefault(
         "objective_attempts", {}
     )
 
-    extracted_evidence = get_targeted_evidence(
-        user_response,
-        previous_objective,
-    )
+    # --------------------------------------------------------
+    # 4. Detect complaints
+    # --------------------------------------------------------
 
-    objective_key = None
+    complaint_detected = False
 
-    if previous_objective:
-        construct = previous_objective["construct"]
-        attribute = previous_objective["attribute"]
+    if not confirmed_continue:
 
-        objective_key = f"{construct}.{attribute}"
-
-        has_valid_evidence = (
-            construct in extracted_evidence
-            and attribute in extracted_evidence[construct]
+        complaint_detected = is_conversation_complaint(
+            user_response
         )
 
-        if has_valid_evidence:
-            # Evidence was collected. Reset the attempt counter.
+    if complaint_detected:
+
+        print(
+            "\nI'm sorry. I may have misunderstood you "
+            "or repeated a question."
+        )
+
+    # --------------------------------------------------------
+    # 5. Detect explicit worry denial
+    # --------------------------------------------------------
+
+    worry_denial_patterns = [
+        r"\b(?:i am not|im not|i'm not)\s+"
+        r"(?:currently\s+)?worrying about anything\b",
+
+        r"\b(?:i am not|im not|i'm not)\s+"
+        r"(?:currently\s+)?worried about anything\b",
+
+        r"\b(?:i am not|im not|i'm not)\s+"
+        r"(?:currently\s+)?worried(?: right now)?\b",
+
+        r"\bnot worrying about anything\b",
+
+        r"\bi have nothing to worry about\b",
+
+        r"\bno worries right now\b",
+    ]
+
+    explicit_worry_denial = (
+        not confirmed_continue
+        and any(
+            re.search(pattern, normalized_response)
+            for pattern in worry_denial_patterns
+        )
+    )
+
+    current_construct = (
+        previous_objective.get("construct")
+        if previous_objective
+        else None
+    )
+
+    # --------------------------------------------------------
+    # 6. Extract evidence or handle special responses
+    # --------------------------------------------------------
+
+    if confirmed_continue:
+
+        # A confirmation response is not behavioural evidence.
+        extracted_evidence = {}
+
+    elif (
+        explicit_worry_denial
+        and current_construct in {None, "worry"}
+    ):
+
+        extracted_evidence = {
+            "worry": {
+                "detected": False,
+            }
+        }
+
+        print(
+            "\nExplicit worry denial recognized. "
+            "The worry assessment will not continue."
+        )
+
+        if previous_objective:
+
+            objective_key = (
+                f"{previous_objective['construct']}."
+                f"{previous_objective['attribute']}"
+            )
+
             objective_attempts[objective_key] = 0
 
-        else:
-            # No evidence was found for the current objective.
-            attempts = objective_attempts.get(
-                objective_key, 0
-            ) + 1
+    elif complaint_detected:
 
-            objective_attempts[objective_key] = attempts
+        extracted_evidence = {}
 
-            if is_conversation_complaint(user_response):
-                print(
-                    "\nI'm sorry. I may have misunderstood you "
-                    "or repeated a question."
-                )
+        if previous_objective:
 
-                # Skip this objective rather than probing again.
-                attempts = MAX_UNCLEAR_ATTEMPTS
+            construct = previous_objective["construct"]
+            attribute = previous_objective["attribute"]
+
+            objective_key = f"{construct}.{attribute}"
+
+            objective_attempts[objective_key] = MAX_UNCLEAR_ATTEMPTS
+
+            skipped_objectives = conversation.setdefault(
+                "skipped_objectives", []
+            )
+
+            if objective_key not in skipped_objectives:
+                skipped_objectives.append(objective_key)
+
+            print(
+                f"\nSkipping '{objective_key}' because "
+                "the user expressed frustration."
+            )
+
+        conversation["last_objective"] = None
+        conversation["awaiting_continue_confirmation"] = True
+
+    else:
+
+        # Normal evidence extraction.
+        extracted_evidence = get_targeted_evidence(
+            user_response,
+            previous_objective,
+        )
+
+        # Apply the two-attempt rule to a current objective.
+        if previous_objective:
+
+            construct = previous_objective["construct"]
+            attribute = previous_objective["attribute"]
+
+            objective_key = f"{construct}.{attribute}"
+
+            has_valid_evidence = (
+                construct in extracted_evidence
+                and attribute in extracted_evidence[construct]
+            )
+
+            if has_valid_evidence:
+
+                objective_attempts[objective_key] = 0
+
+            else:
+
+                attempts = objective_attempts.get(
+                    objective_key, 0
+                ) + 1
+
                 objective_attempts[objective_key] = attempts
 
-                        
                 if attempts >= MAX_UNCLEAR_ATTEMPTS:
-                    # Record that this objective was skipped.
-                    # Do not save "unanswered" as behavioral evidence.
+
                     skipped_objectives = conversation.setdefault(
                         "skipped_objectives", []
                     )
@@ -271,39 +472,45 @@ def process_user_response(state, user_response):
                     if objective_key not in skipped_objectives:
                         skipped_objectives.append(objective_key)
 
-                    # Leave the actual attribute unknown.
                     extracted_evidence = {}
 
                     print(
-                        f"\nThe objective '{attribute}' could not be "
-                        f"established after {attempts} unsuccessful "
-                        "attempts. Skipping it without recording "
-                        "behavioral evidence."
+                        f"\nThe objective '{attribute}' could "
+                        f"not be established after {attempts} "
+                        "unsuccessful attempts. Skipping it "
+                        "without recording False."
                     )
 
-            else:
-                print(
-                    "\nI couldn't identify a clear answer to "
-                    "the current question. I'll try one "
-                    "clarification."
-                )
+                else:
+
+                    print(
+                        "\nI couldn't identify a clear answer "
+                        "to the current question. I'll try "
+                        "one clarification."
+                    )
+
+    # --------------------------------------------------------
+    # 7. Update assessment state
+    # --------------------------------------------------------
 
     print("\nEXTRACTED EVIDENCE:")
     print(extracted_evidence)
 
-    # Update topic information and evidence only once.
     update_conversation_topic(
         state,
         extracted_evidence,
     )
 
     if extracted_evidence:
+
         apply_extracted_evidence(
             state=state,
             extracted_evidence=extracted_evidence,
             source_turn=current_turn,
         )
+
     else:
+
         print(
             "No evidence was recorded for this response."
         )
@@ -311,18 +518,94 @@ def process_user_response(state, user_response):
     print("\nUPDATED WORRY STATE:")
     print(state["constructs"]["worry"])
 
-    # Ask the controller what evidence is needed next.
+    # --------------------------------------------------------
+    # 8. Pause after a complaint
+    # --------------------------------------------------------
+
+    if conversation.get("awaiting_continue_confirmation", False):
+
+        print(
+            "\nWould you like to continue the assessment, "
+            "or would you prefer to stop here?"
+        )
+
+        return {"status": "awaiting_confirmation"}
+
+    # --------------------------------------------------------
+    # 9. Handle an unclear initial response
+    # --------------------------------------------------------
+
+    if (
+        previous_objective is None
+        and not extracted_evidence
+        and not confirmed_continue
+    ):
+
+        clarification_attempted = conversation.get(
+            "initial_clarification_attempted", False
+        )
+
+        if not clarification_attempted:
+
+            conversation["initial_clarification_attempted"] = True
+
+            clarification_question = (
+                "Could you tell me a little more about how "
+                "you have been feeling or responding to "
+                "different situations recently?"
+            )
+
+            print("\nCLARIFICATION QUESTION:")
+            print(clarification_question)
+
+            history.append({
+                "role": "Assistant",
+                "text": clarification_question,
+            })
+
+            return {
+                "status": "awaiting_initial_clarification"
+            }
+
+        else:
+
+            print(
+                "\nI couldn't identify a clear behavioural "
+                "pattern from your responses. That's okay. "
+                "There is no need to force an answer."
+            )
+
+            conversation["last_objective"] = None
+            conversation["termination_reason"] = (
+                "no_construct_detected"
+            )
+
+            return None
+
+    # --------------------------------------------------------
+    # 10. Select next adaptive objective
+    # --------------------------------------------------------
+
     objective = get_next_assessment_objective(state)
 
     print("\nNEXT ASSESSMENT OBJECTIVE:")
     print(objective)
 
     if objective is None:
-        print("\nNo additional assessment objective remains.")
+
+        print(
+            "\nNo additional assessment objective remains."
+        )
+
         conversation["last_objective"] = None
+        conversation["termination_reason"] = "completed"
+
         return None
 
-    # Retrieve knowledge for the selected objective.
+    # --------------------------------------------------------
+    # 11. Retrieve relevant RAG passages
+    # --------------------------------------------------------
+
     passages = retrieve_semantic_passages(
         objective["objective"],
         top_k=3,
@@ -331,20 +614,29 @@ def process_user_response(state, user_response):
     print("\nRETRIEVED SOURCES:")
 
     for passage in passages:
-        print("-", passage.get("source", "Unknown source"))
+        print(
+            "-",
+            passage.get("source", "Unknown source")
+        )
 
     if not passages:
+
         print(
             "\nNo relevant knowledge passages were retrieved. "
-            "The assessment cannot generate a grounded question "
-            "for this turn."
+            "The assessment cannot generate a grounded question."
         )
+
         conversation["last_objective"] = None
+        conversation["termination_reason"] = "retrieval_failure"
+
         return None
 
-    # Generate a question for the controller-selected objective.
+    # --------------------------------------------------------
+    # 12. Generate follow-up question using Gemini
+    # --------------------------------------------------------
+
     question = generate_follow_up_question(
-        objective["objective"],
+        objective,
         passages,
         current_concern=(
             conversation.get("current_concern")
@@ -357,7 +649,6 @@ def process_user_response(state, user_response):
     print("\nGENERATED FOLLOW-UP QUESTION:")
     print(question)
 
-    # Store the generated question and its objective together.
     history.append({
         "role": "Assistant",
         "text": question,
@@ -367,43 +658,70 @@ def process_user_response(state, user_response):
 
     return objective
 
-
 def main():
     """Run an interactive adaptive assessment."""
 
     state = create_assessment_state()
+
+    conversation = state["conversation"]
+
+    # Initialize conversation-control variables.
+    conversation["awaiting_continue_confirmation"] = False
+    conversation["exit_requested"] = False
+    conversation["termination_reason"] = None
 
     print("=" * 60)
     print("INTERACTIVE ADAPTIVE ASSESSMENT")
     print("Type 'exit' to end the conversation.")
     print("=" * 60)
 
+    # --------------------------------------------------------
+    # 1. Initial user response
+    # --------------------------------------------------------
+
     user_response = input(
         "\nPlease describe something you have been worrying about:\n> "
     ).strip()
 
     if not user_response:
+
         print("No response entered. Ending assessment.")
-        return
 
-    if user_wants_to_stop(user_response):
-        print("Assessment ended.")
-        return
+        conversation["termination_reason"] = "no_response"
+        objective = None
 
-    objective = process_user_response(
-        state,
-        user_response,
-    )
+    elif user_wants_to_stop(user_response):
+
+        print("Assessment ended at your request.")
+
+        conversation["exit_requested"] = True
+        conversation["termination_reason"] = "user_exit"
+
+        objective = None
+
+    else:
+
+        objective = process_user_response(
+            state,
+            user_response,
+        )
+
+    # --------------------------------------------------------
+    # 2. Interactive conversation loop
+    # --------------------------------------------------------
 
     while objective is not None:
+
         user_response = input(
             "\nYour answer:\n> "
         ).strip()
 
         if not user_response:
+
             print(
-                "Please enter an answer, or type 'exit' to stop."
+                "Please enter a response, or type 'exit' to stop."
             )
+
             continue
 
         objective = process_user_response(
@@ -411,22 +729,199 @@ def main():
             user_response,
         )
 
+    # --------------------------------------------------------
+    # 3. Final assessment summary
+    # --------------------------------------------------------
+
     print("\n" + "=" * 60)
     print("FINAL ASSESSMENT SUMMARY")
     print("=" * 60)
+
+    termination_reason = conversation.get(
+        "termination_reason"
+    )
+
+    if termination_reason == "completed":
+
+        print("\nAssessment completed successfully.")
+
+    elif termination_reason == "user_exit":
+
+        print("\nAssessment stopped at your request.")
+
+    elif termination_reason == "retrieval_failure":
+
+        print(
+            "\nAssessment stopped because relevant "
+            "knowledge passages could not be retrieved."
+        )
+
+    elif termination_reason == "no_response":
+
+        print(
+            "\nAssessment ended because no response was provided."
+        )
 
     print("\nWorry evidence:")
     print(state["constructs"]["worry"])
 
     print(
         "\nTotal turns:",
-        state["conversation"]["turn_count"],
+        conversation["turn_count"],
     )
 
     print(
         "Evidence records:",
         len(state["evidence_history"]),
     )
+
+
+def main():
+    """Run an interactive adaptive assessment."""
+
+    state = create_assessment_state()
+
+    conversation = state["conversation"]
+
+    # Initialize conversation-control variables.
+    conversation["awaiting_continue_confirmation"] = False
+    conversation["exit_requested"] = False
+    conversation["termination_reason"] = None
+    conversation["initial_clarification_attempted"] = False
+
+    print("=" * 60)
+    print("INTERACTIVE ADAPTIVE ASSESSMENT")
+    print("Type 'exit' to end the conversation.")
+    print("=" * 60)
+
+    # --------------------------------------------------------
+    # 1. Initial neutral question
+    # --------------------------------------------------------
+
+    user_response = input(
+        "\nHow have you been feeling or responding to situations "
+        "in your everyday life recently?\n"
+        "You can describe anything that has been on your mind "
+        "or affected you.\n> "
+    ).strip()
+
+    if not user_response:
+
+        print("No response entered. Ending assessment.")
+
+        conversation["termination_reason"] = "no_response"
+        objective = None
+
+    elif user_wants_to_stop(user_response):
+
+        print("Assessment ended at your request.")
+
+        conversation["exit_requested"] = True
+        conversation["termination_reason"] = "user_exit"
+
+        objective = None
+
+    else:
+
+        objective = process_user_response(
+            state,
+            user_response,
+        )
+
+    # --------------------------------------------------------
+    # 2. Interactive conversation loop
+    # --------------------------------------------------------
+
+    while objective is not None:
+
+        user_response = input(
+            "\nYour answer:\n> "
+        ).strip()
+
+        if not user_response:
+
+            print(
+                "Please enter a response, or type 'exit' to stop."
+            )
+
+            continue
+
+        objective = process_user_response(
+            state,
+            user_response,
+        )
+
+    # --------------------------------------------------------
+    # 3. Final assessment summary
+    # --------------------------------------------------------
+
+    print("\n" + "=" * 60)
+    print("FINAL ASSESSMENT SUMMARY")
+    print("=" * 60)
+
+    termination_reason = conversation.get(
+        "termination_reason"
+    )
+
+    if termination_reason == "completed":
+
+        print("\nAssessment completed successfully.")
+
+    elif termination_reason == "user_exit":
+
+        print("\nAssessment stopped at your request.")
+
+    elif termination_reason == "retrieval_failure":
+
+        print(
+            "\nAssessment stopped because relevant "
+            "knowledge passages could not be retrieved."
+        )
+
+    elif termination_reason == "no_response":
+
+        print(
+            "\nAssessment ended because no response was provided."
+        )
+
+    elif termination_reason == "no_construct_detected":
+
+        print(
+            "\nNo clear behavioural pattern was identified "
+            "during this assessment."
+        )
+
+    # Display evidence for every construct.
+    print("\nCOLLECTED BEHAVIOURAL EVIDENCE")
+    print("-" * 60)
+
+    for construct, attributes in state["constructs"].items():
+
+        collected_attributes = {
+            attribute: value
+            for attribute, value in attributes.items()
+            if value is not None
+        }
+
+        if collected_attributes:
+
+            print(f"\n{construct.upper().replace('_', ' ')}:")
+
+            for attribute, value in collected_attributes.items():
+
+                print(f"  {attribute}: {value}")
+
+    print(
+        "\nTotal turns:",
+        conversation["turn_count"],
+    )
+
+    print(
+        "Evidence records:",
+        len(state["evidence_history"]),
+    )
+
+
 
 
 if __name__ == "__main__":

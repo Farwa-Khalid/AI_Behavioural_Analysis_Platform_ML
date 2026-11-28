@@ -1,3 +1,12 @@
+import os
+import re
+import difflib
+
+from google import genai
+from google.genai import types
+
+import os
+from dotenv import load_dotenv
 
 """
 LLM Question Generator
@@ -11,15 +20,6 @@ Important:
     Gemini phrases the question.
     The adaptive controller decides what evidence is needed.
 """
-
-import os
-import re
-
-from google import genai
-from google.genai import types
-
-import os
-from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -158,7 +158,8 @@ def generate_fallback_question(objective):
         ),
 
         "frequency": (
-            f"How often do you experience {experience}?"
+            f"How many times do {experience} come up "
+            "during a typical day or week?"
         ),
 
         "repetition": (
@@ -178,7 +179,7 @@ def generate_fallback_question(objective):
         ),
 
         "recovery": (
-            "After experiencing these emotional reactions, "
+            f"After {experience} affect you, "
             "approximately how long does it take you to feel like yourself again?"
         ),
 
@@ -311,6 +312,7 @@ def is_question_aligned_with_objective(question, objective):
             r"\bwhat circumstances\b",
             r"\bwhat tends to cause\b",
             r"\bwhat brings on\b",
+            r"\bwhat specific aspects\b.*\btend to bring on\b",
             r"\bwhat brings about\b",
             r"\bwhat bring about\b",
             r"\bwhat triggers\b",
@@ -356,6 +358,8 @@ def is_question_aligned_with_objective(question, objective):
             r"\breturn to normal\b",
             r"\bback to normal\b",
             r"\busual emotional state\b",
+            r"\bfeel back to your usual state\b",
+            r"\breturn to your usual state\b",
             r"\brecover\b",
             r"\bafter an emotional reaction\b",
         ],
@@ -479,6 +483,207 @@ def is_question_aligned_with_objective(question, objective):
             return True
 
     return False
+def is_question_repetitive(
+    question,
+    conversation_history,
+    threshold=0.65,
+):
+    """
+    Check whether a generated question closely resembles
+    a question previously asked by the assistant.
+
+    Only previous assistant questions are considered.
+    """
+
+    if not question or not conversation_history:
+        return False
+
+    def normalize_question(text):
+        text = text.lower()
+        text = re.sub(r"[^\w\s]", "", text)
+        text = re.sub(r"\s+", " ", text)
+        return text.strip()
+
+    current_question = normalize_question(question)
+
+    if not current_question:
+        return False
+
+    for turn in conversation_history:
+
+        if not isinstance(turn, dict):
+            continue
+
+        role = turn.get("role", "").lower()
+
+        if role != "assistant":
+            continue
+
+        previous_question = normalize_question(
+            turn.get("text", "")
+        )
+
+        if not previous_question:
+            continue
+
+        similarity = difflib.SequenceMatcher(
+            None,
+            current_question,
+            previous_question,
+        ).ratio()
+
+        if similarity >= threshold:
+            return True
+
+    return False
+
+def generate_non_repeated_fallback_question(
+    objective,
+    conversation_history=None,
+):
+    """
+    Generate an aligned fallback question that has not
+    already been asked in the conversation.
+
+    The existing fallback is attempted first.
+    An alternative is used if the original is repeated.
+    Returns None if no suitable question is available.
+    """
+
+    if not isinstance(objective, dict):
+        return None
+
+    construct = objective.get("construct")
+    attribute = objective.get("attribute")
+
+    if not construct or not attribute:
+        return None
+
+    # --------------------------------------------------------
+    # 1. Define construct-specific experiences
+    # --------------------------------------------------------
+
+    experiences = {
+        "emotional_reactivity": "these emotional reactions",
+        "worry": "these worries",
+        "rumination": "these recurring thoughts",
+        "repetitive_negative_thinking": (
+            "these repetitive negative thoughts"
+        ),
+        "stress_vulnerability": (
+            "these stress-related experiences"
+        ),
+        "social_evaluation": (
+            "these concerns about being judged"
+        ),
+        "negative_self_evaluation": (
+            "these self-critical thoughts"
+        ),
+    }
+
+    experience = experiences.get(construct)
+
+    if not experience:
+        return None
+
+    # --------------------------------------------------------
+    # 2. Define alternative wording for each supported
+    #    fallback attribute
+    # --------------------------------------------------------
+
+    alternatives = {
+
+        "trigger": (
+            "In what kinds of circumstances do you notice "
+            "your stress levels rising?"
+        ),
+
+        "intensity": (
+            "How overwhelming can these feelings become "
+            "at their peak?"
+        ),
+
+        "persistence": (
+            f"How much time do {experience} usually occupy "
+            "once they begin?"
+        ),
+
+        "frequency": (
+            f"How frequently do you notice {experience} "
+            "occurring in your everyday life?"
+        ),
+
+        "repetition": (
+            "Do these recurring thoughts keep coming back?"
+        ),
+
+        "controllability": (
+            "How manageable are these worries for you?"
+        ),
+
+        "switching_difficulty": (
+            "How easily can you move your attention to "
+            "another activity when worries arise?"
+        ),
+
+        "functional_impact": (
+            "Do these emotional reactions interfere with "
+            "your ability to complete daily tasks or "
+            "responsibilities?"
+        ),
+        "recovery": (
+            f"Once {experience} have passed, "
+            "how long does it usually take you to feel back to your usual state?"
+        ),
+
+        "sensitivity": (
+            "How readily do you experience strong reactions "
+            "related to these emotional reactions?"
+        ),
+    }
+    alternative_question = alternatives.get(attribute)
+
+    # --------------------------------------------------------
+    # 3. Try the existing fallback first
+    # --------------------------------------------------------
+
+    candidates = [
+        generate_fallback_question(objective)
+    ]
+
+    # Add the alternative if this attribute supports one.
+    if alternative_question:
+        candidates.append(alternative_question)
+
+    # --------------------------------------------------------
+    # 4. Validate every candidate and reject repetitions
+    # --------------------------------------------------------
+
+    for candidate in candidates:
+
+        if not candidate:
+            continue
+
+        is_aligned = is_question_aligned_with_objective(
+            candidate,
+            objective,
+        )
+
+        if not is_aligned:
+            continue
+
+        is_repeated = is_question_repetitive(
+            candidate,
+            conversation_history,
+        )
+
+        if is_repeated:
+            continue
+
+        return candidate
+
+    # No aligned, non-repeated candidate was available.
+    return None
 
 def generate_follow_up_question(
     objective,
@@ -492,7 +697,7 @@ def generate_follow_up_question(
     assessment objective.
 
     Gemini must assess only the selected construct and attribute.
-    Generated questions are validated before being returned.
+    Generated questions are validated for alignment and repetition.
     """
 
     # =========================================================
@@ -523,20 +728,38 @@ def generate_follow_up_question(
         )
 
     # =========================================================
-    # 2. CHECK API KEY
+    # 2. NON-REPEATED FALLBACK HELPER
+    # =========================================================
+
+    def get_non_repeated_fallback():
+
+        if isinstance(objective, dict):
+
+            return generate_non_repeated_fallback_question(
+                objective,
+                conversation_history,
+            )
+
+        # Preserve backward compatibility for string objectives.
+        return generate_fallback_question(objective)
+
+    # =========================================================
+    # 3. CHECK API KEY
     # =========================================================
 
     api_key = os.getenv("GEMINI_API_KEY")
 
     if not api_key:
+
         print(
             "\nGemini API key is unavailable. "
-            "Using a fallback question."
+            "Trying a non-repeated fallback question."
         )
-        return generate_fallback_question(objective)
+
+        return get_non_repeated_fallback()
 
     # =========================================================
-    # 3. VALIDATE RETRIEVED PASSAGES
+    # 4. VALIDATE RETRIEVED PASSAGES
     # =========================================================
 
     if not retrieved_passages:
@@ -565,7 +788,7 @@ def generate_follow_up_question(
     knowledge_context = "\n\n---\n\n".join(context_parts)
 
     # =========================================================
-    # 4. PREPARE CONVERSATION HISTORY
+    # 5. PREPARE CONVERSATION HISTORY
     # =========================================================
 
     history_lines = []
@@ -594,7 +817,7 @@ def generate_follow_up_question(
     )
 
     # =========================================================
-    # 5. PREPARE USER CONTEXT
+    # 6. PREPARE USER CONTEXT
     # =========================================================
 
     concern = (
@@ -612,7 +835,7 @@ def generate_follow_up_question(
     )
 
     # =========================================================
-    # 6. CONSTRUCT THE GEMINI PROMPT
+    # 7. CONSTRUCT THE GEMINI PROMPT
     # =========================================================
 
     prompt = f"""
@@ -651,7 +874,6 @@ RULES FOR GENERATING THE QUESTION:
 
 2. The selected attribute is authoritative.
    Generate a question specifically about that attribute.
-
 
 3. Understand the selected attribute in the context of the
    selected construct.
@@ -781,7 +1003,7 @@ Return only the question, without headings or explanations.
 """
 
     # =========================================================
-    # 7. GENERATE QUESTION USING GEMINI
+    # 8. GENERATE AND VALIDATE QUESTION USING GEMINI
     # =========================================================
 
     try:
@@ -805,15 +1027,15 @@ Return only the question, without headings or explanations.
                 "Gemini returned an empty question."
             )
 
-        # =====================================================
-        # 8. VALIDATE QUESTION-OBJECTIVE ALIGNMENT
-        # =====================================================
+        # -----------------------------------------------------
+        # 8A. CHECK OBJECTIVE ALIGNMENT
+        # -----------------------------------------------------
 
         is_aligned = is_question_aligned_with_objective(
             question,
-            objective
+            objective,
         )
-        
+
         if not is_aligned:
 
             print("\nGEMINI GENERATED QUESTION:")
@@ -825,14 +1047,39 @@ Return only the question, without headings or explanations.
             )
 
             print(
-                "Using the fallback question instead."
+                "Trying a non-repeated fallback question."
             )
 
-            return generate_fallback_question(objective)
+            return get_non_repeated_fallback()
+
+        # -----------------------------------------------------
+        # 8B. CHECK FOR REPETITIVE QUESTIONS
+        # -----------------------------------------------------
+
+        if is_question_repetitive(
+            question,
+            conversation_history,
+        ):
+
+            print("\nGEMINI GENERATED QUESTION:")
+            print(question)
+
+            print(
+                "\nGemini generated a question that was "
+                "already asked."
+            )
+
+            print(
+                "Trying a non-repeated fallback question."
+            )
+
+            return get_non_repeated_fallback()
+
+        # -----------------------------------------------------
+        # 8C. RETURN VALID, NON-REPEATED QUESTION
+        # -----------------------------------------------------
 
         return question
-
-
 
     # =========================================================
     # 9. HANDLE GEMINI ERRORS
@@ -845,7 +1092,7 @@ Return only the question, without headings or explanations.
         )
 
         print(
-            "Using a fallback question for this objective."
+            "Trying a non-repeated fallback question."
         )
 
-        return generate_fallback_question(objective)
+        return get_non_repeated_fallback()

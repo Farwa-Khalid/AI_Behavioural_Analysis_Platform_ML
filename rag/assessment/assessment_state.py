@@ -69,6 +69,7 @@ CONSTRUCTS = {
         "content",
         "trigger",
         "repetition",
+        "frequency",
         "persistence",
         "controllability",
         "switching_difficulty",
@@ -249,8 +250,12 @@ def update_evidence(
             )
 
     # Store the current value.
-    state["constructs"][construct][attribute] = value
-
+    # Store only established evidence in the current assessment state.
+# Uncertain and unknown evidence remains in evidence_history
+# but must not be treated as collected by the adaptive controller.
+    if evidence_state == "known":
+     state["constructs"][construct][attribute] = value
+    
     # Also keep a history of where this evidence came from.
     evidence_record = {
         "construct": construct,

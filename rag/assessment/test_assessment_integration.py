@@ -6,13 +6,15 @@ evidence_extractor.py
 assessment_state.py
 """
 
-from assessment_state import (
+from rag.assessment.assessment_state import (
     create_assessment_state,
     add_user_response,
     apply_extracted_evidence,
 )
 
-from evidence_extractor import extract_behavioral_evidence
+from rag.assessment.evidence_extractor import (
+    extract_behavioral_evidence,
+)
 
 
 def print_state(state):

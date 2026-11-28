@@ -11,16 +11,18 @@ Assessment state
     ↓
 Adaptive controller
 """
-
-from assessment_state import (
+from rag.assessment.assessment_state import (
     create_assessment_state,
     add_user_response,
     apply_extracted_evidence,
+    update_evidence,
 )
 
-from evidence_extractor import extract_behavioral_evidence
+from rag.assessment.evidence_extractor import (
+    extract_behavioral_evidence,
+)
 
-from adaptive_controller import (
+from rag.assessment.adaptive_controller import (
     get_next_assessment_objective,
 )
 
@@ -135,6 +137,49 @@ def main():
         print("\nNEXT OBJECTIVE:")
         print(next_objective)
 
+    # ----------------------------------------------------
+    # Test 6: Known trigger, uncertain detection
+    # ----------------------------------------------------
 
+    print("\n")
+    print("=" * 70)
+    print("TEST 6: Known trigger with unconfirmed detection")
+    print("=" * 70)
+
+    state = create_assessment_state()
+
+    update_evidence(
+        state=state,
+        construct="stress_vulnerability",
+        attribute="trigger",
+        value="final year project",
+        evidence_state="known",
+        source_turn=1,
+        confidence=0.8,
+    )
+
+    print("\nSTRESS VULNERABILITY STATE:")
+    print(state["constructs"]["stress_vulnerability"])
+
+    next_objective = get_next_assessment_objective(state)
+
+    print("\nNEXT OBJECTIVE:")
+    print(next_objective)
+
+    assert (
+        state["constructs"]["stress_vulnerability"]["detected"]
+        is None
+    ), "Detection should remain unconfirmed."
+
+    assert next_objective is not None, (
+        "Controller stopped despite having a known trigger."
+    )
+
+    assert (
+        next_objective["construct"] == "stress_vulnerability"
+    ), "Controller selected an unexpected construct."
+
+    print("\nTEST 6 PASSED")
+    
 if __name__ == "__main__":
     main()

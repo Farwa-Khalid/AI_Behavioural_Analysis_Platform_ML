@@ -56,6 +56,7 @@ ASSESSMENT_ATTRIBUTES = {
         "temporal_orientation",
         "content",
         "repetition",
+        "frequency",
         "persistence",
         "controllability",
     },
@@ -204,9 +205,26 @@ def select_next_evidence(state):
 
     detected_constructs = []
 
-    # 1. Find detected constructs.
+    # 1. Find confirmed constructs or constructs
+    # with established assessment evidence.
     for construct, attributes in constructs.items():
-        if attributes.get("detected") is True:
+
+        detected = attributes.get("detected")
+
+        approved_attributes = ASSESSMENT_ATTRIBUTES.get(
+            construct,
+            set()
+        )
+
+        has_known_evidence = any(
+            attributes.get(attribute) is not None
+            for attribute in approved_attributes
+        )
+
+        if detected is True:
+            detected_constructs.append(construct)
+
+        elif detected is not False and has_known_evidence:
             detected_constructs.append(construct)
 
     # 2. Ignore broad RNT when a specific construct exists.
@@ -366,6 +384,9 @@ def describe_evidence_objective(objective):
 
         ("rumination", "persistence"):
             "Determine how long the repeated thinking continues.",
+            
+        ("rumination", "frequency"):
+            "Determine how often the repeated thinking occurs.",
 
         ("rumination", "controllability"):
             "Determine how difficult it is to stop the repeated thinking.",

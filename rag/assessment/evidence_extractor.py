@@ -410,6 +410,7 @@ def extract_persistence(text):
             r"\bsix hours\b",
             r"\ba couple of hours\b",
             r"\bseveral hours\b",
+            r"\ba few hours\b",
             r"\bfor hours\b",
             r"\bfor an hour\b",
             r"\ban hour\b",
@@ -512,6 +513,8 @@ def extract_frequency(text):
             "often",
             "frequently",
             "many times",
+            "several times",
+            "multiple times",
         ],
         "sometimes": [
             "sometimes",
@@ -568,9 +571,15 @@ def extract_worry_evidence(text):
     if controllability:
         evidence["controllability"] = controllability
 
-    frequency = extract_frequency(text)
-    if frequency:
-        evidence["frequency"] = frequency
+ 
+    # Record frequency only when the response contains
+    # explicit evidence of worry.
+    if evidence.get("detected") is True:
+
+        frequency = extract_frequency(text)
+
+        if frequency:
+            evidence["frequency"] = frequency
 
     return evidence
 
@@ -908,6 +917,8 @@ def extract_contextual_answer(text, objective):
             r"\bvery often\b",
             r"\bfrequently\b",
             r"\bmany times\b",
+            r"\bseveral times\b",
+            r"\bmultiple times\b",
             r"\ba lot\b",
             r"\bmost days\b",
             r"\btwice a day\b",
@@ -983,7 +994,7 @@ def extract_contextual_answer(text, objective):
             "find it difficult to manage",
             "cannot manage it",
             "can't manage it",
-                        "struggle to control",
+            "struggle to control",
             "struggle with controlling",
             "find it hard to control",
             "difficulty controlling",

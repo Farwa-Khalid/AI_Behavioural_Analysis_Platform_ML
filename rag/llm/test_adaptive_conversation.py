@@ -19,6 +19,7 @@ from rag.assessment.assessment_state import (
     add_user_response,
     apply_extracted_evidence,
     update_conversation_topic,
+    update_evidence,
 )
 
 from rag.assessment.evidence_extractor import (
@@ -38,6 +39,9 @@ from rag.llm.llm_question_generator import (
     generate_follow_up_question,
 )
 
+from rag.llm.llm_evidence_extractor import (
+    extract_semantic_evidence,
+)
 
 # Maximum number of unclear answers allowed per objective.
 MAX_UNCLEAR_ATTEMPTS = 2
@@ -130,21 +134,20 @@ def user_wants_to_stop(text):
     )
 
 
-
 def get_targeted_evidence(
     user_response,
     previous_objective,
 ):
     """
-    Return evidence only for the attribute targeted by the
-    previous question.
+    Preserve all clearly extracted behavioral evidence.
 
-    Contextual extraction takes priority because it can interpret
-    short answers using the previous objective.
+    Contextual extraction receives priority for the current
+    assessment objective, while general extraction can capture
+    additional evidence volunteered in the same response.
     """
 
+    # The opening message describes the user's concern.
     if not previous_objective:
-        # The opening message describes the user's concern.
         return extract_behavioral_evidence(user_response)
 
     construct = previous_objective.get("construct")
@@ -153,41 +156,149 @@ def get_targeted_evidence(
     if not construct or not attribute:
         return {}
 
+    # --------------------------------------------------------
+    # 1. Extract evidence using the current question context
+    # --------------------------------------------------------
+
     contextual_evidence = extract_contextual_answer(
         user_response,
         previous_objective,
     )
+        # --------------------------------------------------------
+    # Capture rumination frequency as secondary evidence
+    # --------------------------------------------------------
+
+    if (
+        construct == "rumination"
+        and attribute != "frequency"
+    ):
+
+        frequency_objective = {
+            "construct": "rumination",
+            "attribute": "frequency",
+        }
+
+        frequency_evidence = extract_contextual_answer(
+            user_response,
+            frequency_objective,
+        )
+
+        for evidence_construct, attributes in frequency_evidence.items():
+
+            contextual_evidence.setdefault(
+                evidence_construct,
+                {},
+            )
+
+            contextual_evidence[evidence_construct].update(
+                attributes
+            )
+
+    # --------------------------------------------------------
+    # 2. Extract other evidence independently
+    # --------------------------------------------------------
 
     general_evidence = extract_behavioral_evidence(
         user_response
     )
 
-    contextual_attributes = contextual_evidence.get(
-        construct, {}
+    # --------------------------------------------------------
+    # 3. Preserve general evidence from all constructs
+    # --------------------------------------------------------
+
+    combined_evidence = {}
+
+    for detected_construct, attributes in general_evidence.items():
+
+        if not isinstance(attributes, dict):
+            continue
+
+        combined_evidence[detected_construct] = dict(attributes)
+
+    # --------------------------------------------------------
+    # 4. Merge contextual evidence
+    # --------------------------------------------------------
+
+    for contextual_construct, attributes in contextual_evidence.items():
+
+        if not isinstance(attributes, dict):
+            continue
+
+        combined_evidence.setdefault(
+            contextual_construct,
+            {},
+        )
+
+        # Contextual evidence takes priority when the same
+        # attribute was extracted by both methods.
+        combined_evidence[contextual_construct].update(
+            attributes
+        )
+
+    return combined_evidence
+
+def get_semantic_evidence(
+    user_response,
+    conversation_history=None,
+):
+    """
+    Extract additional behavioural evidence using Gemini.
+
+    This function does not update assessment state.
+    It returns the semantic extractor's result for later processing.
+    """
+
+    # Build context from previous conversation turns.
+    previous_history = conversation_history or []
+
+    # Exclude the current response because it is passed separately.
+    if (
+        previous_history
+        and previous_history[-1].get("role") == "User"
+        and previous_history[-1].get("text") == user_response
+    ):
+        previous_history = previous_history[:-1]
+
+    context_lines = []
+
+    for message in previous_history[-6:]:
+
+        role = message.get("role", "Unknown")
+        text = message.get("text", "")
+
+        if text:
+            context_lines.append(f"{role}: {text}")
+
+    conversation_context = (
+        "\n".join(context_lines)
+        if context_lines
+        else "No previous conversation."
     )
 
-    general_attributes = general_evidence.get(
-        construct, {}
-    )
+    try:
 
-    # Use contextual evidence first.
-    if attribute in contextual_attributes:
-        value = contextual_attributes[attribute]
+        result = extract_semantic_evidence(
+            user_response=user_response,
+            conversation_context=conversation_context,
+        )
 
-    # Otherwise, accept general evidence only if it matches
-    # the current objective.
-    elif attribute in general_attributes:
-        value = general_attributes[attribute]
+        return result
 
-    else:
-        return {}
+    except Exception as exc:
 
-    return {
-        construct: {
-            attribute: value,
+        print(
+            "Semantic evidence extraction encountered an error:",
+            exc,
+        )
+
+        return {
+            "status": "unavailable",
+            "original_response": user_response,
+            "evidence": [],
+            "clarification_question": None,
+            "error": str(exc),
         }
-    }
-
+        
 def process_user_response(state, user_response):
     """
     Process one user response and generate the next question.
@@ -233,6 +344,8 @@ def process_user_response(state, user_response):
             r"^continue(?:\s|$)",
             r"^go on(?:\s|$)",
             r"^lets continue(?:\s|$)",
+            r"^(?:no|nope)\s+i want to continue(?:\s|$)",
+            r"^(?:no|nope)\s+i would like to continue(?:\s|$)",
             r"^i want to continue(?:\s|$)",
             r"^i would like to continue(?:\s|$)",
             r"^continue the assessment(?:\s|$)",
@@ -261,18 +374,7 @@ def process_user_response(state, user_response):
             for pattern in stop_patterns
         )
 
-        if wants_to_stop or user_wants_to_stop(user_response):
-
-            conversation["awaiting_continue_confirmation"] = False
-            conversation["exit_requested"] = True
-            conversation["termination_reason"] = "user_exit"
-            conversation["last_objective"] = None
-
-            print("\nAssessment ended at your request.")
-
-            return None
-
-        elif wants_to_continue:
+        if wants_to_continue:
 
             conversation["awaiting_continue_confirmation"] = False
             conversation["last_objective"] = None
@@ -282,6 +384,20 @@ def process_user_response(state, user_response):
             print(
                 "\nThank you. We can continue the assessment."
             )
+
+        elif wants_to_stop or user_wants_to_stop(user_response):
+
+            conversation["awaiting_continue_confirmation"] = False
+            conversation["exit_requested"] = True
+            conversation["termination_reason"] = "user_exit"
+            conversation["last_objective"] = None
+
+            print(
+                "\nThank you for your time. "
+                "Goodbye!"
+            )
+
+            return None
 
         else:
 
@@ -372,6 +488,12 @@ def process_user_response(state, user_response):
     # 6. Extract evidence or handle special responses
     # --------------------------------------------------------
 
+    # Default values for response paths that do not call Gemini.
+    semantic_result = None
+    semantic_known_evidence = {}
+    semantic_uncertain_evidence = []
+    rule_based_evidence = {}
+
     if confirmed_continue:
 
         # A confirmation response is not behavioural evidence.
@@ -432,11 +554,89 @@ def process_user_response(state, user_response):
 
     else:
 
-        # Normal evidence extraction.
+        # Normal rule-based evidence extraction.
         extracted_evidence = get_targeted_evidence(
             user_response,
             previous_objective,
         )
+        
+                # Preserve rule-based evidence separately.
+        # Semantic evidence will be processed independently.
+        rule_based_evidence = {
+            construct: dict(attributes)
+            for construct, attributes in extracted_evidence.items()
+        }
+
+        # Check whether the current objective was established.
+        objective_evidence_found = False
+
+        if previous_objective:
+
+            construct = previous_objective["construct"]
+            attribute = previous_objective["attribute"]
+
+            objective_evidence_found = (
+                construct in extracted_evidence
+                and attribute in extracted_evidence[construct]
+            )
+
+        # Use semantic extraction when rule-based extraction
+        # does not identify evidence for the current objective.
+        semantic_result = None
+
+        if (
+            not extracted_evidence
+            or (
+                previous_objective
+                and not objective_evidence_found
+            )
+        ):
+
+            semantic_result = get_semantic_evidence(
+                user_response,
+                history,
+            )
+
+            print("\nSEMANTIC EXTRACTION STATUS:")
+            print(semantic_result.get("status"))
+
+            print("\nSEMANTIC EVIDENCE:")
+            print(semantic_result.get("evidence", []))
+            
+        # Separate semantic evidence by confidence state.
+        semantic_known_evidence = {}
+        semantic_uncertain_evidence = []
+
+        if (
+            semantic_result
+            and semantic_result.get("status") == "ok"
+        ):
+
+            for item in semantic_result.get("evidence", []):
+
+                item_construct = item.get("construct")
+                item_attribute = item.get("attribute")
+                evidence_state = item.get("evidence_state")
+
+                # Avoid duplicating evidence already found
+                # by the rule-based extractor.
+                if (
+                    item_construct in extracted_evidence
+                    and item_attribute
+                    in extracted_evidence[item_construct]
+                ):
+                    continue
+
+                if evidence_state == "known":
+
+                    semantic_known_evidence.setdefault(
+                        item_construct, {}
+                    )[item_attribute] = item.get("value")
+
+                elif evidence_state == "uncertain":
+
+                    semantic_uncertain_evidence.append(item)
+
 
         # Apply the two-attempt rule to a current objective.
         if previous_objective:
@@ -447,13 +647,32 @@ def process_user_response(state, user_response):
             objective_key = f"{construct}.{attribute}"
 
             has_valid_evidence = (
-                construct in extracted_evidence
-                and attribute in extracted_evidence[construct]
+                attribute in rule_based_evidence.get(
+                    construct, {}
+                )
+                or attribute in semantic_known_evidence.get(
+                    construct, {}
+                )
+            )
+
+            has_uncertain_evidence = any(
+                item.get("construct") == construct
+                and item.get("attribute") == attribute
+                for item in semantic_uncertain_evidence
             )
 
             if has_valid_evidence:
 
                 objective_attempts[objective_key] = 0
+
+            elif has_uncertain_evidence:
+
+                # Do not count uncertain evidence as an
+                # unsuccessful attempt. Clarification is needed.
+                print(
+                    "\nThe response contains potentially relevant "
+                    "evidence that needs clarification."
+                )
 
             else:
 
@@ -472,7 +691,6 @@ def process_user_response(state, user_response):
                     if objective_key not in skipped_objectives:
                         skipped_objectives.append(objective_key)
 
-                    extracted_evidence = {}
 
                     print(
                         f"\nThe objective '{attribute}' could "
@@ -496,28 +714,132 @@ def process_user_response(state, user_response):
     print("\nEXTRACTED EVIDENCE:")
     print(extracted_evidence)
 
+    # Update the conversation topic using rule-based evidence
+    # and established semantic evidence.
+    topic_evidence = {
+        construct: dict(attributes)
+        for construct, attributes in rule_based_evidence.items()
+    }
+
+    for construct, attributes in semantic_known_evidence.items():
+        topic_evidence.setdefault(construct, {}).update(attributes)
+
     update_conversation_topic(
         state,
-        extracted_evidence,
+        topic_evidence,
     )
 
-    if extracted_evidence:
+    # Store rule-based evidence using the existing method.
+    if rule_based_evidence:
 
         apply_extracted_evidence(
             state=state,
-            extracted_evidence=extracted_evidence,
+            extracted_evidence=rule_based_evidence,
             source_turn=current_turn,
         )
 
-    else:
+    # Store semantic known evidence without inventing confidence.
+    for construct, attributes in semantic_known_evidence.items():
 
-        print(
-            "No evidence was recorded for this response."
+        for attribute, value in attributes.items():
+
+            update_evidence(
+                state=state,
+                construct=construct,
+                attribute=attribute,
+                value=value,
+                evidence_state="known",
+                source_turn=current_turn,
+                confidence=None,
+            )
+
+    # Store semantic uncertain evidence in history only.
+    for item in semantic_uncertain_evidence:
+
+        update_evidence(
+            state=state,
+            construct=item["construct"],
+            attribute=item["attribute"],
+            value=item.get("value"),
+            evidence_state="uncertain",
+            source_turn=current_turn,
+            confidence=None,
         )
 
+    if not rule_based_evidence and not semantic_known_evidence:
+
+        print(
+            "No established evidence was recorded for this response."
+        )
+        
     print("\nUPDATED WORRY STATE:")
     print(state["constructs"]["worry"])
+        # --------------------------------------------------------
+    # End gracefully when the user explicitly denies worry
+    # --------------------------------------------------------
 
+    if explicit_worry_denial:
+
+        print(
+            "\nThank you for sharing. Since you have indicated "
+            "that you are not worried, we can end this assessment here. "
+            "Take care and goodbye!"
+        )
+
+        conversation["last_objective"] = None
+        conversation["termination_reason"] = "explicit_worry_denial"
+        conversation["awaiting_continue_confirmation"] = False
+
+        return None
+    # --------------------------------------------------------
+    # Preserve the user's initial concern as conversation context
+    # --------------------------------------------------------
+
+    # --------------------------------------------------------
+    # Resume from the opening question after confirmation
+    # --------------------------------------------------------
+
+    if (
+        confirmed_continue
+        and previous_objective is None
+        and not conversation.get("current_concern")
+    ):
+
+        opening_question = (
+            "How have you been feeling or responding to situations "
+            "in your everyday life recently? "
+            "You can describe anything that has been on your mind "
+            "or affected you."
+        )
+
+        print("\nLet's start again.")
+        print(opening_question)
+
+        history.append({
+            "role": "Assistant",
+            "text": opening_question,
+        })
+
+        conversation["initial_clarification_attempted"] = False
+
+        return {
+            "status": "awaiting_initial_concern"
+        }
+
+    # --------------------------------------------------------
+    # Preserve the user's initial concern as conversation context
+    # --------------------------------------------------------
+
+    if (
+        previous_objective is None
+        and not conversation.get("current_concern")
+        and not confirmed_continue
+        and not complaint_detected
+        and not explicit_worry_denial
+        and user_response.strip()
+    ):
+
+        conversation["current_concern"] = user_response.strip()
     # --------------------------------------------------------
     # 8. Pause after a complaint
     # --------------------------------------------------------
@@ -530,6 +852,33 @@ def process_user_response(state, user_response):
         )
 
         return {"status": "awaiting_confirmation"}
+    
+        # --------------------------------------------------------
+    # 8A. Ask for clarification when semantic evidence is uncertain
+    # --------------------------------------------------------
+
+    semantic_clarification = (
+        semantic_result.get("clarification_question")
+        if semantic_result
+        else None
+    )
+
+    if semantic_uncertain_evidence and semantic_clarification:
+
+        print("\nSEMANTIC CLARIFICATION QUESTION:")
+        print(semantic_clarification)
+
+        history.append({
+            "role": "Assistant",
+            "text": semantic_clarification,
+        })
+
+        conversation["last_objective"] = previous_objective
+
+        return {
+            "status": "awaiting_semantic_clarification"
+        }
+        
 
     # --------------------------------------------------------
     # 9. Handle an unclear initial response
@@ -537,7 +886,8 @@ def process_user_response(state, user_response):
 
     if (
         previous_objective is None
-        and not extracted_evidence
+        and not rule_based_evidence
+        and not semantic_known_evidence
         and not confirmed_continue
     ):
 
@@ -549,11 +899,24 @@ def process_user_response(state, user_response):
 
             conversation["initial_clarification_attempted"] = True
 
-            clarification_question = (
-                "Could you tell me a little more about how "
-                "you have been feeling or responding to "
-                "different situations recently?"
-            )
+            current_concern = conversation.get("current_concern")
+
+            if current_concern:
+
+                clarification_question = (
+                    f'You mentioned "{current_concern}". '
+                    "Could you tell me a little more about "
+                    "how you have been feeling or responding "
+                    "in relation to that?"
+                )
+
+            else:
+
+                clarification_question = (
+                    "Could you tell me a little more about how "
+                    "you have been feeling or responding to "
+                    "different situations recently?"
+                )
 
             print("\nCLARIFICATION QUESTION:")
             print(clarification_question)
@@ -646,6 +1009,25 @@ def process_user_response(state, user_response):
         conversation_history=history,
     )
 
+    # --------------------------------------------------------
+    # Handle unavailable or repeated questions
+    # --------------------------------------------------------
+
+    if not question:
+
+        print(
+            "\nNo suitable new question could be generated "
+            "for this assessment objective without repeating "
+            "an earlier question."
+        )
+
+        conversation["last_objective"] = None
+        conversation["termination_reason"] = (
+            "no_non_repeated_question"
+        )
+
+        return None
+
     print("\nGENERATED FOLLOW-UP QUESTION:")
     print(question)
 
@@ -657,123 +1039,6 @@ def process_user_response(state, user_response):
     conversation["last_objective"] = objective
 
     return objective
-
-def main():
-    """Run an interactive adaptive assessment."""
-
-    state = create_assessment_state()
-
-    conversation = state["conversation"]
-
-    # Initialize conversation-control variables.
-    conversation["awaiting_continue_confirmation"] = False
-    conversation["exit_requested"] = False
-    conversation["termination_reason"] = None
-
-    print("=" * 60)
-    print("INTERACTIVE ADAPTIVE ASSESSMENT")
-    print("Type 'exit' to end the conversation.")
-    print("=" * 60)
-
-    # --------------------------------------------------------
-    # 1. Initial user response
-    # --------------------------------------------------------
-
-    user_response = input(
-        "\nPlease describe something you have been worrying about:\n> "
-    ).strip()
-
-    if not user_response:
-
-        print("No response entered. Ending assessment.")
-
-        conversation["termination_reason"] = "no_response"
-        objective = None
-
-    elif user_wants_to_stop(user_response):
-
-        print("Assessment ended at your request.")
-
-        conversation["exit_requested"] = True
-        conversation["termination_reason"] = "user_exit"
-
-        objective = None
-
-    else:
-
-        objective = process_user_response(
-            state,
-            user_response,
-        )
-
-    # --------------------------------------------------------
-    # 2. Interactive conversation loop
-    # --------------------------------------------------------
-
-    while objective is not None:
-
-        user_response = input(
-            "\nYour answer:\n> "
-        ).strip()
-
-        if not user_response:
-
-            print(
-                "Please enter a response, or type 'exit' to stop."
-            )
-
-            continue
-
-        objective = process_user_response(
-            state,
-            user_response,
-        )
-
-    # --------------------------------------------------------
-    # 3. Final assessment summary
-    # --------------------------------------------------------
-
-    print("\n" + "=" * 60)
-    print("FINAL ASSESSMENT SUMMARY")
-    print("=" * 60)
-
-    termination_reason = conversation.get(
-        "termination_reason"
-    )
-
-    if termination_reason == "completed":
-
-        print("\nAssessment completed successfully.")
-
-    elif termination_reason == "user_exit":
-
-        print("\nAssessment stopped at your request.")
-
-    elif termination_reason == "retrieval_failure":
-
-        print(
-            "\nAssessment stopped because relevant "
-            "knowledge passages could not be retrieved."
-        )
-
-    elif termination_reason == "no_response":
-
-        print(
-            "\nAssessment ended because no response was provided."
-        )
-
-    print("\nWorry evidence:")
-    print(state["constructs"]["worry"])
-
-    print(
-        "\nTotal turns:",
-        conversation["turn_count"],
-    )
-
-    print(
-        "Evidence records:",
-        len(state["evidence_history"]),
-    )
 
 
 def main():
@@ -889,6 +1154,13 @@ def main():
         print(
             "\nNo clear behavioural pattern was identified "
             "during this assessment."
+        )
+    elif termination_reason == "no_non_repeated_question":
+
+        print(
+            "\nAssessment stopped because no suitable new "
+            "question was available without repeating an "
+            "earlier question."
         )
 
     # Display evidence for every construct.
